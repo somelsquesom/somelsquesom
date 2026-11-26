@@ -9,7 +9,7 @@
     "text": "Qui som",
     "enllac": "/companyia"
   },
-  "numerarSeccions": true,
+  "numerarSeccions": false,
   "seccions": [
     {
       "seccio": "en-gira",
