@@ -275,3 +275,4 @@ a[data-galeria] { cursor: zoom-in; display: block; }
   .facts > div:nth-child(n+3) { border-top: 1px solid var(--line); }
   .facts > div:nth-child(odd) { padding-left: 0; }
 }
+.card-h > .card-h-text:first-child { grid-column: 1 / -1; }
