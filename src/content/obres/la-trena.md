@@ -13,7 +13,7 @@ direccio: David Creus
 durada: '75'
 public: ''
 format: Sala
-foto: ''
+foto: /uploads/instagram/la-trena-ig01.jpg
 galeria: []
 trailer: ''
 entrades: ''
@@ -30,7 +30,32 @@ llocs: Castell d'Aro, Bell-lloc (4 al Casal Parroquial)
 poblacions:
   - Bell-lloc d'Urgell
   - Castell d'Aro
-funcions: [{"data":"15–17.05.2026","poblacio":"Castell d'Aro","nota":"Intercanvi amb Platja d'Aro"},{"data":"19.06.2026","espai":"Casal Parroquial","poblacio":"Bell-lloc d'Urgell","nota":"20 h · Tertúlia postfunció"},{"data":"20.06.2026","espai":"Casal Parroquial","poblacio":"Bell-lloc d'Urgell","nota":"17 h"},{"data":"21.06.2026","espai":"Casal Parroquial","poblacio":"Bell-lloc d'Urgell","nota":"11 h · Tertúlia postfunció"},{"data":"21.06.2026","espai":"Casal Parroquial","poblacio":"Bell-lloc d'Urgell","nota":"17 h"}]
+funcions:
+  - data: 15–17.05.2026
+    espai: ''
+    poblacio: Castell d'Aro
+    nota: Intercanvi amb Platja d'Aro
+    entrades: ''
+  - data: 19.06.2026
+    espai: Casal Parroquial
+    poblacio: Bell-lloc d'Urgell
+    nota: 20 h · Tertúlia postfunció
+    entrades: ''
+  - data: 20.06.2026
+    espai: Casal Parroquial
+    poblacio: Bell-lloc d'Urgell
+    nota: 17 h
+    entrades: ''
+  - data: 21.06.2026
+    espai: Casal Parroquial
+    poblacio: Bell-lloc d'Urgell
+    nota: 11 h · Tertúlia postfunció
+    entrades: ''
+  - data: 21.06.2026
+    espai: Casal Parroquial
+    poblacio: Bell-lloc d'Urgell
+    nota: 17 h
+    entrades: ''
 cites: []
 destacada: false
 ---
