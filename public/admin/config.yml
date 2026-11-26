@@ -57,7 +57,7 @@ collections:
       - { name: foto, label: Foto principal, widget: image, required: false }
       - { name: galeria, label: Galeria de fotos, widget: image, multiple: true, required: false }
       - { name: trailer, label: "Tràiler (enllaç de YouTube o Vimeo)", widget: string, required: false }
-            - { name: entrades, label: "Entrades: enllaç per comprar-les (surt el botó «Comprar entrades»)", widget: string, required: false }
+      - { name: entrades, label: "Entrades: enllaç per comprar-les (surt el botó «Comprar entrades»)", widget: string, required: false }
       - { name: entradesInfo, label: "Entrades: preu o informació (p. ex. 8 € · venda anticipada a ...)", widget: string, required: false }
       - { name: dossier, label: Dossier de venda (PDF), widget: file, required: false }
       - { name: rider, label: Rider tècnic (PDF), widget: file, required: false }
@@ -96,7 +96,7 @@ collections:
           - { name: espai, label: Espai o sala, widget: string, required: false }
           - { name: poblacio, label: Població, widget: string, required: false }
           - { name: nota, label: Nota, widget: string, required: false }
-                    - { name: entrades, label: "Enllaç d'entrades d'aquesta funció", widget: string, required: false }
+          - { name: entrades, label: "Enllaç d'entrades d'aquesta funció", widget: string, required: false }
       - name: cites
         label: Què n'han dit
         label_singular: cita
