@@ -1,10 +1,12 @@
 ---
 // Mostra la foto només si n'hi ha. Si el camp és buit, no surt res.
+// "sencera": la imatge es veu completa, sense retallar (per als cartells).
 interface Props {
   src?: string;
   alt?: string;
   ratio?: string;
+  sencera?: boolean;
 }
-const { src, alt = '', ratio = '4/3' } = Astro.props;
+const { src, alt = '', ratio = '4/3', sencera = false } = Astro.props;
 ---
-{src && <img class="media" src={src} alt={alt} loading="lazy" style={`aspect-ratio:${ratio}`} />}
+{src && <img class:list={['media', { sencera }]} src={src} alt={alt} loading="lazy" style={`aspect-ratio:${ratio}`} />}
