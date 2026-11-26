@@ -1,24 +1,35 @@
 ---
 import '../styles/global.css';
 import web from '../data/web.json';
+import menu from '../data/textos/menu.json';
+import peu from '../data/textos/peu.json';
+import estil from '../data/textos/estil.json';
+import { omple, variables } from '../lib/util';
 
 interface Props {
   title?: string;
   description?: string;
-  current?: string;
+  seccio?: string;
 }
-const { title, description = web.presentacio, current = '' } = Astro.props;
+const { title, description = web.presentacio } = Astro.props;
 const fullTitle = title ? `${title} · ${web.nom}` : `${web.nom} · Teatre amateur de ${web.poblacio}`;
-
-const nav = [
-  { href: '/companyia', label: 'La companyia', key: 'companyia' },
-  { href: '/en-gira', label: 'En gira', key: 'en-gira' },
-  { href: '/arxiu', label: 'Temporades anteriors', key: 'arxiu' },
-  { href: '/noticies', label: 'Notícies', key: 'noticies' },
-];
+const vars = variables();
+const ruta = Astro.url.pathname.replace(/\/$/, '') || '/';
+const actiu = (enllac: string) => enllac !== '/' && (ruta === enllac.replace(/\/$/, '') || ruta.startsWith(enllac.replace(/\/$/, '') + '/'));
+const extern = (enllac: string) => /^https?:\/\//.test(enllac);
+const colors = [
+  `--accent:${estil.colorDestacat}`,
+  `--granat:${estil.colorDestacat}`,
+  `--granat-fosc:${estil.colorDestacatFosc}`,
+  `--ink:${estil.colorText}`,
+  `--bg:${estil.colorFons}`,
+  `--soft:${estil.colorFonsSuau}`,
+].join(';');
+// Obres en gira i arxiu: la fitxa d'una obra marca la secció corresponent del menú.
+const seccioObra = Astro.props.seccio;
 ---
 <!doctype html>
-<html lang="ca">
+<html lang="ca" style={colors}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,14 +39,14 @@ const nav = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
   </head>
-  <body>
+  <body class:list={{ franja: estil.franjaSuperior }}>
     <header class="wrap site-header">
       <a href="/" class="logo">{web.nom}</a>
       <nav class="site-nav" aria-label="Menú principal">
-        {nav.map((item) => (
-          <a href={item.href} aria-current={current === item.key ? 'page' : undefined}>{item.label}</a>
+        {(menu.elements ?? []).map((item) => (
+          <a href={item.enllac} aria-current={actiu(item.enllac) || seccioObra === item.enllac ? 'page' : undefined} target={extern(item.enllac) ? '_blank' : undefined}>{item.text}</a>
         ))}
-        <a href="/contractacio" class="btn">Contractació</a>
+        {menu.boto?.text && <a href={menu.boto.enllac} class="btn">{menu.boto.text}</a>}
       </nav>
     </header>
 
@@ -47,43 +58,45 @@ const nav = [
       <div class="wrap footer-cols">
         <div>
           <div style="font-weight:600;letter-spacing:.14em;margin-bottom:10px">{web.nom}</div>
-          <div class="label">{web.descripcio}</div>
+          <div class="label">{peu.descripcio || web.descripcio}</div>
         </div>
         <div>
-          <div class="label">On som</div>
+          <div class="label">{peu.onSom}</div>
           <div>{web.poblacio}<br />{web.codiPostal} · {web.provincia}</div>
         </div>
         <div>
-          <div class="label">Contacte</div>
+          <div class="label">{peu.contacte}</div>
           <div>
-            {web.contacteNom && <>{web.contacteNom} · Producció<br /></>}
+            {web.contacteNom && <>{web.contacteNom} · {peu.produccio}<br /></>}
             <a href={`mailto:${web.email}`}>{web.email}</a>
             {web.telefon && <><br />{web.telefon}</>}
           </div>
         </div>
         <div>
-          <div class="label">Segueix-nos a les xarxes</div>
+          <div class="label">{peu.xarxes}</div>
           <div class="social">
-            {!web.instagram && !web.tiktok && !web.facebook && <span class="label">Aviat!</span>}
+            {!web.instagram && !web.tiktok && !web.facebook && <span class="label">{peu.senseXarxes}</span>}
             {web.instagram && (
-              <a href={`https://www.instagram.com/${web.instagram.replace('@', '')}`} rel="me">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" /></svg>
-                Instagram · @{web.instagram.replace('@', '')}
+              <a href={`https://www.instagram.com/${web.instagram.replace('@', '')}`} rel="me" aria-label="Instagram" title={`Instagram @${web.instagram.replace('@', '')}`}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" /></svg>
               </a>
             )}
             {web.tiktok && (
-              <a href={`https://www.tiktok.com/@${web.tiktok.replace('@', '')}`} rel="me">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5" /><path d="M14 3c.6 2.8 2.6 4.6 5.5 4.8" /></svg>
-                TikTok · @{web.tiktok.replace('@', '')}
+              <a href={`https://www.tiktok.com/@${web.tiktok.replace('@', '')}`} rel="me" aria-label="TikTok" title={`TikTok @${web.tiktok.replace('@', '')}`}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5" /><path d="M14 3c.6 2.8 2.6 4.6 5.5 4.8" /></svg>
               </a>
             )}
-            {web.facebook && <a href={web.facebook} rel="me">Facebook</a>}
+            {web.facebook && (
+              <a href={web.facebook} rel="me" aria-label="Facebook" title="Facebook">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z" /></svg>
+              </a>
+            )}
           </div>
         </div>
       </div>
       <div class="wrap footer-bottom">
-        <span>© {web.nom} · {web.poblacio}</span>
-        <a href="/contractacio">Contractació</a>
+        <span>{omple(peu.copyright, vars)}</span>
+        {peu.enllacFinal?.text && <a href={peu.enllacFinal.enllac}>{peu.enllacFinal.text}</a>}
       </div>
     </footer>
   </body>

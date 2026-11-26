@@ -2,108 +2,130 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
-import web from '../data/web.json';
 import Etiquetes from '../components/Etiquetes.astro';
-import { perEstrena, perData, formatData, xifres } from '../lib/util';
+import web from '../data/web.json';
+import t from '../data/textos/inici.json';
+import { perEstrena, perData, formatData, rich, variables } from '../lib/util';
 
 const obres = (await getCollection('obres')).sort(perEstrena);
-const enGira = obres.filter((o) => o.data.estat === 'en-gira');
-const arxiu = obres.filter((o) => o.data.estat === 'arxiu').slice(0, 4);
-const noticies = (await getCollection('noticies')).sort(perData).slice(0, 3);
-const x = xifres(obres, web.anyInici);
+const enGira = obres.filter((o) => o.data.estat === 'en-gira').slice(0, t.enGira.quantes ?? 2);
+const arxiu = obres.filter((o) => o.data.estat === 'arxiu').slice(0, t.arxiu.quantes ?? 4);
+const noticies = (await getCollection('noticies')).sort(perData).slice(0, t.noticies.quantes ?? 3);
+const v = variables({}, obres);
+const R = (s?: string) => rich(s, v);
+
+// Seccions en l'ordre i amb la visibilitat que s'ha triat al gestor (les buides no surten).
+const teContingut: Record<string, boolean> = {
+  'en-gira': enGira.length > 0,
+  companyia: true,
+  arxiu: arxiu.length > 0,
+  noticies: noticies.length > 0,
+  contractacio: true,
+};
+const seccions = (t.seccions ?? []).filter((s) => s.visible !== false && teContingut[s.seccio]).map((s) => s.seccio);
+const num = (s: string) => (t.numerarSeccions ? `${String(seccions.indexOf(s) + 1).padStart(2, '0')} — ` : '');
+const fons = (s: string) => (seccions.indexOf(s) % 2 === 1 ? 'section soft' : 'section');
 ---
 <Base>
   <section class="wrap" style="padding-top:24px">
     <Foto src={web.fotoPortada} alt="Escena d'una obra de la companyia" ratio="21/9" />
     <div class="hero" style="padding-bottom:96px">
-      <h1 class="display" style="font-size:clamp(64px,9vw,112px)">Som els<br /><em>que som.</em></h1>
+      <h1 class="display" style="font-size:clamp(64px,9vw,112px)" set:html={R(t.titol)} />
       <div style="display:flex;flex-direction:column;gap:24px;max-width:460px">
-        <p class="lead" style="font-size:18px">
-          Companyia de teatre amateur de {web.poblacio}. Des del {web.anyInici}, {x.obres} obres i {x.funcions} representacions. {web.presentacio}
-        </p>
+        {t.presentacio && <p class="lead" style="font-size:18px" set:html={R(t.presentacio)} />}
         <div class="btns">
-          <a href="/en-gira" class="btn">Obres en gira →</a>
-          <a href="/companyia" class="btn ghost">Qui som</a>
+          {t.boto1?.text && <a href={t.boto1.enllac} class="btn">{t.boto1.text}</a>}
+          {t.boto2?.text && <a href={t.boto2.enllac} class="btn ghost">{t.boto2.text}</a>}
         </div>
       </div>
     </div>
   </section>
 
-  {enGira.length > 0 && (
-    <section class="section">
-      <div class="wrap">
-        <div class="section-head"><span>01 — En gira</span><a href="/en-gira">Totes les obres en gira →</a></div>
-        <div class="cols" style="gap:40px">
-          {enGira.slice(0, 2).map((o) => (
-            <a href={`/obres/${o.id}`} class="card" style="gap:16px">
-              <Foto src={o.data.foto} alt={o.data.titol} ratio="4/3" />
-              <div class="label accent">Disponible per programar</div>
-              <div class="serif" style="font-size:52px;line-height:1">{o.data.titol}</div>
-              <Etiquetes etiquetes={o.data.etiquetes} textPropi={o.data.textPropi} />
-              <div class="muted">{[o.data.resum, o.data.durada, o.data.public].filter(Boolean).join(' · ')}</div>
-              <span style="font-size:14px;border-bottom:1px solid var(--ink);align-self:flex-start">Més informació →</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
+  {seccions.map((s) => (
+    <>
+      {s === 'en-gira' && (
+        <section class={fons(s)}>
+          <div class="wrap">
+            <div class="section-head"><span>{num(s)}{t.enGira.etiqueta}</span><a href="/en-gira">{t.enGira.enllac}</a></div>
+            <div class="cols" style="gap:40px">
+              {enGira.map((o) => (
+                <a href={`/obres/${o.id}`} class="card" style="gap:16px">
+                  <Foto src={o.data.foto} alt={o.data.titol} ratio="4/3" />
+                  {t.enGira.disponible && <div class="label accent">{t.enGira.disponible}</div>}
+                  <div class="serif" style="font-size:52px;line-height:1">{o.data.titol}</div>
+                  <Etiquetes etiquetes={o.data.etiquetes} textPropi={o.data.textPropi} />
+                  <div class="muted">{[o.data.resum, o.data.durada, o.data.public].filter(Boolean).join(' · ')}</div>
+                  <span style="font-size:14px;border-bottom:1px solid var(--ink);align-self:flex-start">{t.enGira.mesInfo}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
-  <section class="section soft">
-    <div class={web.fotoGrup ? 'wrap cols' : 'wrap'} style="align-items:center">
-      <div>
-        <div class="label" style="margin-bottom:24px">02 — La companyia</div>
-        <h2 class="display" style="margin-bottom:24px" set:html={(web.titolCompanyia || "Un grup de gent que s'ajunta per *fer teatre*.").replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\*([^*]+)\*/g, '<em>$1</em>')}></h2>
-        <p class="muted" style="font-size:18px;max-width:520px;margin:0 0 28px">{web.somTotsITotes}</p>
-        <a href="/companyia">{web.enllacCompanyia || 'Coneix-nos →'}</a>
-      </div>
-      <Foto src={web.fotoGrup} alt="Foto de grup de la companyia" ratio="4/3" />
-    </div>
-  </section>
+      {s === 'companyia' && (
+        <section class={fons(s)}>
+          <div class={web.fotoGrup ? 'wrap cols' : 'wrap'} style="align-items:center">
+            <div>
+              <div class="label" style="margin-bottom:24px">{num(s)}{t.companyia.etiqueta}</div>
+              <h2 class="display" style="margin-bottom:24px" set:html={R(t.companyia.titol)} />
+              <p class="muted" style="font-size:18px;max-width:520px;margin:0 0 28px" set:html={R(t.companyia.text || web.somTotsITotes)} />
+              {t.companyia.enllac && <a href="/companyia">{t.companyia.enllac}</a>}
+            </div>
+            <Foto src={web.fotoGrup} alt="Foto de grup de la companyia" ratio="4/3" />
+          </div>
+        </section>
+      )}
 
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head"><span>03 — Temporades anteriors</span><a href="/arxiu">Tot l'arxiu →</a></div>
-      <div class="grid-cards">
-        {arxiu.map((o) => (
-          <a href={`/obres/${o.id}`} class="card">
-            <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="3/4" />
-            <div class="label">{o.data.temporada}</div>
-            <div class="card-title" style="font-size:28px">{o.data.titol}</div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+      {s === 'arxiu' && (
+        <section class={fons(s)}>
+          <div class="wrap">
+            <div class="section-head"><span>{num(s)}{t.arxiu.etiqueta}</span><a href="/arxiu">{t.arxiu.enllac}</a></div>
+            <div class="grid-cards">
+              {arxiu.map((o) => (
+                <a href={`/obres/${o.id}`} class="card">
+                  <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="3/4" />
+                  <div class="label">{o.data.temporada}</div>
+                  <div class="card-title" style="font-size:28px">{o.data.titol}</div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
-  {noticies.length > 0 && (
-    <section class="section soft">
-      <div class="wrap">
-        <div class="section-head"><span>04 — Notícies</span><a href="/noticies">Totes les notícies →</a></div>
-        <div class="grid-cards">
-          {noticies.map((n) => (
-            <a href={`/noticies/${n.id}`} class="card">
-              <Foto src={n.data.foto} alt={n.data.titol} ratio="4/3" />
-              <div class="label">{formatData(n.data.data)}</div>
-              <div class="card-title" style="font-size:26px">{n.data.titol}</div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
+      {s === 'noticies' && (
+        <section class={fons(s)}>
+          <div class="wrap">
+            <div class="section-head"><span>{num(s)}{t.noticies.etiqueta}</span><a href="/noticies">{t.noticies.enllac}</a></div>
+            <div class="grid-cards">
+              {noticies.map((n) => (
+                <a href={`/noticies/${n.id}`} class="card">
+                  <Foto src={n.data.foto} alt={n.data.titol} ratio="4/3" />
+                  <div class="label">{formatData(n.data.data)}</div>
+                  <div class="card-title" style="font-size:26px">{n.data.titol}</div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
-  <section class="section">
-    <div class="wrap cols" style="align-items:end;padding-bottom:112px">
-      <div>
-        <div class="label" style="margin-bottom:24px">05 — Contractació</div>
-        <h2 class="display" style="font-size:clamp(56px,7vw,84px)">Programeu-nos<em>.</em></h2>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;font-size:18px">
-        {web.contacteNom && <div style="font-weight:600">{web.contacteNom} — Producció</div>}
-        <div><a href={`mailto:${web.email}`}>{web.email}</a>{web.telefon && ` · ${web.telefon}`}</div>
-        <a href="/contractacio" class="btn" style="align-self:flex-start;margin-top:16px">Contactar amb producció</a>
-      </div>
-    </div>
-  </section>
+      {s === 'contractacio' && (
+        <section class={fons(s)}>
+          <div class="wrap cols" style="align-items:end;padding-bottom:112px">
+            <div>
+              <div class="label" style="margin-bottom:24px">{num(s)}{t.contractacio.etiqueta}</div>
+              <h2 class="display" style="font-size:clamp(56px,7vw,84px)" set:html={R(t.contractacio.titol)} />
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:18px">
+              {web.contacteNom && <div style="font-weight:600">{web.contacteNom} — Producció</div>}
+              <div><a href={`mailto:${web.email}`}>{web.email}</a>{web.telefon && ` · ${web.telefon}`}</div>
+              {t.contractacio.boto && <a href="/contractacio" class="btn" style="align-self:flex-start;margin-top:16px">{t.contractacio.boto}</a>}
+            </div>
+          </div>
+        </section>
+      )}
+    </>
+  ))}
 </Base>

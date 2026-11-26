@@ -1,0 +1,16 @@
+{
+  "titolPestanya": "Obres en gira",
+  "etiqueta": "En gira",
+  "titol": "Obres per *programar*.",
+  "presentacio": "Aquestes són les obres que tenim en actiu. Les podem portar a sales, festes majors, festivals i escoles.",
+  "botoTotsDossiers": "Descarregar tots els dossiers",
+  "senseObres": "Ara mateix estem preparant obra nova. Escriviu-nos i us n'informarem.",
+  "disponible": "Disponible",
+  "botoVeure": "Veure l'obra",
+  "botoDossier": "Dossier",
+  "botoEntrades": "Comprar entrades",
+  "mostrarFinal": true,
+  "finalTitol": "Voleu una data*?*",
+  "finalText": "Escriviu a producció: {email}",
+  "finalBoto": "Contactar amb producció →"
+}

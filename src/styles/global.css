@@ -116,17 +116,20 @@ summary { cursor: pointer; font-weight: 500; font-size: 17px; }
 .filtre button[aria-pressed='true'] { background: var(--ink); color: #fff; }
 [hidden] { display: none !important; }
 
-/* Toc granat de teló de teatre */
-:root { --accent: #7a1c2a; --granat: #7a1c2a; --granat-fosc: #5c1420; }
-body { border-top: 6px solid var(--granat); }
+/* Color destacat (granat de teló). Els valors reals venen del gestor: Textos i aparença → Colors */
+:root { --granat: #8e1b1b; --granat-fosc: #6a1010; --accent: var(--granat); --bg: #fff; }
+body { background: var(--bg); }
+body.franja { border-top: 6px solid var(--granat); }
 .site-nav .btn { background: var(--granat); border-color: var(--granat); }
-.site-nav .btn:hover { background: var(--granat-fosc); color: #fff; }
+.site-nav .btn:hover { background: var(--granat-fosc); border-color: var(--granat-fosc); color: #fff; }
 .site-nav a[aria-current='page'] { border-bottom-color: var(--granat); }
 .section.dark { background: var(--granat); }
 .dark .btn { color: var(--granat); }
-h1.display em, h2.display em { color: var(--granat); }
+h1.display em, h2.display em, .card-title em { color: var(--granat); }
 .section.dark h2.display em { color: #fff; }
 .tags li.propi, .tags.gran li.propi { border-color: var(--granat); color: var(--granat); }
 .filtre button[aria-pressed='true'] { background: var(--granat); border-color: var(--granat); }
 .btn.granat { background: var(--granat); border-color: var(--granat); color: #fff; }
 .btn.granat:hover { background: var(--granat-fosc); border-color: var(--granat-fosc); color: #fff; }
+.social { flex-direction: row; gap: 16px; }
+.social a:hover { color: var(--granat); }

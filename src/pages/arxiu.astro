@@ -5,7 +5,10 @@ import Foto from '../components/Foto.astro';
 import Etiquetes from '../components/Etiquetes.astro';
 import web from '../data/web.json';
 import altres from '../data/altres-actuacions.json';
-import { perEstrena, repDe } from '../lib/util';
+import t from '../data/textos/arxiu.json';
+import { perEstrena, repDe, rich, variables } from '../lib/util';
+const v = variables();
+const R = (s?: string) => rich(s, v);
 
 const obres = (await getCollection('obres')).sort(perEstrena);
 
@@ -23,20 +26,20 @@ const ordenats = [...grups].sort(([a], [b]) => b.localeCompare(a));
 const etiquetes = [...new Set(obres.flatMap((o) => [...(o.data.textPropi ? ['Text propi'] : []), ...o.data.etiquetes]))].sort((a, b) => a.localeCompare(b, 'ca'));
 const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Text propi'] : []), ...o.data.etiquetes].join('|');
 ---
-<Base title="Temporades anteriors" current="arxiu">
+<Base title={t.titolPestanya}>
   <section class="wrap hero" style="padding-bottom:48px">
     <div>
-      <div class="label" style="margin-bottom:20px">Arxiu</div>
-      <h1 class="display">Temporades <em>anteriors</em>.</h1>
+      {t.etiqueta && <div class="label" style="margin-bottom:20px">{t.etiqueta}</div>}
+      <h1 class="display" set:html={R(t.titol)} />
     </div>
-    <p class="lead">Totes les obres que hem fet des del {web.anyInici}: de què anaven, quan les vam estrenar i on les vam portar.</p>
+    {t.presentacio && <p class="lead" set:html={R(t.presentacio)} />}
   </section>
 
-  {etiquetes.length > 0 && (
+  {t.mostrarFiltre && etiquetes.length > 0 && (
     <section class="wrap" style="padding-bottom:16px">
       <div class="filtre" role="group" aria-label="Filtra per etiqueta">
-        <span class="label" style="margin-right:8px">Filtra</span>
-        <button type="button" data-filtre="" aria-pressed="true">Totes</button>
+        <span class="label" style="margin-right:8px">{t.filtra}</span>
+        <button type="button" data-filtre="" aria-pressed="true">{t.totes}</button>
         {etiquetes.map((e) => <button type="button" data-filtre={e} aria-pressed="false">{e}</button>)}
       </div>
     </section>
@@ -48,7 +51,7 @@ const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Tex
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:28px">
           <h2 class="serif" style="margin:0;font-size:44px;line-height:1">{any}</h2>
           <span class="label">
-            {[g.obres.length && `${g.obres.length} ${g.obres.length === 1 ? 'obra' : 'obres'}`, g.altres.length && `${g.altres.length} ${g.altres.length === 1 ? 'actuació' : 'actuacions'} més`].filter(Boolean).join(' · ')}
+            {[g.obres.length && `${g.obres.length} ${g.obres.length === 1 ? 'obra' : 'obres'}`, t.mostrarAltres && g.altres.length && `${g.altres.length} ${g.altres.length === 1 ? 'actuació' : 'actuacions'} més`].filter(Boolean).join(' · ')}
           </span>
         </div>
         {g.obres.length > 0 && (
@@ -62,16 +65,16 @@ const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Tex
                 )}
                 <Etiquetes etiquetes={o.data.etiquetes} textPropi={o.data.textPropi} />
                 <div class="label" style="display:flex;flex-wrap:wrap;gap:6px 16px">
-                  {repDe(o) > 0 && <span>{repDe(o)} {repDe(o) === 1 ? 'representació' : 'representacions'}</span>}
-                  {o.data.estat === 'en-gira' && <span class="accent">En gira</span>}
+                  {repDe(o) > 0 && <span>{repDe(o)} {repDe(o) === 1 ? t.representacio : t.representacions}</span>}
+                  {o.data.estat === 'en-gira' && <span class="accent">{t.enGira}</span>}
                 </div>
               </a>
             ))}
           </div>
         )}
-        {g.altres.length > 0 && (
+        {t.mostrarAltres && g.altres.length > 0 && (
           <div class="altres rows" style="margin-top:28px">
-            <div class="label" style="border-top:0;padding-top:0">També vam fer</div>
+            <div class="label" style="border-top:0;padding-top:0">{t.tambe}</div>
             {g.altres.map((a) => (
               <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px">
                 <span>{a.titol}{a.grup !== 'Companyia' && <span class="label"> · {a.grup}</span>}</span>

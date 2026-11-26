@@ -1,12 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
+import peu from '../data/textos/peu.json';
+import { rich, variables } from '../lib/util';
+const R = (s?: string) => rich(s, variables());
 ---
-<Base title="Pàgina no trobada">
+<Base title="404">
   <section class="wrap hero" style="padding-bottom:120px">
-    <h1 class="display">Aquí no hi ha <em>funció</em>.</h1>
+    <h1 class="display" set:html={R(peu.pagina404Titol)} />
     <div style="display:flex;flex-direction:column;gap:20px">
-      <p class="lead">Aquesta pàgina no existeix o s'ha mogut.</p>
-      <a href="/" class="btn" style="align-self:flex-start">Tornar a l'inici</a>
+      {peu.pagina404Text && <p class="lead" set:html={R(peu.pagina404Text)} />}
+      {peu.pagina404Boto && <a href="/" class="btn" style="align-self:flex-start">{peu.pagina404Boto}</a>}
     </div>
   </section>
 </Base>

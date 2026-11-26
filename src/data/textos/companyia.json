@@ -1,0 +1,30 @@
+{
+  "titolPestanya": "La companyia",
+  "etiqueta": "La companyia",
+  "titol": "Qui *som*.",
+  "presentacio": "",
+  "mostrarXifres": true,
+  "xifres": {
+    "anys": "anys de companyia",
+    "obres": "obres estrenades",
+    "representacions": "representacions",
+    "poblacions": "poblacions visitades"
+  },
+  "mostrarHistoria": true,
+  "historiaEtiqueta": "La nostra història",
+  "historiaTitol": "Del {anyInici} *fins avui*.",
+  "somEtiqueta": "Qui hi som",
+  "somEtiqueta2": "Cada obra, una colla diferent",
+  "somTitol": "Som tots i *totes*.",
+  "nomsEtiqueta": "La gent que fa (i ha fet) {nom}",
+  "mostrarFinal": true,
+  "finalTitol": "Vols veure el que fem*?*",
+  "finalBoto1": {
+    "text": "Obres en gira",
+    "enllac": "/en-gira"
+  },
+  "finalBoto2": {
+    "text": "Temporades anteriors",
+    "enllac": "/arxiu"
+  }
+}

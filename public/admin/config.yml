@@ -57,7 +57,7 @@ collections:
       - { name: foto, label: Foto principal, widget: image, required: false }
       - { name: galeria, label: Galeria de fotos, widget: image, multiple: true, required: false }
       - { name: trailer, label: "Tràiler (enllaç de YouTube o Vimeo)", widget: string, required: false }
-      - { name: entrades, label: "Entrades: enllaç per comprar-les (surt el botó «Comprar entrades»)", widget: string, required: false }
+      - { name: entrades, label: "Comprar entrades: enllaç (si és buit, el botó no surt)", widget: string, required: false }
       - { name: entradesInfo, label: "Entrades: text informatiu (p. ex. «Entrades disponibles a partir del 5 de desembre a les 10 h · 8 €»)", widget: string, required: false }
       - { name: dossier, label: Dossier de venda (PDF), widget: file, required: false }
       - { name: rider, label: Rider tècnic (PDF), widget: file, required: false }
@@ -147,6 +147,881 @@ collections:
       - { name: enllac, label: Enllaç, widget: string, required: false }
       - { name: body, label: Notes (no es mostren), widget: text, required: false }
 
+  # ---------------- PÀGINES I TEXTOS ----------------
+  - name: pagines
+    label: Pàgines
+    label_singular: Pàgina
+    description: Pàgines noves (p. ex. «Escola de teatre»). L'adreça serà /nom-de-la-pagina; per posar-la al menú, afegeix-la a «Textos i aparença → Menú».
+    folder: src/content/pagines
+    create: true
+    identifier_field: titol
+    slug: '{{slug}}'
+    summary: '{{titol}}'
+    fields:
+    - name: titol
+      label: Títol (també fa l'adreça)
+      widget: string
+    - name: titolGran
+      label: Títol gran (opcional, admet *cursiva*)
+      widget: string
+      required: false
+    - name: etiqueta
+      label: Etiqueta petita
+      widget: string
+      required: false
+    - name: entradeta
+      label: Entradeta
+      widget: text
+      required: false
+    - name: foto
+      label: Foto principal
+      widget: image
+      required: false
+    - name: body
+      label: Text
+      widget: markdown
+      required: false
+    - name: galeria
+      label: Galeria de fotos
+      widget: image
+      multiple: true
+      required: false
+    - name: boto
+      label: Botó final
+      widget: object
+      required: false
+      fields:
+      - name: text
+        label: Text
+        widget: string
+        required: false
+      - name: enllac
+        label: Enllaç
+        widget: string
+        required: false
+    - name: esborrany
+      label: Esborrany (no surt a la web)
+      widget: boolean
+      default: false
+      required: false
+  - name: textos
+    label: Textos i aparença
+    description: 'Tots els textos fixos de la web, el menú, l''ordre de la portada i els colors. Truc: *paraula* surt en cursiva granat; {nom}, {poblacio}, {anyInici}, {obres}, {representacions}, {email}
+      i {titol} es canvien pel valor real.'
+    files:
+    - name: menu
+      label: Menú
+      file: src/data/textos/menu.json
+      format: json
+      fields:
+      - name: elements
+        label: Apartats del menú (arrossega per canviar l'ordre)
+        label_singular: apartat
+        widget: list
+        summary: '{{text}} → {{enllac}}'
+        hint: L'enllaç pot ser una pàgina de la web (/companyia, /en-gira, /arxiu, /noticies, /contractacio o una pàgina creada a «Pàgines», p. ex. /escola) o una adreça externa (https://...).
+        fields:
+        - name: text
+          label: Text
+          widget: string
+        - name: enllac
+          label: Enllaç
+          widget: string
+      - name: boto
+        label: Botó destacat de la dreta
+        widget: object
+        fields:
+        - name: text
+          label: Text (buit = no surt)
+          widget: string
+          required: false
+        - name: enllac
+          label: Enllaç
+          widget: string
+          required: false
+    - name: estil
+      label: Colors i aparença
+      file: src/data/textos/estil.json
+      format: json
+      fields:
+      - name: colorDestacat
+        label: Color destacat (granat)
+        widget: color
+      - name: colorDestacatFosc
+        label: Color destacat fosc (quan passes el ratolí)
+        widget: color
+      - name: colorText
+        label: Color del text
+        widget: color
+      - name: colorFons
+        label: Color de fons
+        widget: color
+      - name: colorFonsSuau
+        label: Color de fons suau (franges grises)
+        widget: color
+      - name: franjaSuperior
+        label: Franja de color a dalt de tot
+        widget: boolean
+        required: false
+    - name: inici
+      label: Pàgina d'inici
+      file: src/data/textos/inici.json
+      format: json
+      fields:
+      - name: titol
+        label: Títol gran
+        required: false
+        widget: text
+      - name: presentacio
+        label: Text d'introducció
+        required: false
+        widget: text
+      - name: boto1
+        label: Botó 1
+        required: false
+        widget: object
+        fields:
+        - name: text
+          label: Text
+          required: false
+          widget: text
+        - name: enllac
+          label: Enllaç
+          required: false
+          widget: string
+      - name: boto2
+        label: Botó 2
+        required: false
+        widget: object
+        fields:
+        - name: text
+          label: Text
+          required: false
+          widget: text
+        - name: enllac
+          label: Enllaç
+          required: false
+          widget: string
+      - name: numerarSeccions
+        label: Numerar les seccions (01 —, 02 —...)
+        widget: boolean
+        required: false
+      - name: seccions
+        label: Seccions de la portada (arrossega per canviar l'ordre)
+        label_singular: secció
+        widget: list
+        summary: '{{seccio}} · visible: {{visible}}'
+        fields:
+        - name: seccio
+          label: Secció
+          widget: select
+          options:
+          - label: Obres en gira
+            value: en-gira
+          - label: La companyia
+            value: companyia
+          - label: Temporades anteriors
+            value: arxiu
+          - label: Notícies
+            value: noticies
+          - label: Contractació
+            value: contractacio
+        - name: visible
+          label: Visible
+          widget: boolean
+          default: true
+      - name: enGira
+        label: Secció / etiqueta «En gira»
+        required: false
+        widget: object
+        fields:
+        - name: etiqueta
+          label: Etiqueta petita (a sobre del títol)
+          required: false
+          widget: string
+        - name: enllac
+          label: Enllaç
+          required: false
+          widget: string
+        - name: disponible
+          label: Text «Disponible»
+          required: false
+          widget: string
+        - name: mesInfo
+          label: Text de l'enllaç de cada obra
+          required: false
+          widget: string
+        - name: quantes
+          label: Quantes se'n mostren
+          required: false
+          widget: number
+          value_type: int
+      - name: companyia
+        label: Secció «La companyia»
+        required: false
+        widget: object
+        fields:
+        - name: etiqueta
+          label: Etiqueta petita (a sobre del títol)
+          required: false
+          widget: string
+        - name: titol
+          label: Títol gran
+          required: false
+          widget: text
+        - name: text
+          label: Text
+          required: false
+          widget: text
+        - name: enllac
+          label: Enllaç
+          required: false
+          widget: string
+      - name: arxiu
+        label: Secció «Temporades anteriors»
+        required: false
+        widget: object
+        fields:
+        - name: etiqueta
+          label: Etiqueta petita (a sobre del títol)
+          required: false
+          widget: string
+        - name: enllac
+          label: Enllaç
+          required: false
+          widget: string
+        - name: quantes
+          label: Quantes se'n mostren
+          required: false
+          widget: number
+          value_type: int
+      - name: noticies
+        label: Secció «Notícies»
+        required: false
+        widget: object
+        fields:
+        - name: etiqueta
+          label: Etiqueta petita (a sobre del títol)
+          required: false
+          widget: string
+        - name: enllac
+          label: Enllaç
+          required: false
+          widget: string
+        - name: quantes
+          label: Quantes se'n mostren
+          required: false
+          widget: number
+          value_type: int
+      - name: contractacio
+        label: Secció «Contractació»
+        required: false
+        widget: object
+        fields:
+        - name: etiqueta
+          label: Etiqueta petita (a sobre del títol)
+          required: false
+          widget: string
+        - name: titol
+          label: Títol gran
+          required: false
+          widget: string
+        - name: boto
+          label: Botó
+          required: false
+          widget: string
+    - name: companyia
+      label: Pàgina «La companyia»
+      file: src/data/textos/companyia.json
+      format: json
+      fields:
+      - name: titolPestanya
+        label: Nom a la pestanya del navegador
+        required: false
+        widget: string
+      - name: etiqueta
+        label: Etiqueta petita (a sobre del títol)
+        required: false
+        widget: string
+      - name: titol
+        label: Títol gran
+        required: false
+        widget: string
+      - name: presentacio
+        label: Text d'introducció
+        required: false
+        widget: text
+      - name: mostrarXifres
+        label: Mostrar les xifres
+        required: false
+        widget: boolean
+      - name: xifres
+        label: Noms de les xifres
+        required: false
+        widget: object
+        fields:
+        - name: anys
+          label: 'Xifra: anys'
+          required: false
+          widget: string
+        - name: obres
+          label: 'Xifra: obres'
+          required: false
+          widget: string
+        - name: representacions
+          label: Paraula «representacions»
+          required: false
+          widget: string
+        - name: poblacions
+          label: 'Xifra: poblacions'
+          required: false
+          widget: string
+      - name: mostrarHistoria
+        label: Mostrar la història
+        required: false
+        widget: boolean
+      - name: historiaEtiqueta
+        label: 'Història: etiqueta'
+        required: false
+        widget: string
+      - name: historiaTitol
+        label: 'Història: títol'
+        required: false
+        widget: string
+      - name: somEtiqueta
+        label: '«Som tots i totes»: etiqueta'
+        required: false
+        widget: string
+      - name: somEtiqueta2
+        label: '«Som tots i totes»: etiqueta de la dreta'
+        required: false
+        widget: string
+      - name: somTitol
+        label: '«Som tots i totes»: títol'
+        required: false
+        widget: string
+      - name: nomsEtiqueta
+        label: Títol de la llista de noms
+        required: false
+        widget: string
+      - name: mostrarFinal
+        label: Mostrar el bloc final
+        required: false
+        widget: boolean
+      - name: finalTitol
+        label: 'Bloc final: títol'
+        required: false
+        widget: string
+      - name: finalBoto1
+        label: 'Bloc final: botó 1'
+        required: false
+        widget: object
+        fields:
+        - name: text
+          label: Text
+          required: false
+          widget: text
+        - name: enllac
+          label: Enllaç
+          required: false
+          widget: string
+      - name: finalBoto2
+        label: 'Bloc final: botó 2'
+        required: false
+        widget: object
+        fields:
+        - name: text
+          label: Text
+          required: false
+          widget: text
+        - name: enllac
+          label: Enllaç
+          required: false
+          widget: string
+    - name: engira
+      label: Pàgina «En gira»
+      file: src/data/textos/engira.json
+      format: json
+      fields:
+      - name: titolPestanya
+        label: Nom a la pestanya del navegador
+        required: false
+        widget: string
+      - name: etiqueta
+        label: Etiqueta petita (a sobre del títol)
+        required: false
+        widget: string
+      - name: titol
+        label: Títol gran
+        required: false
+        widget: string
+      - name: presentacio
+        label: Text d'introducció
+        required: false
+        widget: text
+      - name: botoTotsDossiers
+        label: Botó «Descarregar tots els dossiers»
+        required: false
+        widget: string
+      - name: senseObres
+        label: Text quan no hi ha cap obra en gira
+        required: false
+        widget: text
+      - name: disponible
+        label: Text «Disponible»
+        required: false
+        widget: string
+      - name: botoVeure
+        label: Botó per veure l'obra
+        required: false
+        widget: string
+      - name: botoDossier
+        label: Botó del dossier
+        required: false
+        widget: string
+      - name: botoEntrades
+        label: Botó de comprar entrades
+        required: false
+        widget: string
+      - name: mostrarFinal
+        label: Mostrar el bloc final
+        required: false
+        widget: boolean
+      - name: finalTitol
+        label: 'Bloc final: títol'
+        required: false
+        widget: string
+      - name: finalText
+        label: 'Bloc final: text'
+        required: false
+        widget: text
+      - name: finalBoto
+        label: 'Bloc final: botó'
+        required: false
+        widget: string
+    - name: arxiu
+      label: Pàgina «Temporades anteriors»
+      file: src/data/textos/arxiu.json
+      format: json
+      fields:
+      - name: titolPestanya
+        label: Nom a la pestanya del navegador
+        required: false
+        widget: string
+      - name: etiqueta
+        label: Etiqueta petita (a sobre del títol)
+        required: false
+        widget: string
+      - name: titol
+        label: Títol gran
+        required: false
+        widget: string
+      - name: presentacio
+        label: Text d'introducció
+        required: false
+        widget: text
+      - name: mostrarFiltre
+        label: Mostrar el filtre per etiquetes
+        required: false
+        widget: boolean
+      - name: filtra
+        label: Paraula «Filtra»
+        required: false
+        widget: string
+      - name: totes
+        label: Text «Totes»
+        required: false
+        widget: string
+      - name: mostrarAltres
+        label: Mostrar «També vam fer» (altres actuacions)
+        required: false
+        widget: boolean
+      - name: tambe
+        label: Títol «També vam fer»
+        required: false
+        widget: string
+      - name: representacio
+        label: Paraula «representació» (singular)
+        required: false
+        widget: string
+      - name: representacions
+        label: Paraula «representacions»
+        required: false
+        widget: string
+      - name: enGira
+        label: Secció / etiqueta «En gira»
+        required: false
+        widget: string
+    - name: obra
+      label: Fitxa de cada obra (textos fixos)
+      file: src/data/textos/obra.json
+      format: json
+      fields:
+      - name: disponible
+        label: Text «Disponible»
+        required: false
+        widget: string
+      - name: estrena
+        label: Paraula «Estrena»
+        required: false
+        widget: string
+      - name: durada
+        label: Etiqueta «Durada»
+        required: false
+        widget: string
+      - name: public
+        label: Etiqueta «Públic»
+        required: false
+        widget: string
+      - name: format
+        label: Etiqueta «Format»
+        required: false
+        widget: string
+      - name: representacions
+        label: Paraula «representacions»
+        required: false
+        widget: string
+      - name: botoDossierGira
+        label: Botó del dossier (obres en gira)
+        required: false
+        widget: string
+      - name: botoDossierArxiu
+        label: Botó del dossier (obres d'arxiu)
+        required: false
+        widget: string
+      - name: botoEntrades
+        label: Botó de comprar entrades
+        required: false
+        widget: string
+      - name: botoData
+        label: Botó «Demanar data»
+        required: false
+        widget: string
+      - name: trailer
+        label: Títol «Tràiler»
+        required: false
+        widget: string
+      - name: deQueVa
+        label: Títol «De què va»
+        required: false
+        widget: string
+      - name: fitxaArtistica
+        label: Títol «Fitxa artística»
+        required: false
+        widget: string
+      - name: fitxaTecnica
+        label: Títol «Fitxa tècnica»
+        required: false
+        widget: string
+      - name: galeria
+        label: Títol «Galeria»
+        required: false
+        widget: string
+      - name: fotos
+        label: Paraula «fotos»
+        required: false
+        widget: string
+      - name: material
+        label: Títol del material per a programadors
+        required: false
+        widget: string
+      - name: materialSub
+        label: Subtítol del material
+        required: false
+        widget: string
+      - name: cartellFlyer
+        label: Títol del bloc de cartell i flyer (obres d'arxiu)
+        required: false
+        widget: string
+      - name: cartell
+        label: Paraula «Cartell»
+        required: false
+        widget: string
+      - name: flyer
+        label: Paraula «Flyer»
+        required: false
+        widget: string
+      - name: descarregar
+        label: Paraula «Descarregar»
+        required: false
+        widget: string
+      - name: docDossier
+        label: 'Descàrrega: dossier'
+        required: false
+        widget: string
+      - name: docRider
+        label: 'Descàrrega: rider'
+        required: false
+        widget: string
+      - name: docCartell
+        label: 'Descàrrega: cartell'
+        required: false
+        widget: string
+      - name: docFlyer
+        label: 'Descàrrega: flyer'
+        required: false
+        widget: string
+      - name: docFotos
+        label: 'Descàrrega: fotos de premsa'
+        required: false
+        widget: string
+      - name: cites
+        label: Títol «Què n'han dit»
+        required: false
+        widget: string
+      - name: onLhemFet
+        label: Títol «On l'hem fet»
+        required: false
+        widget: string
+      - name: funcio
+        label: Paraula «funció»
+        required: false
+        widget: string
+      - name: funcions
+        label: Paraula «funcions»
+        required: false
+        widget: string
+      - name: entrades
+        label: Enllaç d'entrades de cada funció
+        required: false
+        widget: string
+      - name: finalTitol
+        label: 'Bloc final: títol'
+        required: false
+        widget: string
+      - name: produccio
+        label: Paraula «Producció»
+        required: false
+        widget: string
+      - name: finalDossier
+        label: 'Bloc final: botó del dossier'
+        required: false
+        widget: string
+      - name: tornarArxiu
+        label: Enllaç «Tornar a l'arxiu»
+        required: false
+        widget: string
+      - name: altresGira
+        label: Títol «Altres obres en gira»
+        required: false
+        widget: string
+      - name: veureTotes
+        label: Enllaç «Veure-les totes»
+        required: false
+        widget: string
+    - name: noticies
+      label: Pàgina «Notícies» i premsa
+      file: src/data/textos/noticies.json
+      format: json
+      fields:
+      - name: titolPestanya
+        label: Nom a la pestanya del navegador
+        required: false
+        widget: string
+      - name: etiqueta
+        label: Etiqueta petita (a sobre del títol)
+        required: false
+        widget: string
+      - name: titol
+        label: Títol gran
+        required: false
+        widget: string
+      - name: presentacio
+        label: Text d'introducció
+        required: false
+        widget: text
+      - name: destacat
+        label: Etiqueta «Destacat»
+        required: false
+        widget: string
+      - name: llegirMes
+        label: Text «Llegir-ne més»
+        required: false
+        widget: string
+      - name: mostrarPremsa
+        label: Mostrar el racó de premsa
+        required: false
+        widget: boolean
+      - name: premsaEtiqueta
+        label: 'Premsa: etiqueta'
+        required: false
+        widget: string
+      - name: premsaTitol
+        label: 'Premsa: títol'
+        required: false
+        widget: string
+      - name: premsaText
+        label: 'Premsa: text'
+        required: false
+        widget: text
+      - name: mesNoticies
+        label: Títol «Més notícies»
+        required: false
+        widget: string
+      - name: totes
+        label: Text «Totes»
+        required: false
+        widget: string
+      - name: comparteix
+        label: Text «Comparteix:»
+        required: false
+        widget: string
+    - name: contractacio
+      label: Pàgina «Contractació»
+      file: src/data/textos/contractacio.json
+      format: json
+      fields:
+      - name: titolPestanya
+        label: Nom a la pestanya del navegador
+        required: false
+        widget: string
+      - name: etiqueta
+        label: Etiqueta petita (a sobre del títol)
+        required: false
+        widget: string
+      - name: titol
+        label: Títol gran
+        required: false
+        widget: string
+      - name: presentacio
+        label: Text d'introducció
+        required: false
+        widget: text
+      - name: produccio
+        label: Paraula «Producció»
+        required: false
+        widget: string
+      - name: correu
+        label: Etiqueta «Correu»
+        required: false
+        widget: string
+      - name: telefon
+        label: Etiqueta «Telèfon»
+        required: false
+        widget: string
+      - name: onSom
+        label: Etiqueta «On som»
+        required: false
+        widget: string
+      - name: dossiers
+        label: Títol de la llista de dossiers
+        required: false
+        widget: string
+      - name: mostrarFormulari
+        label: Mostrar el formulari
+        required: false
+        widget: boolean
+      - name: formTitol
+        label: Títol del formulari
+        required: false
+        widget: string
+      - name: campNom
+        label: 'Camp: nom'
+        required: false
+        widget: string
+      - name: campEntitat
+        label: 'Camp: entitat'
+        required: false
+        widget: string
+      - name: campCorreu
+        label: 'Camp: correu'
+        required: false
+        widget: string
+      - name: campTelefon
+        label: 'Camp: telèfon'
+        required: false
+        widget: string
+      - name: campObra
+        label: 'Camp: obra'
+        required: false
+        widget: string
+      - name: campObraNoSe
+        label: Opció «encara no ho sabem»
+        required: false
+        widget: string
+      - name: campData
+        label: 'Camp: data'
+        required: false
+        widget: string
+      - name: campMissatge
+        label: 'Camp: missatge'
+        required: false
+        widget: string
+      - name: acceptacio
+        label: Text de la casella d'acceptació
+        required: false
+        widget: text
+      - name: boto
+        label: Botó
+        required: false
+        widget: string
+      - name: faqEtiqueta
+        label: 'Preguntes freqüents: etiqueta'
+        required: false
+        widget: string
+      - name: faqTitol
+        label: 'Preguntes freqüents: títol'
+        required: false
+        widget: string
+    - name: peu
+      label: Peu de pàgina i pàgina 404
+      file: src/data/textos/peu.json
+      format: json
+      fields:
+      - name: descripcio
+        label: Descripció (buit = la de Dades de la web)
+        required: false
+        widget: string
+      - name: onSom
+        label: Etiqueta «On som»
+        required: false
+        widget: string
+      - name: contacte
+        label: Títol de la columna de contacte
+        required: false
+        widget: string
+      - name: produccio
+        label: Paraula «Producció»
+        required: false
+        widget: string
+      - name: xarxes
+        label: Títol de les xarxes
+        required: false
+        widget: string
+      - name: senseXarxes
+        label: Text si no hi ha xarxes
+        required: false
+        widget: string
+      - name: copyright
+        label: Text de la línia final
+        required: false
+        widget: string
+      - name: enllacFinal
+        label: Enllaç de la línia final
+        required: false
+        widget: object
+        fields:
+        - name: text
+          label: Text
+          required: false
+          widget: text
+        - name: enllac
+          label: Enllaç
+          required: false
+          widget: string
+      - name: pagina404Titol
+        label: 'Pàgina no trobada: títol'
+        required: false
+        widget: string
+      - name: pagina404Text
+        label: 'Pàgina no trobada: text'
+        required: false
+        widget: string
+      - name: pagina404Boto
+        label: 'Pàgina no trobada: botó'
+        required: false
+        widget: string
+
   # ---------------- DADES DE LA WEB ----------------
   - name: configuracio
     label: Dades de la web
@@ -176,8 +1051,6 @@ collections:
           - { name: dossiersGenerals, label: Tots els dossiers (ZIP), widget: file, required: false }
           - { name: fotoPortada, label: Foto de portada, widget: image, required: false }
           - { name: fotoGrup, label: Foto de grup, widget: image, required: false }
-          - { name: titolCompanyia, label: "Portada: títol del bloc de la companyia (el que va entre *asteriscs* surt en cursiva granat)", widget: string, required: false }
-          - { name: enllacCompanyia, label: "Portada: text de l'enllaç a la companyia", widget: string, required: false }
           - name: preguntes
             label: Preguntes freqüents (Contractació)
             label_singular: pregunta

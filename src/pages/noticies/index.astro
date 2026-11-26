@@ -3,20 +3,23 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Foto from '../../components/Foto.astro';
 import web from '../../data/web.json';
-import { perData, formatData } from '../../lib/util';
+import t from '../../data/textos/noticies.json';
+import { perData, formatData, rich, variables } from '../../lib/util';
+const v = variables();
+const R = (s?: string) => rich(s, v);
 
 const noticies = (await getCollection('noticies')).sort(perData);
 const destacada = noticies.find((n) => n.data.destacada) ?? noticies[0];
 const resta = noticies.filter((n) => n !== destacada);
 const premsa = (await getCollection('premsa')).sort(perData);
 ---
-<Base title="Notícies" current="noticies">
+<Base title={t.titolPestanya}>
   <section class="wrap hero" style="padding-bottom:48px">
     <div>
-      <div class="label" style="margin-bottom:20px">Notícies</div>
-      <h1 class="display">Què <em>fem</em>.</h1>
+      {t.etiqueta && <div class="label" style="margin-bottom:20px">{t.etiqueta}</div>}
+      <h1 class="display" set:html={R(t.titol)} />
     </div>
-    <p class="lead">Més enllà de l'escenari: estrenes, conta contes, extraescolars, sortides al teatre i tot el que anem fent. I el que diu la premsa de nosaltres.</p>
+    {t.presentacio && <p class="lead" set:html={R(t.presentacio)} />}
   </section>
 
   {destacada && (
@@ -25,10 +28,10 @@ const premsa = (await getCollection('premsa')).sort(perData);
         <a href={`/noticies/${destacada.id}`} class="cols" style="text-decoration:none;gap:40px;align-items:center">
           <Foto src={destacada.data.foto} alt={destacada.data.titol} ratio="3/2" />
           <div style="display:flex;flex-direction:column;gap:16px">
-            <div class="label"><span class="accent">Destacat</span> · {formatData(destacada.data.data)}</div>
+            <div class="label"><span class="accent">{t.destacat}</span> · {formatData(destacada.data.data)}</div>
             <h2 class="display" style="font-size:56px">{destacada.data.titol}</h2>
             {destacada.data.entradeta && <p class="muted" style="font-size:18px;margin:0">{destacada.data.entradeta}</p>}
-            <span style="font-size:14px;border-bottom:1px solid var(--ink);align-self:flex-start">Llegir-ne més</span>
+            <span style="font-size:14px;border-bottom:1px solid var(--ink);align-self:flex-start">{t.llegirMes}</span>
           </div>
         </a>
       </div>
@@ -52,13 +55,13 @@ const premsa = (await getCollection('premsa')).sort(perData);
     </section>
   )}
 
-  {premsa.length > 0 && (
+  {t.mostrarPremsa && premsa.length > 0 && (
     <section class="section soft" id="premsa">
       <div class="wrap cols">
         <div>
-          <div class="label" style="margin-bottom:20px">A la premsa</div>
-          <h2 class="display" style="margin-bottom:16px">On hem <em>sortit</em>.</h2>
-          <p class="muted" style="font-size:17px;max-width:420px;margin:0">Articles, entrevistes, ràdio i tele que han parlat de {web.nom}.</p>
+          <div class="label" style="margin-bottom:20px">{t.premsaEtiqueta}</div>
+          <h2 class="display" style="margin-bottom:16px" set:html={R(t.premsaTitol)} />
+          {t.premsaText && <p class="muted" style="font-size:17px;max-width:420px;margin:0" set:html={R(t.premsaText)} />}
         </div>
         <div class="rows">
           {premsa.map((p) => {

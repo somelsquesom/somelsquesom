@@ -1,0 +1,63 @@
+{
+  "titol": "Som els\n*que som.*",
+  "presentacio": "Companyia de teatre amateur de {poblacio}. Des del {anyInici}, {obres} obres i {representacions} representacions. {presentacio}",
+  "boto1": {
+    "text": "Obres en gira →",
+    "enllac": "/en-gira"
+  },
+  "boto2": {
+    "text": "Qui som",
+    "enllac": "/companyia"
+  },
+  "numerarSeccions": true,
+  "seccions": [
+    {
+      "seccio": "en-gira",
+      "visible": true
+    },
+    {
+      "seccio": "companyia",
+      "visible": true
+    },
+    {
+      "seccio": "arxiu",
+      "visible": true
+    },
+    {
+      "seccio": "noticies",
+      "visible": true
+    },
+    {
+      "seccio": "contractacio",
+      "visible": true
+    }
+  ],
+  "enGira": {
+    "etiqueta": "En gira",
+    "enllac": "Totes les obres en gira →",
+    "disponible": "Disponible per programar",
+    "mesInfo": "Més informació →",
+    "quantes": 2
+  },
+  "companyia": {
+    "etiqueta": "La companyia",
+    "titol": "Un grup de gent que s'ajunta per *fer teatre*.",
+    "text": "",
+    "enllac": "Coneix-nos →"
+  },
+  "arxiu": {
+    "etiqueta": "Temporades anteriors",
+    "enllac": "Tot l'arxiu →",
+    "quantes": 4
+  },
+  "noticies": {
+    "etiqueta": "Notícies",
+    "enllac": "Totes les notícies →",
+    "quantes": 3
+  },
+  "contractacio": {
+    "etiqueta": "Contractació",
+    "titol": "Programeu-*nos*.",
+    "boto": "Contactar amb producció"
+  }
+}

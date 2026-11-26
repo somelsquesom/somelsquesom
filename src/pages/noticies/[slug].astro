@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Foto from '../../components/Foto.astro';
+import t from '../../data/textos/noticies.json';
 import { perData, formatData } from '../../lib/util';
 
 export async function getStaticPaths() {
@@ -14,10 +15,10 @@ const d = noticia.data;
 const { Content } = await render(noticia);
 const mes = (await getCollection('noticies')).sort(perData).filter((n) => n.id !== noticia.id).slice(0, 3);
 ---
-<Base title={d.titol} description={d.entradeta} current="noticies">
+<Base title={d.titol} description={d.entradeta}>
   <article>
     <div class="narrow" style="padding-top:32px;padding-bottom:40px">
-      <div class="label" style="margin-bottom:32px"><a href="/noticies" style="color:var(--grey)">Notícies</a></div>
+      <div class="label" style="margin-bottom:32px"><a href="/noticies" style="color:var(--grey)">{t.etiqueta}</a></div>
       <div class="label" style="margin-bottom:16px">{formatData(d.data)}</div>
       <h1 class="serif" style="margin:0 0 24px;font-size:clamp(44px,6vw,72px);line-height:1">{d.titol}</h1>
       {d.entradeta && <p style="margin:0;font-size:21px;color:#333">{d.entradeta}</p>}
@@ -36,8 +37,8 @@ const mes = (await getCollection('noticies')).sort(perData).filter((n) => n.id !
     )}
     <div class="narrow" style="padding-bottom:72px">
       <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:18px 0;font-size:14px">
-        <a href="/noticies">← Totes les notícies</a>
-        <span class="label">Comparteix: <a href={`https://wa.me/?text=${encodeURIComponent(d.titol + ' ' + Astro.url.href)}`}>WhatsApp</a></span>
+        <a href="/noticies">← {t.totes.replace(/\s*→\s*$/, '')}</a>
+        <span class="label">{t.comparteix} <a href={`https://wa.me/?text=${encodeURIComponent(d.titol + ' ' + Astro.url.href)}`}>WhatsApp</a></span>
       </div>
     </div>
   </article>
@@ -45,7 +46,7 @@ const mes = (await getCollection('noticies')).sort(perData).filter((n) => n.id !
   {mes.length > 0 && (
     <section class="section soft">
       <div class="wrap">
-        <div class="section-head"><span>Més notícies</span><a href="/noticies">Totes les notícies →</a></div>
+        <div class="section-head"><span>{t.mesNoticies}</span><a href="/noticies">{t.totes}</a></div>
         <div class="grid-cards">
           {mes.map((n) => (
             <a href={`/noticies/${n.id}`} class="card">

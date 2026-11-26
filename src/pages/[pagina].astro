@@ -1,0 +1,36 @@
+---
+// Pàgines lliures que es creen des del gestor (col·lecció «Pàgines»). Per posar-les al menú,
+// afegiu-ne l'adreça (/nom-de-la-pagina) a «Textos i aparença → Menú».
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import { rich, variables } from '../lib/util';
+
+export async function getStaticPaths() {
+  const pagines = await getCollection('pagines', (p) => !p.data.esborrany);
+  return pagines.map((pagina) => ({ params: { pagina: pagina.id }, props: { pagina } }));
+}
+const { pagina } = Astro.props;
+const d = pagina.data;
+const { Content } = await render(pagina);
+const R = (s?: string) => rich(s, variables());
+---
+<Base title={d.titol} description={d.entradeta}>
+  <section class="wrap hero">
+    <div>
+      {d.etiqueta && <div class="label" style="margin-bottom:20px">{d.etiqueta}</div>}
+      <h1 class="display" set:html={R(d.titolGran || d.titol)} />
+    </div>
+    {d.entradeta && <p class="lead" set:html={R(d.entradeta)} />}
+  </section>
+  {d.foto && <section class="wrap"><Foto src={d.foto} alt={d.titol} ratio="21/9" /></section>}
+  {pagina.body?.trim() && <section class="narrow prose" style="padding-top:56px;padding-bottom:48px"><Content /></section>}
+  {d.galeria.length > 0 && (
+    <section class="wrap" style="padding-bottom:64px;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:12px">
+      {d.galeria.map((src, n) => <a href={src}><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="4/3" /></a>)}
+    </section>
+  )}
+  {d.boto?.text && d.boto?.enllac && (
+    <section class="section"><div class="wrap" style="padding-top:40px"><a href={d.boto.enllac} class="btn">{d.boto.text}</a></div></section>
+  )}
+</Base>

@@ -1,0 +1,24 @@
+{
+  "elements": [
+    {
+      "text": "La companyia",
+      "enllac": "/companyia"
+    },
+    {
+      "text": "En gira",
+      "enllac": "/en-gira"
+    },
+    {
+      "text": "Temporades anteriors",
+      "enllac": "/arxiu"
+    },
+    {
+      "text": "Notícies",
+      "enllac": "/noticies"
+    }
+  ],
+  "boto": {
+    "text": "Contractació",
+    "enllac": "/contractacio"
+  }
+}

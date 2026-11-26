@@ -1,0 +1,16 @@
+{
+  "descripcio": "",
+  "onSom": "On som",
+  "contacte": "Contacte",
+  "produccio": "Producció",
+  "xarxes": "Segueix-nos a les xarxes",
+  "senseXarxes": "Aviat!",
+  "copyright": "© {nom} · {poblacio}",
+  "enllacFinal": {
+    "text": "Contractació",
+    "enllac": "/contractacio"
+  },
+  "pagina404Titol": "Aquí no hi ha *funció*.",
+  "pagina404Text": "Aquesta pàgina no existeix o s'ha mogut.",
+  "pagina404Boto": "Tornar a l'inici"
+}

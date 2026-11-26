@@ -25,7 +25,7 @@ const obres = defineCollection({
     foto: z.string().optional(),
     galeria: z.array(z.string()).default([]),
     trailer: z.string().optional(),
-        entrades: z.string().optional(),
+    entrades: z.string().optional(),
     entradesInfo: z.string().optional(),
     dossier: z.string().optional(),
     rider: z.string().optional(),
@@ -69,4 +69,19 @@ const premsa = defineCollection({
   }),
 });
 
-export const collections = { obres, noticies, premsa };
+// Pàgines lliures (p. ex. «Escola de teatre», «Col·laboradors»...).
+const pagines = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pagines' }),
+  schema: z.object({
+    titol: z.string(),
+    titolGran: z.string().optional(),
+    etiqueta: z.string().optional(),
+    entradeta: z.string().optional(),
+    foto: z.string().optional(),
+    galeria: z.array(z.string()).default([]),
+    boto: z.object({ text: z.string().optional(), enllac: z.string().optional() }).optional(),
+    esborrany: z.boolean().default(false),
+  }),
+});
+
+export const collections = { obres, noticies, premsa, pagines };

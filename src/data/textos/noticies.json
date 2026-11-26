@@ -1,0 +1,15 @@
+{
+  "titolPestanya": "Notícies",
+  "etiqueta": "Notícies",
+  "titol": "Què *fem*.",
+  "presentacio": "Més enllà de l'escenari: estrenes, conta contes, extraescolars, sortides al teatre i tot el que anem fent. I el que diu la premsa de nosaltres.",
+  "destacat": "Destacat",
+  "llegirMes": "Llegir-ne més",
+  "mostrarPremsa": true,
+  "premsaEtiqueta": "A la premsa",
+  "premsaTitol": "On hem *sortit*.",
+  "premsaText": "Articles, entrevistes, ràdio i tele que han parlat de {nom}.",
+  "mesNoticies": "Més notícies",
+  "totes": "Totes les notícies →",
+  "comparteix": "Comparteix:"
+}
