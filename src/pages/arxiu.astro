@@ -61,11 +61,12 @@ const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Tex
           </span>
         </div>
         {g.obres.length > 0 && (
-          <div class="grid-cards">
+          <div class="llista-h petita">
             {g.obres.map((o) => (
-              <a href={`/obres/${o.id}`} class="card obra" data-etiquetes={etiquetesDe(o)}>
-                <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} portada encaixa={!o.data.foto} />
-                <div class="card-title">{o.data.titol}</div>
+              <a href={`/obres/${o.id}`} class="card-h obra" data-etiquetes={etiquetesDe(o)}>
+                <Foto src={o.data.foto || o.data.cartell} alt={o.data.titol} portada encaixa={!o.data.foto} />
+                <div class="card-h-text">
+                <div class="card-title" style="font-size:28px">{o.data.titol}</div>
                 {(o.data.grup !== 'Companyia' || o.data.resum) && (
                   <div class="muted" style="font-size:14px">{[o.data.grup !== 'Companyia' ? o.data.grup : '', o.data.resum].filter(Boolean).join(' · ')}</div>
                 )}
@@ -73,6 +74,7 @@ const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Tex
                 <div class="label" style="display:flex;flex-wrap:wrap;gap:6px 16px">
                   {repDe(o) > 0 && <span>{repDe(o)} {repDe(o) === 1 ? t.representacio : t.representacions}</span>}
                   {o.data.estat === 'en-gira' && <span class="accent">{t.enGira}</span>}
+                </div>
                 </div>
               </a>
             ))}
