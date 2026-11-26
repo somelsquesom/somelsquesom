@@ -1,5 +1,6 @@
 {
   "nom": "SOM ELS QUE SOM",
+  "logo": "/uploads/logo-som-els-que-som.png",
   "descripcio": "Associació Cultural i Teatral de Bell-lloc d'Urgell",
   "poblacio": "Bell-lloc d'Urgell",
   "codiPostal": "25220",
@@ -9,9 +10,9 @@
   "presentacioLlarga": "",
   "somTotsITotes": "Aquí no hi ha rols fixos: qui avui actua, demà fa llums, cus vestuari o porta la furgoneta. Segons l'obra som més o menys, i cadascú hi posa el que pot.",
   "noms": [],
-  "contacteNom": "",
+  "contacteNom": "David Creus",
   "email": "somelsquesom@gmail.com",
-  "telefon": "",
+  "telefon": "607 41 02 06",
   "instagram": "somelsquesom_",
   "tiktok": "somelsquesom",
   "facebook": "https://www.facebook.com/Somelsquesom",
@@ -19,7 +20,5 @@
   "dossiersGenerals": "",
   "fotoPortada": "",
   "fotoGrup": "",
-  "titolCompanyia": "Un grup de gent que s'ajunta per *fer teatre*.",
-  "enllacCompanyia": "Coneix-nos →",
   "preguntes": []
 }
