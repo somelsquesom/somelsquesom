@@ -263,3 +263,15 @@ a[data-galeria] { cursor: zoom-in; display: block; }
   .facts > div + div { border-left: 0; padding-left: 0; }
   .facts > div:nth-child(even) { border-left: 1px solid var(--line); padding-left: 16px; }
 }
+
+/* Funcions */
+.funcio-fila { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; }
+.funcio-fila .mapa { white-space: nowrap; color: var(--granat); }
+@media (max-width: 640px) {
+  .funcio-fila { grid-template-columns: 92px minmax(0, 1fr); gap: 12px; font-size: 15px; }
+  .galeria-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; padding-left: 20px !important; padding-right: 20px !important; }
+  .wrap .galeria-grid { padding-left: 0 !important; padding-right: 0 !important; }
+  .facts > div { padding: 12px 12px 12px 0; }
+  .facts > div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .facts > div:nth-child(odd) { padding-left: 0; }
+}
