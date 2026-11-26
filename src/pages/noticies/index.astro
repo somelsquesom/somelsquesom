@@ -25,7 +25,7 @@ const premsa = (await getCollection('premsa')).sort(perData);
   {destacada && (
     <section class="section">
       <div class="wrap" style="padding-bottom:56px">
-        <a href={`/noticies/${destacada.id}`} class="cols" style="text-decoration:none;gap:40px;align-items:center">
+        <a href={`/noticies/${destacada.id}`} class="card-h gran">
           <Foto src={destacada.data.foto} alt={destacada.data.titol} portada />
           <div style="display:flex;flex-direction:column;gap:16px">
             <div class="label"><span class="accent">{t.destacat}</span> · {formatData(destacada.data.data)}</div>
@@ -41,12 +41,12 @@ const premsa = (await getCollection('premsa')).sort(perData);
   {resta.length > 0 && (
     <section class="section">
       <div class="wrap" style="padding-top:48px">
-        <div class="grid-cards" style="grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:48px 32px">
+        <div class="grid-cards" style="grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:40px 24px">
           {resta.map((n) => (
             <a href={`/noticies/${n.id}`} class="card" style="gap:12px">
               <Foto src={n.data.foto} alt={n.data.titol} portada />
               <div class="label">{formatData(n.data.data)}</div>
-              <div class="card-title">{n.data.titol}</div>
+              <div class="card-title" style="font-size:24px">{n.data.titol}</div>
               {n.data.entradeta && <div class="muted" style="font-size:15px">{n.data.entradeta}</div>}
             </a>
           ))}
