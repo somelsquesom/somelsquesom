@@ -20,6 +20,7 @@
   "tiktok": "somelsquesom",
   "facebook": "https://www.facebook.com/Somelsquesom",
   "formulari": "https://formsubmit.co/somelsquesom@gmail.com",
+  "clauWeb3forms": "<form action=\"https://api.web3forms.com/submit\" method=\"POST\">   <input type=\"hidden\" name=\"access_key\" value=\"3a34a692-bd8a-4c7f-9e00-72589b0d3ddf\">   <input type=\"text\" name=\"name\" required>   <input type=\"email\" name=\"email\" required>   <textarea name=\"message\" required></textarea>   <button type=\"submit\">Submit</button> </form>",
   "dossiersGenerals": "",
   "fotoPortada": "",
   "fotoGrup": "",
