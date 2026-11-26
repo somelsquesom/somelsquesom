@@ -33,6 +33,7 @@ collections:
         options:
           - { label: "En gira (es pot contractar)", value: en-gira }
           - { label: "Arxiu (temporades anteriors)", value: arxiu }
+      - { name: secundaria, label: "Obra secundària (a «Temporades anteriors» surt només a la llista «També vam fer», sense fitxa gran)", widget: boolean, default: false, required: false }
       - name: grup
         label: Qui la fa
         widget: select
@@ -488,6 +489,10 @@ collections:
         label: 'Història: títol'
         required: false
         widget: string
+      - name: historiaEnllac
+        label: 'Història: enllaç a l''arxiu'
+        widget: string
+        required: false
       - name: somEtiqueta
         label: '«Som tots i totes»: etiqueta'
         required: false
@@ -1059,20 +1064,3 @@ collections:
             fields:
               - { name: pregunta, label: Pregunta, widget: string }
               - { name: resposta, label: Resposta, widget: text }
-      - name: altres
-        label: Altres actuacions (lectures, performances, contes...)
-        file: src/data/altres-actuacions.json
-        format: json
-        fields:
-          - name: actuacions
-            label: Actuacions
-            label_singular: actuació
-            widget: list
-            summary: "{{any}} · {{titol}}"
-            fields:
-              - { name: any, label: Any, widget: string }
-              - { name: titol, label: Què vam fer, widget: string }
-              - { name: grup, label: Qui, widget: select, options: [Companyia, Companyia Jove, Companyia Jove 2.0, Taller de teatre], default: Companyia }
-              - { name: representacions, label: Representacions, widget: number, value_type: int, default: 1 }
-              - { name: llocs, label: On, widget: string }
-              - { name: poblacions, label: Poblacions, widget: list, required: false }
