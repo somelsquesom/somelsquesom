@@ -99,5 +99,53 @@ const seccioObra = Astro.props.seccio;
         {peu.enllacFinal?.text && <a href={peu.enllacFinal.enllac}>{peu.enllacFinal.text}</a>}
       </div>
     </footer>
+
+    <!-- Visor de fotos: s'obre en clicar qualsevol foto d'una galeria o un cartell -->
+    <dialog class="visor" aria-label="Visor de fotos">
+      <img alt="" />
+      <button type="button" class="visor-tancar" aria-label="Tancar">✕</button>
+      <button type="button" class="visor-ant" aria-label="Foto anterior">‹</button>
+      <button type="button" class="visor-seg" aria-label="Foto següent">›</button>
+      <div class="visor-compte"></div>
+    </dialog>
+    <script>
+      const visor = document.querySelector<HTMLDialogElement>('dialog.visor')!;
+      const img = visor.querySelector('img')!;
+      const compte = visor.querySelector<HTMLElement>('.visor-compte')!;
+      let llista: HTMLAnchorElement[] = [];
+      let i = 0;
+      const mostra = (n: number) => {
+        i = (n + llista.length) % llista.length;
+        img.src = llista[i].href;
+        img.alt = llista[i].querySelector('img')?.alt ?? '';
+        compte.textContent = llista.length > 1 ? `${i + 1} / ${llista.length}` : '';
+        visor.classList.toggle('sola', llista.length < 2);
+      };
+      document.addEventListener('click', (e) => {
+        const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-galeria]');
+        if (!a || e.metaKey || e.ctrlKey) return;
+        e.preventDefault();
+        llista = [...document.querySelectorAll<HTMLAnchorElement>(`a[data-galeria="${a.dataset.galeria}"]`)];
+        mostra(llista.indexOf(a));
+        visor.showModal();
+      });
+      visor.querySelector('.visor-tancar')!.addEventListener('click', () => visor.close());
+      visor.querySelector('.visor-ant')!.addEventListener('click', () => mostra(i - 1));
+      visor.querySelector('.visor-seg')!.addEventListener('click', () => mostra(i + 1));
+      // Clicar fora de la foto tanca el visor
+      visor.addEventListener('click', (e) => { if (e.target === visor) visor.close(); });
+      document.addEventListener('keydown', (e) => {
+        if (!visor.open) return;
+        if (e.key === 'ArrowLeft') mostra(i - 1);
+        if (e.key === 'ArrowRight') mostra(i + 1);
+      });
+      // Lliscar amb el dit al mòbil
+      let x0 = 0;
+      visor.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+      visor.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 50) mostra(dx < 0 ? i + 1 : i - 1);
+      });
+    </script>
   </body>
 </html>
