@@ -31,7 +31,7 @@ const R = (s?: string) => rich(s, v);
       {obres.length === 0 && <p class="lead" style="padding:48px 0" set:html={R(t.senseObres)} />}
       {obres.map((o, i) => (
         <article class="cols" style="gap:48px;padding:48px 0;border-bottom:1px solid var(--line);align-items:center">
-          {o.data.foto && <a href={`/obres/${o.id}`}><Foto src={o.data.foto} alt={o.data.titol} ratio="3/2" /></a>}
+          {(o.data.foto || o.data.cartell) && <a href={`/obres/${o.id}`}><Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="3/2" /></a>}
           <div style="display:flex;flex-direction:column;gap:20px">
             <div class="label accent">{[t.etiqueta, i + 1, t.disponible].filter(Boolean).join(' · ')}</div>
             <h2 class="display" style="font-size:60px;line-height:1"><a href={`/obres/${o.id}`} style="text-decoration:none">{o.data.titol}</a></h2>

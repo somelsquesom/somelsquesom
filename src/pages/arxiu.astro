@@ -74,7 +74,7 @@ const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Tex
         )}
         {t.mostrarAltres && g.altres.length > 0 && (
           <div class="altres rows" style="margin-top:28px">
-            <div class="label" style="border-top:0;padding-top:0">{t.tambe}</div>
+            <div class="label accent" style="border-top:0;padding-top:0">{t.tambe}</div>
             {g.altres.map((a) => (
               <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px">
                 <span>{a.titol}{a.grup !== 'Companyia' && <span class="label"> · {a.grup}</span>}</span>
