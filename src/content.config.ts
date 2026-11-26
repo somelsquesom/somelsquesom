@@ -24,6 +24,7 @@ const obres = defineCollection({
     format: z.string().optional(),
     foto: z.string().optional(),
     galeria: z.array(z.string()).default([]),
+    seccionsGaleria: z.array(z.object({ titol: z.string(), fotos: z.array(z.string()).default([]) })).default([]),
     trailer: z.string().optional(),
     videos: z.array(z.object({ titol: z.string().optional(), enllac: z.string(), imatge: z.string().optional() })).default([]),
     entrades: z.string().optional(),
