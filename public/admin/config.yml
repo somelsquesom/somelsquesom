@@ -284,6 +284,15 @@ collections:
         label: Franja de color a dalt de tot
         widget: boolean
         required: false
+      - name: formatFotos
+        label: "Format de les fotos de portada (inici, En gira, arxiu, notícies). Si una foto té un altre format, es retalla sola pel centre. Els cartells sempre surten sencers."
+        widget: select
+        default: "4/3"
+        options:
+          - { label: "Quadrada (1:1)", value: "1/1" }
+          - { label: "Clàssica (4:3)", value: "4/3" }
+          - { label: "Foto (3:2)", value: "3/2" }
+          - { label: "Panoràmica (16:9)", value: "16/9" }
     - name: inici
       label: Pàgina d'inici
       file: src/data/textos/inici.json
