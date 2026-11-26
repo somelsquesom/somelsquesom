@@ -1,6 +1,9 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+// El gestor desa els camps buits com a text buit (''): els tractem com si no hi fossin.
+const opt = () => z.string().optional().transform((v) => (v && v.trim() ? v : undefined));
+
 // Totes les obres de la companyia: les que estan en gira i les de l'arxiu.
 const obres = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/obres' }),
@@ -12,32 +15,32 @@ const obres = defineCollection({
     textPropi: z.boolean().default(false),
     representacions: z.number().optional(),
     poblacions: z.array(z.string()).default([]),
-    llocs: z.string().optional(),
+    llocs: opt(),
     temporada: z.string(),
     estrena: z.coerce.date(),
-    estrenaText: z.string().optional(),
-    resum: z.string().optional(),
-    autoria: z.string().optional(),
-    direccio: z.string().optional(),
-    durada: z.string().optional(),
-    public: z.string().optional(),
-    format: z.string().optional(),
-    foto: z.string().optional(),
+    estrenaText: opt(),
+    resum: opt(),
+    autoria: opt(),
+    direccio: opt(),
+    durada: opt(),
+    public: opt(),
+    format: opt(),
+    foto: opt(),
     galeria: z.array(z.string()).default([]),
     seccionsGaleria: z.array(z.object({ titol: z.string(), fotos: z.array(z.string()).default([]) })).default([]),
-    trailer: z.string().optional(),
-    videos: z.array(z.object({ titol: z.string().optional(), enllac: z.string(), imatge: z.string().optional() })).default([]),
-    entrades: z.string().optional(),
-    entradesInfo: z.string().optional(),
-    dossier: z.string().optional(),
-    rider: z.string().optional(),
-    cartell: z.string().optional(),
-    flyer: z.string().optional(),
-    fotosPremsa: z.string().optional(),
+    trailer: opt(),
+    videos: z.array(z.object({ titol: opt(), enllac: z.string(), imatge: opt() })).default([]),
+    entrades: opt(),
+    entradesInfo: opt(),
+    dossier: opt(),
+    rider: opt(),
+    cartell: opt(),
+    flyer: opt(),
+    fotosPremsa: opt(),
     fitxaArtistica: z.array(z.object({ rol: z.string(), nom: z.string() })).default([]),
     fitxaTecnica: z.array(z.object({ concepte: z.string(), valor: z.string() })).default([]),
     funcions: z
-      .array(z.object({ data: z.string(), espai: z.string().optional(), poblacio: z.string().optional(), nota: z.string().optional(), entrades: z.string().optional(), adreca: z.string().optional() }))
+      .array(z.object({ data: z.string(), espai: opt(), poblacio: opt(), nota: opt(), entrades: opt(), adreca: opt() }))
       .default([]),
     cites: z.array(z.object({ text: z.string(), autor: z.string() })).default([]),
     destacada: z.boolean().default(false),
@@ -51,11 +54,11 @@ const noticies = defineCollection({
   schema: z.object({
     titol: z.string(),
     data: z.coerce.date(),
-    entradeta: z.string().optional(),
-    foto: z.string().optional(),
-    peuFoto: z.string().optional(),
+    entradeta: opt(),
+    foto: opt(),
+    peuFoto: opt(),
     galeria: z.array(z.string()).default([]),
-    videos: z.array(z.object({ titol: z.string().optional(), enllac: z.string(), imatge: z.string().optional() })).default([]),
+    videos: z.array(z.object({ titol: opt(), enllac: z.string(), imatge: opt() })).default([]),
     destacada: z.boolean().default(false),
   }),
 });
@@ -67,9 +70,9 @@ const premsa = defineCollection({
     titol: z.string(),
     mitja: z.string(),
     data: z.coerce.date(),
-    dataText: z.string().optional(),
+    dataText: opt(),
     tipus: z.enum(['Article', 'Entrevista', 'Àudio', 'Vídeo']).default('Article'),
-    enllac: z.string().optional(),
+    enllac: opt(),
   }),
 });
 
@@ -78,12 +81,12 @@ const pagines = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/pagines' }),
   schema: z.object({
     titol: z.string(),
-    titolGran: z.string().optional(),
-    etiqueta: z.string().optional(),
-    entradeta: z.string().optional(),
-    foto: z.string().optional(),
+    titolGran: opt(),
+    etiqueta: opt(),
+    entradeta: opt(),
+    foto: opt(),
     galeria: z.array(z.string()).default([]),
-    boto: z.object({ text: z.string().optional(), enllac: z.string().optional() }).optional(),
+    boto: z.object({ text: opt(), enllac: opt() }).optional(),
     esborrany: z.boolean().default(false),
   }),
 });
