@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Foto from '../../components/Foto.astro';
+import Videos from '../../components/Videos.astro';
 import t from '../../data/textos/noticies.json';
 import { perData, formatData } from '../../lib/util';
 
@@ -35,6 +36,7 @@ const mes = (await getCollection('noticies')).sort(perData).filter((n) => n.id !
         {d.galeria.map((src, n) => <a href={src} data-galeria="noticia"><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="1/1" /></a>)}
       </div>
     )}
+    {d.videos.length > 0 && <div style="max-width:1000px;margin:0 auto;padding:0 40px 48px"><Videos videos={d.videos} text={t.veureVideo} /></div>}
     <div class="narrow" style="padding-bottom:72px">
       <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:18px 0;font-size:14px">
         <a href="/noticies">← {t.totes.replace(/\s*→\s*$/, '')}</a>
