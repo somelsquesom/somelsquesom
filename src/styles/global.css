@@ -214,3 +214,52 @@ a[data-galeria] { cursor: zoom-in; display: block; }
   .linia-temps .any:first-child:is(:hover, :focus-within, .obert) .any-obres, .linia-temps .any:nth-child(2):is(:hover, :focus-within, .obert) .any-obres,
   .linia-temps .any:last-child:is(:hover, :focus-within, .obert) .any-obres, .linia-temps .any:nth-last-child(2):is(:hover, :focus-within, .obert) .any-obres { transform: none; }
 }
+
+/* Cartells dins d'un format fix: sencers, sense fons */
+.media.encaixa { object-fit: contain; background: none; }
+
+/* Llistes amb la imatge petita a l'esquerra i la informació a la dreta */
+.llista-h { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr)); gap: 36px 48px; }
+.llista-h.petita { grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr)); gap: 28px 40px; }
+.card-h { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; align-items: center; text-decoration: none; }
+.llista-h.petita .card-h { grid-template-columns: 130px minmax(0, 1fr); gap: 20px; }
+.card-h.gran { grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 40px; }
+.card-h-text { display: flex; flex-direction: column; gap: 10px; }
+.card-h:hover .card-title { color: var(--granat); }
+@media (max-width: 640px) {
+  .card-h { grid-template-columns: 120px minmax(0, 1fr); gap: 16px; }
+  .llista-h.petita .card-h { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; }
+  .card-h .card-title { font-size: 24px !important; }
+  .card-h.gran { grid-template-columns: 1fr; }
+}
+
+/* Menú hamburguesa al mòbil */
+.menu-boto { display: none; background: none; border: 0; cursor: pointer; width: 44px; height: 44px; padding: 10px; flex-direction: column; justify-content: center; gap: 6px; }
+.menu-boto span { display: block; height: 2px; background: var(--ink); transition: transform .2s, opacity .2s; }
+.menu-boto.obert span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.menu-boto.obert span:nth-child(2) { opacity: 0; }
+.menu-boto.obert span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+@media (max-width: 899px) {
+  .site-header { flex-wrap: wrap; padding-top: 18px; padding-bottom: 18px; }
+  .logo img { height: 44px; }
+  .logo span { font-size: 13px; }
+  .menu-boto { display: flex; }
+  .site-nav { display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 0; border-top: 1px solid var(--line); margin-top: 8px; }
+  .site-nav.obert { display: flex; }
+  .site-nav a { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 18px; }
+  .site-nav a[aria-current='page'] { color: var(--granat); }
+  .site-nav .btn { margin-top: 16px; padding: 14px 20px; justify-content: center; border-bottom: 0; }
+}
+
+/* Xifres al mòbil: dues columnes */
+@media (max-width: 640px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stats > div { padding: 20px 12px 20px 0; }
+  .stats > div + div { border-left: 0; padding-left: 0; }
+  .stats > div:nth-child(even) { border-left: 1px solid var(--line); padding-left: 16px; }
+  .stats > div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .stats .n { font-size: 52px; }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .facts > div + div { border-left: 0; padding-left: 0; }
+  .facts > div:nth-child(even) { border-left: 1px solid var(--line); padding-left: 16px; }
+}
