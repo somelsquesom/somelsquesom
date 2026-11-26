@@ -67,7 +67,7 @@ const xifresLlista = [[x.anys, t.xifres?.anys], [x.obres, t.xifres?.obres], [x.r
                   <div class="any-obres">
                     {llista.map((o) => (
                       <a href={`/obres/${o.id}`}>
-                        {(o.data.foto || o.data.cartell) ? <img src={o.data.foto ?? o.data.cartell} alt="" loading="lazy" /> : <span class="sense-img" aria-hidden="true"></span>}
+                        {(o.data.foto || o.data.cartell) ? <img src={o.data.foto ?? o.data.cartell} alt="" /> : <span class="sense-img" aria-hidden="true"></span>}
                         <span>{o.data.titol}</span>
                       </a>
                     ))}

@@ -47,15 +47,17 @@ const fons = (s: string) => (seccions.indexOf(s) % 2 === 1 ? 'section soft' : 's
         <section class={fons(s)}>
           <div class="wrap">
             <div class="section-head"><span>{num(s)}{t.enGira.etiqueta}</span><a href="/en-gira">{t.enGira.enllac}</a></div>
-            <div class="cols" style="gap:40px">
+            <div class="llista-h">
               {enGira.map((o) => (
-                <a href={`/obres/${o.id}`} class="card" style="gap:16px">
-                  <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} portada sencera={!o.data.foto} />
-                  {t.enGira.disponible && <div class="label accent">{t.enGira.disponible}</div>}
-                  <div class="serif" style="font-size:52px;line-height:1">{o.data.titol}</div>
-                  <Etiquetes etiquetes={o.data.etiquetes} textPropi={o.data.textPropi} />
-                  <div class="muted">{[o.data.resum, o.data.durada, o.data.public].filter(Boolean).join(' · ')}</div>
-                  <span style="font-size:14px;border-bottom:1px solid var(--ink);align-self:flex-start">{t.enGira.mesInfo}</span>
+                <a href={`/obres/${o.id}`} class="card-h">
+                  <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} portada encaixa={!o.data.foto} />
+                  <div class="card-h-text">
+                    {t.enGira.disponible && <div class="label accent">{t.enGira.disponible}</div>}
+                    <div class="card-title" style="font-size:38px;line-height:1">{o.data.titol}</div>
+                    <Etiquetes etiquetes={o.data.etiquetes} textPropi={o.data.textPropi} />
+                    {(o.data.resum || o.data.entradesInfo) && <div class="muted" style="font-size:15px">{o.data.entradesInfo || o.data.resum}</div>}
+                    <span style="font-size:14px;border-bottom:1px solid var(--ink);align-self:flex-start">{t.enGira.mesInfo}</span>
+                  </div>
                 </a>
               ))}
             </div>
@@ -81,12 +83,15 @@ const fons = (s: string) => (seccions.indexOf(s) % 2 === 1 ? 'section soft' : 's
         <section class={fons(s)}>
           <div class="wrap">
             <div class="section-head"><span>{num(s)}{t.arxiu.etiqueta}</span><a href="/arxiu">{t.arxiu.enllac}</a></div>
-            <div class="grid-cards">
+            <div class="llista-h petita">
               {arxiu.map((o) => (
-                <a href={`/obres/${o.id}`} class="card">
-                  <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} portada sencera={!o.data.foto} />
-                  <div class="label">{o.data.temporada}</div>
-                  <div class="card-title" style="font-size:28px">{o.data.titol}</div>
+                <a href={`/obres/${o.id}`} class="card-h">
+                  <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} portada encaixa={!o.data.foto} />
+                  <div class="card-h-text">
+                    <div class="label accent">{o.data.temporada}</div>
+                    <div class="card-title" style="font-size:28px">{o.data.titol}</div>
+                    {o.data.resum && <div class="muted" style="font-size:14px">{o.data.resum}</div>}
+                  </div>
                 </a>
               ))}
             </div>
@@ -98,12 +103,15 @@ const fons = (s: string) => (seccions.indexOf(s) % 2 === 1 ? 'section soft' : 's
         <section class={fons(s)}>
           <div class="wrap">
             <div class="section-head"><span>{num(s)}{t.noticies.etiqueta}</span><a href="/noticies">{t.noticies.enllac}</a></div>
-            <div class="grid-cards">
+            <div class="llista-h petita">
               {noticies.map((n) => (
-                <a href={`/noticies/${n.id}`} class="card">
+                <a href={`/noticies/${n.id}`} class="card-h">
                   <Foto src={n.data.foto} alt={n.data.titol} portada />
-                  <div class="label">{formatData(n.data.data)}</div>
-                  <div class="card-title" style="font-size:26px">{n.data.titol}</div>
+                  <div class="card-h-text">
+                    <div class="label accent">{formatData(n.data.data)}</div>
+                    <div class="card-title" style="font-size:26px">{n.data.titol}</div>
+                    {n.data.entradeta && <div class="muted" style="font-size:14px">{n.data.entradeta}</div>}
+                  </div>
                 </a>
               ))}
             </div>
