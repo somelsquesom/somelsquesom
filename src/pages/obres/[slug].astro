@@ -124,7 +124,7 @@ const descarregues = [
       <div class="wrap">
         <div class="section-head"><span>{t.galeria}</span><span>{d.galeria.length} {t.fotos}</span></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:12px">
-          {d.galeria.map((src, n) => <a href={src}><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="4/3" /></a>)}
+          {d.galeria.map((src, n) => <a href={src} data-galeria="obra"><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="4/3" /></a>)}
         </div>
       </div>
     </section>
@@ -133,17 +133,17 @@ const descarregues = [
   {(d.cartell || d.flyer || descarregues.length > 0) && (
     <section class="section">
       <div class="wrap">
-        <div class="section-head"><span>{enGira ? t.material : t.cartellFlyer}</span>{enGira && t.materialSub && <span>{t.materialSub}</span>}</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:32px;align-items:end">
+        <div class="section-head"><span>{enGira ? t.material : d.cartell && d.flyer ? t.cartellFlyer : d.cartell ? t.cartell : t.flyer}</span>{enGira && t.materialSub && <span>{t.materialSub}</span>}</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),280px));gap:32px;align-items:end">
           {d.cartell && (
             <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
-              <Foto src={d.cartell} alt={`${t.cartell} · ${d.titol}`} ratio="2/3" />
+              <a href={d.cartell} data-galeria="cartell"><Foto src={d.cartell} alt={`${t.cartell} · ${d.titol}`} ratio="auto" /></a>
               <figcaption class="label">{t.cartell} · <a href={d.cartell} download>{t.descarregar}</a></figcaption>
             </figure>
           )}
           {d.flyer && (
             <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
-              <Foto src={d.flyer} alt={`${t.flyer} · ${d.titol}`} ratio="1/1.414" />
+              <a href={d.flyer} data-galeria="cartell"><Foto src={d.flyer} alt={`${t.flyer} · ${d.titol}`} ratio="auto" /></a>
               <figcaption class="label">{t.flyer} · <a href={d.flyer} download>{t.descarregar}</a></figcaption>
             </figure>
           )}
@@ -174,13 +174,13 @@ const descarregues = [
         )}
         {d.funcions.length === 0 && d.llocs && (
           <div>
-            <div class="label" style="margin-bottom:20px">{t.onLhemFet} · {rep} {rep === 1 ? arxiu.representacio : arxiu.representacions}</div>
+            <div class="label accent" style="margin-bottom:20px">{t.onLhemFet} · {rep} {rep === 1 ? arxiu.representacio : arxiu.representacions}</div>
             <p style="margin:0;font-size:18px">{d.llocs}</p>
           </div>
         )}
         {d.funcions.length > 0 && (
           <div>
-            <div class="label" style="margin-bottom:20px">{t.onLhemFet} · {d.funcions.length} {d.funcions.length === 1 ? t.funcio : t.funcions}</div>
+            <div class="label accent" style="margin-bottom:20px">{t.onLhemFet} · {d.funcions.length} {d.funcions.length === 1 ? t.funcio : t.funcions}</div>
             <div class="rows">
               {d.funcions.map((f) => (
                 <div style="display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px">
