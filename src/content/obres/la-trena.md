@@ -1,6 +1,6 @@
 ---
 titol: "La Trena"
-estat: "arxiu"
+estat: "en-gira"
 grup: "Companyia"
 temporada: "2026"
 estrena: "2026-01-01"
