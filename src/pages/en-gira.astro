@@ -39,6 +39,7 @@ const obres = (await getCollection('obres', (o) => o.data.estat === 'en-gira')).
             </div>
             <div class="btns">
               <a href={`/obres/${o.id}`} class="btn">Veure l'obra</a>
+              {o.data.entrades && <a href={o.data.entrades} class="btn granat" target="_blank" rel="noopener">Comprar entrades</a>}
               {o.data.dossier && <a href={o.data.dossier} class="btn ghost" download><IconaBaixar />Dossier</a>}
             </div>
           </div>
