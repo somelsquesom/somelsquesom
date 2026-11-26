@@ -282,3 +282,9 @@ a[data-galeria] { cursor: zoom-in; display: block; }
   .llista-h.llista-arxiu { grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 40px 28px; }
   .llista-h.llista-arxiu .card-h { display: flex; flex-direction: column; gap: 10px; align-items: stretch; }
 }
+
+/* «També vam fer»: bloc emmarcat amb una línia granat */
+.altres.rows { border-left: 3px solid var(--granat); padding-left: 20px; background: var(--soft); padding-top: 18px; padding-right: 20px; padding-bottom: 6px; }
+.altres.rows > * { border-top-color: #e3e3df; }
+.altres.rows a { color: var(--ink); }
+.altres.rows a:hover { color: var(--granat); }
