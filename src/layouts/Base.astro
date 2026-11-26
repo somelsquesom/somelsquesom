@@ -1,0 +1,90 @@
+---
+import '../styles/global.css';
+import web from '../data/web.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  current?: string;
+}
+const { title, description = web.presentacio, current = '' } = Astro.props;
+const fullTitle = title ? `${title} · ${web.nom}` : `${web.nom} · Teatre amateur de ${web.poblacio}`;
+
+const nav = [
+  { href: '/companyia', label: 'La companyia', key: 'companyia' },
+  { href: '/en-gira', label: 'En gira', key: 'en-gira' },
+  { href: '/arxiu', label: 'Temporades anteriors', key: 'arxiu' },
+  { href: '/noticies', label: 'Notícies', key: 'noticies' },
+];
+---
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="wrap site-header">
+      <a href="/" class="logo">{web.nom}</a>
+      <nav class="site-nav" aria-label="Menú principal">
+        {nav.map((item) => (
+          <a href={item.href} aria-current={current === item.key ? 'page' : undefined}>{item.label}</a>
+        ))}
+        <a href="/contractacio" class="btn">Contractació</a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-cols">
+        <div>
+          <div style="font-weight:600;letter-spacing:.14em;margin-bottom:10px">{web.nom}</div>
+          <div class="label">{web.descripcio}</div>
+        </div>
+        <div>
+          <div class="label">On som</div>
+          <div>{web.poblacio}<br />{web.codiPostal} · {web.provincia}</div>
+        </div>
+        <div>
+          <div class="label">Contacte</div>
+          <div>
+            {web.contacteNom && <>{web.contacteNom} · Producció<br /></>}
+            <a href={`mailto:${web.email}`}>{web.email}</a>
+            {web.telefon && <><br />{web.telefon}</>}
+          </div>
+        </div>
+        <div>
+          <div class="label">Segueix-nos a les xarxes</div>
+          <div class="social">
+            {!web.instagram && !web.tiktok && !web.facebook && <span class="label">Aviat!</span>}
+            {web.instagram && (
+              <a href={`https://www.instagram.com/${web.instagram.replace('@', '')}`} rel="me">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" /></svg>
+                Instagram · @{web.instagram.replace('@', '')}
+              </a>
+            )}
+            {web.tiktok && (
+              <a href={`https://www.tiktok.com/@${web.tiktok.replace('@', '')}`} rel="me">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5" /><path d="M14 3c.6 2.8 2.6 4.6 5.5 4.8" /></svg>
+                TikTok · @{web.tiktok.replace('@', '')}
+              </a>
+            )}
+            {web.facebook && <a href={web.facebook} rel="me">Facebook</a>}
+          </div>
+        </div>
+      </div>
+      <div class="wrap footer-bottom">
+        <span>© {web.nom} · {web.poblacio}</span>
+        <a href="/contractacio">Contractació</a>
+      </div>
+    </footer>
+  </body>
+</html>

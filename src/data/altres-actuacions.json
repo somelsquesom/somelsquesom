@@ -1,0 +1,295 @@
+{
+  "actuacions": [
+    {
+      "any": "2011",
+      "grup": "Companyia",
+      "titol": "Inauguració de la Biblioteca «Joan Solà»",
+      "representacions": 1,
+      "llocs": "Bell-lloc",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2011",
+      "grup": "Companyia",
+      "titol": "Lectura de poemes de Nadal",
+      "representacions": 2,
+      "llocs": "Bell-lloc, Torresserona",
+      "poblacions": [
+        "Bell-lloc d'Urgell",
+        "Torresserona"
+      ]
+    },
+    {
+      "any": "2012",
+      "grup": "Companyia",
+      "titol": "Performance en un casament",
+      "representacions": 1,
+      "llocs": "Bellvís (Restaurant La Boscana)",
+      "poblacions": [
+        "Bellvís"
+      ]
+    },
+    {
+      "any": "2013",
+      "grup": "Taller de teatre",
+      "titol": "Podem!",
+      "representacions": 1,
+      "llocs": "Bell-lloc",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2013",
+      "grup": "Taller de teatre",
+      "titol": "El nas de Satanàs",
+      "representacions": 1,
+      "llocs": "Bell-lloc",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2013",
+      "grup": "Companyia",
+      "titol": "La zebra Camil·la",
+      "representacions": 2,
+      "llocs": "Bell-lloc (CEIP i Vailets)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2014",
+      "grup": "Companyia",
+      "titol": "Criatures (lectura dramatitzada)",
+      "representacions": 1,
+      "llocs": "Bell-lloc",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2015",
+      "grup": "Companyia",
+      "titol": "Performance en un casament",
+      "representacions": 1,
+      "llocs": "Mollerussa (Restaurant Resquitx)",
+      "poblacions": [
+        "Mollerussa"
+      ]
+    },
+    {
+      "any": "2018",
+      "grup": "Companyia Jove",
+      "titol": "Performance en Cantata",
+      "representacions": 1,
+      "llocs": "Bell-lloc",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2019",
+      "grup": "Companyia",
+      "titol": "Exposició dels 10 anys",
+      "representacions": 1,
+      "llocs": "Bell-lloc (Sala Multifuncional)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2021",
+      "grup": "Companyia Jove 2.0",
+      "titol": "La zebra Camil·la",
+      "representacions": 1,
+      "llocs": "Bell-lloc",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2021",
+      "grup": "Companyia Jove 2.0",
+      "titol": "Teatralització d'una sessió",
+      "representacions": 1,
+      "llocs": "Bell-lloc",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2022",
+      "grup": "Taller de teatre",
+      "titol": "Un món sense llibres",
+      "representacions": 2,
+      "llocs": "Bell-lloc",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2022",
+      "grup": "Companyia",
+      "titol": "Les 3 llegendes de Sant Jordi",
+      "representacions": 1,
+      "llocs": "Bell-lloc (La Cultural)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2022",
+      "grup": "Companyia",
+      "titol": "Propòsits",
+      "representacions": 3,
+      "llocs": "Bell-lloc (escenari de La Cultural)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2022",
+      "grup": "Companyia Jove 2.0",
+      "titol": "Tot assajant Mamá o Papá",
+      "representacions": 1,
+      "llocs": "Bell-lloc (Sala Multifuncional)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2022",
+      "grup": "Companyia",
+      "titol": "PEr semPrE",
+      "representacions": 1,
+      "llocs": "Bell-lloc",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2023",
+      "grup": "Taller de teatre",
+      "titol": "La petjada de la biblioteca",
+      "representacions": 3,
+      "llocs": "Bell-lloc (2), Bell-lloc (La Pineda)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2023",
+      "grup": "Taller de teatre",
+      "titol": "Un matí de teatre",
+      "representacions": 1,
+      "llocs": "Bell-lloc (La Cultural, amb el Casal d'estiu de l'Esplai la Costereta)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2023",
+      "grup": "Taller de teatre",
+      "titol": "Addicció a les pantalles",
+      "representacions": 1,
+      "llocs": "Poal",
+      "poblacions": [
+        "Poal"
+      ]
+    },
+    {
+      "any": "2023",
+      "grup": "Companyia",
+      "titol": "Propòsits",
+      "representacions": 1,
+      "llocs": "Lleida (Sala 2 del Teatre Municipal de l'Escorxador)",
+      "poblacions": [
+        "Lleida"
+      ]
+    },
+    {
+      "any": "2024",
+      "grup": "Companyia",
+      "titol": "Contes a l'escola",
+      "representacions": 1,
+      "llocs": "Bell-lloc (Escola)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2024",
+      "grup": "Companyia",
+      "titol": "Sívisme!",
+      "representacions": 1,
+      "llocs": "Bell-lloc (Plaça Creu del Terme)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2024",
+      "grup": "Companyia",
+      "titol": "«Respira La Marató»",
+      "representacions": 1,
+      "llocs": "Bell-lloc (La Cultural)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2025",
+      "grup": "Companyia",
+      "titol": "Sívisme! 1a acció",
+      "representacions": 1,
+      "llocs": "Bell-lloc (Via Fèrrea)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2025",
+      "grup": "Companyia",
+      "titol": "Sívisme! 2a acció",
+      "representacions": 1,
+      "llocs": "Bell-lloc (La Cultural)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2025",
+      "grup": "Companyia",
+      "titol": "Sívisme! 3a acció",
+      "representacions": 1,
+      "llocs": "Bell-lloc (tot el poble)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2025",
+      "grup": "Companyia",
+      "titol": "Escena «de la Comunitat» de «Quina merda!!!»",
+      "representacions": 1,
+      "llocs": "Bell-lloc (Sala de la Incubadora)",
+      "poblacions": [
+        "Bell-lloc d'Urgell"
+      ]
+    },
+    {
+      "any": "2025",
+      "grup": "Companyia",
+      "titol": "Quina merda!!!",
+      "representacions": 1,
+      "llocs": "Golmés (Casal)",
+      "poblacions": [
+        "Golmés"
+      ]
+    }
+  ]
+}

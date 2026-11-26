@@ -1,0 +1,228 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Foto from '../../components/Foto.astro';
+import IconaBaixar from '../../components/IconaBaixar.astro';
+import Etiquetes from '../../components/Etiquetes.astro';
+import web from '../../data/web.json';
+import { embedVideo, formatMesAny, perEstrena, repDe } from '../../lib/util';
+
+export async function getStaticPaths() {
+  const obres = await getCollection('obres');
+  return obres.map((obra) => ({ params: { slug: obra.id }, props: { obra } }));
+}
+
+const { obra } = Astro.props;
+const d = obra.data;
+const { Content } = await render(obra);
+const enGira = d.estat === 'en-gira';
+const teText = Boolean(obra.body && obra.body.trim());
+const video = embedVideo(d.trailer);
+const estrena = d.estrenaText ?? formatMesAny(d.estrena);
+const rep = repDe(obra);
+
+const totes = (await getCollection('obres')).sort(perEstrena);
+const i = totes.findIndex((o) => o.id === obra.id);
+const anterior = totes[i + 1];
+const seguent = totes[i - 1];
+const altresEnGira = totes.filter((o) => o.data.estat === 'en-gira' && o.id !== obra.id).slice(0, 2);
+
+const descarregues = [
+  { t: 'Dossier de venda', f: d.dossier },
+  { t: 'Rider tècnic', f: d.rider },
+  { t: 'Cartell en alta', f: d.cartell },
+  { t: 'Flyer', f: d.flyer },
+  { t: 'Fotos de premsa', f: d.fotosPremsa },
+].filter((x) => x.f);
+---
+<Base title={d.titol} description={d.resum} current={enGira ? 'en-gira' : 'arxiu'}>
+  <section class="wrap" style="padding-top:16px">
+    <div class="label" style="margin-bottom:20px">
+      {enGira ? <a href="/en-gira" style="color:var(--grey)">En gira</a> : <a href="/arxiu" style="color:var(--grey)">Temporades anteriors</a>}
+      {' / '}{d.temporada}
+    </div>
+    <Foto src={d.foto} alt={d.titol} ratio="21/9" />
+    <div class="hero" style="padding-top:48px;padding-bottom:72px">
+      <div>
+        <div class="label accent" style="margin-bottom:12px">
+          {enGira ? `Disponible per programar · Estrena ${estrena}` : `Estrena ${estrena}`}
+        </div>
+        <h1 class="display">{d.titol}</h1>
+        <div style="margin-top:20px"><Etiquetes etiquetes={d.etiquetes} textPropi={d.textPropi} gran /></div>
+        {(d.autoria || d.direccio || d.grup !== 'Companyia') && (
+          <div class="label" style="font-size:18px;margin-top:12px">
+            {[d.autoria && `de ${d.autoria}`, d.direccio && `direcció de ${d.direccio}`, d.grup !== 'Companyia' && d.grup].filter(Boolean).join(' · ')}
+          </div>
+        )}
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        {(d.durada || d.public || d.format || rep > 0) && (
+          <div class="facts">
+            {d.durada && <div><div class="k">Durada</div><div>{d.durada}</div></div>}
+            {d.public && <div><div class="k">Públic</div><div>{d.public}</div></div>}
+            {d.format && <div><div class="k">Format</div><div>{d.format}</div></div>}
+            {rep > 0 && <div><div class="k">Representacions</div><div>{rep}</div></div>}
+          </div>
+        )}
+        <div class="btns">
+          {d.dossier && <a href={d.dossier} class="btn" download><IconaBaixar />{enGira ? 'Descarregar el dossier de venda' : "Dossier de l'obra"}</a>}
+          {enGira && <a href="/contractacio" class="btn ghost">Demanar data</a>}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {video && (
+    <section class="section">
+      <div class="wrap">
+        <div class="label" style="margin-bottom:28px">Tràiler</div>
+        <div class="video"><iframe src={video} title={`Tràiler de ${d.titol}`} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
+      </div>
+    </section>
+  )}
+
+  {(d.resum || teText) && (
+    <section class="section">
+      <div class="wrap cols">
+        <div>
+          <div class="label" style="margin-bottom:20px">De què va</div>
+          {d.resum && <p class="serif" style="margin:0;font-size:34px;line-height:1.25">{d.resum}</p>}
+        </div>
+        {teText && <div class="prose"><Content /></div>}
+      </div>
+    </section>
+  )}
+
+  {(d.fitxaArtistica.length > 0 || d.fitxaTecnica.length > 0) && (
+    <section class="section soft">
+      <div class="wrap cols">
+        {d.fitxaArtistica.length > 0 && (
+          <div>
+            <div class="label" style="margin-bottom:20px">Fitxa artística</div>
+            <div class="rows">{d.fitxaArtistica.map((r) => <div class="kv"><span>{r.rol}</span><span>{r.nom}</span></div>)}</div>
+          </div>
+        )}
+        {d.fitxaTecnica.length > 0 && (
+          <div>
+            <div class="label" style="margin-bottom:20px">Fitxa tècnica</div>
+            <div class="rows">{d.fitxaTecnica.map((r) => <div class="kv"><span>{r.concepte}</span><span style="text-align:right">{r.valor}</span></div>)}</div>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  {d.galeria.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><span>Galeria</span><span>{d.galeria.length} fotos</span></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:12px">
+          {d.galeria.map((src, n) => <a href={src}><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="4/3" /></a>)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {(d.cartell || d.flyer || descarregues.length > 0) && (
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><span>{enGira ? 'Material per a programadors' : 'Cartell i flyer'}</span>{enGira && <span>Tot el que necessiteu, descarregable</span>}</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:32px;align-items:end">
+          {d.cartell && (
+            <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+              <Foto src={d.cartell} alt={`Cartell de ${d.titol}`} ratio="2/3" />
+              <figcaption class="label">Cartell · <a href={d.cartell} download>Descarregar</a></figcaption>
+            </figure>
+          )}
+          {d.flyer && (
+            <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+              <Foto src={d.flyer} alt={`Flyer de ${d.titol}`} ratio="1/1.414" />
+              <figcaption class="label">Flyer · <a href={d.flyer} download>Descarregar</a></figcaption>
+            </figure>
+          )}
+          {enGira && descarregues.length > 0 && (
+            <div class="rows">
+              {descarregues.map((x) => (
+                <a href={x.f} download class="kv" style="text-decoration:none"><span style="color:var(--ink)">{x.t}</span><IconaBaixar /></a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {(d.cites.length > 0 || d.funcions.length > 0 || d.llocs) && (
+    <section class="section">
+      <div class="wrap cols">
+        {d.cites.length > 0 && (
+          <div>
+            <div class="label" style="margin-bottom:20px">Què n'han dit</div>
+            <div style="display:flex;flex-direction:column;gap:32px">
+              {d.cites.map((c) => (
+                <blockquote class="serif" style="margin:0;font-size:30px;line-height:1.25">«{c.text}»<footer class="label" style="font-family:var(--sans);font-size:14px;margin-top:8px">— {c.autor}</footer></blockquote>
+              ))}
+            </div>
+          </div>
+        )}
+        {d.funcions.length === 0 && d.llocs && (
+          <div>
+            <div class="label" style="margin-bottom:20px">On l'hem fet · {rep} {rep === 1 ? 'representació' : 'representacions'}</div>
+            <p style="margin:0;font-size:18px">{d.llocs}</p>
+          </div>
+        )}
+        {d.funcions.length > 0 && (
+          <div>
+            <div class="label" style="margin-bottom:20px">On l'hem fet · {d.funcions.length} {d.funcions.length === 1 ? 'funció' : 'funcions'}</div>
+            <div class="rows">
+              {d.funcions.map((f) => (
+                <div style="display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px">
+                  <span class="label" style="font-size:15px">{f.data}</span>
+                  <span>{[f.espai, f.poblacio].filter(Boolean).join(' · ')}{f.nota && <span class="label"> · {f.nota}</span>}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  {enGira ? (
+    <section class="section dark">
+      <div class="wrap cols" style="align-items:center;padding-bottom:64px">
+        <h2 class="display">Porteu <em>{d.titol}</em> al vostre escenari.</h2>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:17px">
+          <div>{web.contacteNom ? `${web.contacteNom} · Producció` : 'Producció'}</div>
+          <div><a href={`mailto:${web.email}`}>{web.email}</a>{web.telefon && ` · ${web.telefon}`}</div>
+          <div class="btns" style="margin-top:12px">
+            {d.dossier && <a href={d.dossier} class="btn" download>Dossier de venda</a>}
+            <a href="/contractacio" class="btn ghost">Demanar data</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class="section">
+      <div class="wrap" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-top:32px;padding-bottom:32px;font-size:15px">
+        {anterior ? <a href={`/obres/${anterior.id}`} style="text-decoration:none">← {anterior.data.titol}</a> : <span></span>}
+        <a href="/arxiu">Tornar a l'arxiu</a>
+        {seguent ? <a href={`/obres/${seguent.id}`} style="text-decoration:none">{seguent.data.titol} →</a> : <span></span>}
+      </div>
+    </section>
+  )}
+
+  {enGira && altresEnGira.length > 0 && (
+    <section class="wrap" style="padding-top:48px;padding-bottom:88px">
+      <div class="section-head"><span>Altres obres en gira</span><a href="/en-gira">Veure-les totes →</a></div>
+      <div class="cols" style="gap:32px">
+        {altresEnGira.map((o) => (
+          <a href={`/obres/${o.id}`} style="text-decoration:none;display:grid;grid-template-columns:160px minmax(0,1fr);gap:20px;align-items:center">
+            <Foto src={o.data.foto} alt={o.data.titol} ratio="1/1" />
+            <div class="serif" style="font-size:32px;line-height:1.1">{o.data.titol}</div>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+</Base>

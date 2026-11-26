@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import web from '../data/web.json';
+import { perEstrena, xifres } from '../lib/util';
+
+const obres = (await getCollection('obres')).sort(perEstrena);
+const x = xifres(obres, web.anyInici);
+// La història es construeix sola a partir de les estrenes (de la primera a la darrera).
+const fites = [...obres].reverse();
+---
+<Base title="La companyia" current="companyia">
+  <section class="wrap hero">
+    <div>
+      <div class="label" style="margin-bottom:20px">La companyia</div>
+      <h1 class="display">Qui <em>som</em>.</h1>
+    </div>
+    <p class="lead" style="font-size:20px;max-width:520px">{web.presentacioLlarga || web.presentacio}</p>
+  </section>
+
+  {web.fotoGrup && (
+    <section class="wrap">
+      <Foto src={web.fotoGrup} alt="Foto de grup de la companyia" ratio="21/9" />
+    </section>
+  )}
+
+  <section class="wrap" style="padding-top:72px;padding-bottom:96px">
+    <div class="stats">
+      {[[x.anys, 'anys de companyia'], [x.obres, 'obres estrenades'], [x.funcions, 'representacions'], [x.poblacions, 'poblacions visitades']]
+        .filter(([n]) => Number(n) > 0)
+        .map(([n, t]) => <div><div class="n">{n}</div><div class="label" style="font-size:14px">{t}</div></div>)}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap cols">
+      <div>
+        <div class="label" style="margin-bottom:24px">La nostra història</div>
+        <h2 class="display">Del {web.anyInici} <em>fins avui</em>.</h2>
+      </div>
+      <div class="rows">
+        {fites.map((o) => (
+          <a href={`/obres/${o.id}`} style="display:grid;grid-template-columns:100px minmax(0,1fr);gap:24px;text-decoration:none">
+            <div class="serif accent" style="font-size:28px">{o.data.estrena.getFullYear()}</div>
+            <div>
+              <div style="font-weight:600">{o.data.titol}</div>
+              <div class="muted" style="font-size:15px">{[o.data.grup, o.data.resum].filter(Boolean).join(' · ')}</div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="wrap">
+      <div class="section-head"><span>Qui hi som</span><span>Cada obra, una colla diferent</span></div>
+      <div class={web.fotoGrup ? 'cols' : ''} style="align-items:start">
+        <div>
+          <h2 class="display" style="margin-bottom:24px">Som tots i <em>totes</em>.</h2>
+          <p class="muted" style="font-size:18px;margin:0;max-width:640px">{web.somTotsITotes}</p>
+        </div>
+        <Foto src={web.fotoGrup} alt="Foto de grup" ratio="3/2" />
+      </div>
+      {web.noms.length > 0 && (
+        <div style="margin-top:56px;border-top:1px solid var(--line);padding-top:28px">
+          <div class="label" style="margin-bottom:16px">La gent que fa (i ha fet) {web.nom}</div>
+          <p class="serif" style="margin:0;font-size:30px;line-height:1.45">{web.noms.join(' · ')}</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center;padding-top:56px;padding-bottom:96px">
+      <h2 class="display" style="font-size:56px">Vols veure el que fem<em>?</em></h2>
+      <div class="btns">
+        <a href="/en-gira" class="btn">Obres en gira</a>
+        <a href="/arxiu" class="btn ghost">Temporades anteriors</a>
+      </div>
+    </div>
+  </section>
+</Base>

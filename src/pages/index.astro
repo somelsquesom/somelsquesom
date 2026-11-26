@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import web from '../data/web.json';
+import Etiquetes from '../components/Etiquetes.astro';
+import { perEstrena, perData, formatData, xifres } from '../lib/util';
+
+const obres = (await getCollection('obres')).sort(perEstrena);
+const enGira = obres.filter((o) => o.data.estat === 'en-gira');
+const arxiu = obres.filter((o) => o.data.estat === 'arxiu').slice(0, 4);
+const noticies = (await getCollection('noticies')).sort(perData).slice(0, 3);
+const x = xifres(obres, web.anyInici);
+---
+<Base>
+  <section class="wrap" style="padding-top:24px">
+    <Foto src={web.fotoPortada} alt="Escena d'una obra de la companyia" ratio="21/9" />
+    <div class="hero" style="padding-bottom:96px">
+      <h1 class="display" style="font-size:clamp(64px,9vw,112px)">Som els<br /><em>que som.</em></h1>
+      <div style="display:flex;flex-direction:column;gap:24px;max-width:460px">
+        <p class="lead" style="font-size:18px">
+          Companyia de teatre amateur de {web.poblacio}. Des del {web.anyInici}, {x.obres} obres i {x.funcions} representacions. {web.presentacio}
+        </p>
+        <div class="btns">
+          <a href="/en-gira" class="btn">Obres en gira →</a>
+          <a href="/companyia" class="btn ghost">Qui som</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {enGira.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><span>01 — En gira</span><a href="/en-gira">Totes les obres en gira →</a></div>
+        <div class="cols" style="gap:40px">
+          {enGira.slice(0, 2).map((o) => (
+            <a href={`/obres/${o.id}`} class="card" style="gap:16px">
+              <Foto src={o.data.foto} alt={o.data.titol} ratio="4/3" />
+              <div class="label accent">Disponible per programar</div>
+              <div class="serif" style="font-size:52px;line-height:1">{o.data.titol}</div>
+              <Etiquetes etiquetes={o.data.etiquetes} textPropi={o.data.textPropi} />
+              <div class="muted">{[o.data.resum, o.data.durada, o.data.public].filter(Boolean).join(' · ')}</div>
+              <span style="font-size:14px;border-bottom:1px solid var(--ink);align-self:flex-start">Veure l'obra, el tràiler i el dossier</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section soft">
+    <div class={web.fotoGrup ? 'wrap cols' : 'wrap'} style="align-items:center">
+      <div>
+        <div class="label" style="margin-bottom:24px">02 — La companyia</div>
+        <h2 class="display" style="margin-bottom:24px">Un grup de gent que s'ajunta per <em>fer teatre</em>.</h2>
+        <p class="muted" style="font-size:18px;max-width:520px;margin:0 0 28px">{web.somTotsITotes}</p>
+        <a href="/companyia">Coneix-nos →</a>
+      </div>
+      <Foto src={web.fotoGrup} alt="Foto de grup de la companyia" ratio="4/3" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><span>03 — Temporades anteriors</span><a href="/arxiu">Tot l'arxiu →</a></div>
+      <div class="grid-cards">
+        {arxiu.map((o) => (
+          <a href={`/obres/${o.id}`} class="card">
+            <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="3/4" />
+            <div class="label">{o.data.temporada}</div>
+            <div class="card-title" style="font-size:28px">{o.data.titol}</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {noticies.length > 0 && (
+    <section class="section soft">
+      <div class="wrap">
+        <div class="section-head"><span>04 — Notícies</span><a href="/noticies">Totes les notícies →</a></div>
+        <div class="grid-cards">
+          {noticies.map((n) => (
+            <a href={`/noticies/${n.id}`} class="card">
+              <Foto src={n.data.foto} alt={n.data.titol} ratio="4/3" />
+              <div class="label">{formatData(n.data.data)}</div>
+              <div class="card-title" style="font-size:26px">{n.data.titol}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="wrap cols" style="align-items:end;padding-bottom:112px">
+      <div>
+        <div class="label" style="margin-bottom:24px">05 — Contractació</div>
+        <h2 class="display" style="font-size:clamp(56px,7vw,84px)">Programeu-nos<em>.</em></h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:18px">
+        {web.contacteNom && <div style="font-weight:600">{web.contacteNom} — Producció</div>}
+        <div><a href={`mailto:${web.email}`}>{web.email}</a>{web.telefon && ` · ${web.telefon}`}</div>
+        <a href="/contractacio" class="btn" style="align-self:flex-start;margin-top:16px">Contactar amb producció</a>
+      </div>
+    </div>
+  </section>
+</Base>

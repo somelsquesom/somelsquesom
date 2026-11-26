@@ -1,0 +1,10 @@
+---
+// Mostra la foto només si n'hi ha. Si el camp és buit, no surt res.
+interface Props {
+  src?: string;
+  alt?: string;
+  ratio?: string;
+}
+const { src, alt = '', ratio = '4/3' } = Astro.props;
+---
+{src && <img class="media" src={src} alt={alt} loading="lazy" style={`aspect-ratio:${ratio}`} />}

@@ -1,0 +1,15 @@
+---
+// Etiquetes d'una obra (Comèdia, Nadal, Musical...). Si no n'hi ha cap, no surt res.
+interface Props {
+  etiquetes?: string[];
+  textPropi?: boolean;
+  gran?: boolean;
+}
+const { etiquetes = [], textPropi = false, gran = false } = Astro.props;
+const totes = [...(textPropi ? ['Text propi'] : []), ...etiquetes.filter((e) => e && e.trim())];
+---
+{totes.length > 0 && (
+  <ul class:list={['tags', { gran }]} aria-label="Etiquetes">
+    {totes.map((t) => <li class:list={{ propi: t === 'Text propi' }}>{t}</li>)}
+  </ul>
+)}

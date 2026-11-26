@@ -1,0 +1,13 @@
+---
+titol: "Diner negre"
+estat: "arxiu"
+grup: "Companyia"
+temporada: "2012"
+estrena: "2012-06-02"
+representacions: 2
+llocs: "Bell-lloc (2)"
+poblacions: ["Bell-lloc d'Urgell"]
+funcions: [{"data": "02.06.2012", "espai": "La Cultural", "poblacio": "Bell-lloc d'Urgell"}, {"data": "03.06.2012", "espai": "La Cultural", "poblacio": "Bell-lloc d'Urgell"}]
+---
+
+Les dues funcions es van omplir.

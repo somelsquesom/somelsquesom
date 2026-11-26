@@ -1,0 +1,61 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Foto from '../../components/Foto.astro';
+import { perData, formatData } from '../../lib/util';
+
+export async function getStaticPaths() {
+  const noticies = await getCollection('noticies');
+  return noticies.map((noticia) => ({ params: { slug: noticia.id }, props: { noticia } }));
+}
+
+const { noticia } = Astro.props;
+const d = noticia.data;
+const { Content } = await render(noticia);
+const mes = (await getCollection('noticies')).sort(perData).filter((n) => n.id !== noticia.id).slice(0, 3);
+---
+<Base title={d.titol} description={d.entradeta} current="noticies">
+  <article>
+    <div class="narrow" style="padding-top:32px;padding-bottom:40px">
+      <div class="label" style="margin-bottom:32px"><a href="/noticies" style="color:var(--grey)">Notícies</a></div>
+      <div class="label" style="margin-bottom:16px">{formatData(d.data)}</div>
+      <h1 class="serif" style="margin:0 0 24px;font-size:clamp(44px,6vw,72px);line-height:1">{d.titol}</h1>
+      {d.entradeta && <p style="margin:0;font-size:21px;color:#333">{d.entradeta}</p>}
+    </div>
+    {d.foto && (
+      <figure class="wrap" style="margin-top:0;margin-bottom:0">
+        <Foto src={d.foto} alt={d.peuFoto ?? d.titol} ratio="21/9" />
+        {d.peuFoto && <figcaption class="label" style="margin-top:10px">{d.peuFoto}</figcaption>}
+      </figure>
+    )}
+    {noticia.body?.trim() && <div class="narrow prose" style="padding-top:48px;padding-bottom:24px"><Content /></div>}
+    {d.galeria.length > 0 && (
+      <div style="max-width:1000px;margin:0 auto;padding:0 40px 48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px">
+        {d.galeria.map((src, n) => <a href={src}><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="1/1" /></a>)}
+      </div>
+    )}
+    <div class="narrow" style="padding-bottom:72px">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:18px 0;font-size:14px">
+        <a href="/noticies">← Totes les notícies</a>
+        <span class="label">Comparteix: <a href={`https://wa.me/?text=${encodeURIComponent(d.titol + ' ' + Astro.url.href)}`}>WhatsApp</a></span>
+      </div>
+    </div>
+  </article>
+
+  {mes.length > 0 && (
+    <section class="section soft">
+      <div class="wrap">
+        <div class="section-head"><span>Més notícies</span><a href="/noticies">Totes les notícies →</a></div>
+        <div class="grid-cards">
+          {mes.map((n) => (
+            <a href={`/noticies/${n.id}`} class="card">
+              <Foto src={n.data.foto} alt={n.data.titol} ratio="4/3" />
+              <div class="label">{formatData(n.data.data)}</div>
+              <div class="card-title" style="font-size:28px">{n.data.titol}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>

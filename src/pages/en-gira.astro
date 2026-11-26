@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import IconaBaixar from '../components/IconaBaixar.astro';
+import Etiquetes from '../components/Etiquetes.astro';
+import web from '../data/web.json';
+import { perEstrena } from '../lib/util';
+
+const obres = (await getCollection('obres', (o) => o.data.estat === 'en-gira')).sort(perEstrena);
+---
+<Base title="Obres en gira" current="en-gira">
+  <section class="wrap hero">
+    <div>
+      <div class="label" style="margin-bottom:20px">En gira</div>
+      <h1 class="display">Obres per <em>programar</em>.</h1>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;max-width:480px">
+      <p class="lead">Aquestes són les obres que tenim en actiu. Les podem portar a sales, festes majors, festivals i escoles.</p>
+      {web.dossiersGenerals && (
+        <a href={web.dossiersGenerals} class="btn ghost" style="align-self:flex-start"><IconaBaixar />Descarregar tots els dossiers</a>
+      )}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap" style="padding-top:0">
+      {obres.length === 0 && <p class="lead" style="padding:48px 0">Ara mateix estem preparant obra nova. Escriviu-nos i us n'informarem.</p>}
+      {obres.map((o, i) => (
+        <article class="cols" style="gap:48px;padding:48px 0;border-bottom:1px solid var(--line);align-items:center">
+          {o.data.foto && <a href={`/obres/${o.id}`}><Foto src={o.data.foto} alt={o.data.titol} ratio="3/2" /></a>}
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div class="label accent">En gira · {i + 1} · Disponible</div>
+            <h2 class="display" style="font-size:60px;line-height:1"><a href={`/obres/${o.id}`} style="text-decoration:none">{o.data.titol}</a></h2>
+            <Etiquetes etiquetes={o.data.etiquetes} textPropi={o.data.textPropi} gran />
+            {o.data.resum && <p class="muted" style="font-size:18px;margin:0">{o.data.resum}</p>}
+            <div class="label" style="font-size:14px;display:flex;flex-wrap:wrap;gap:8px 24px">
+              {[o.data.autoria, o.data.durada, o.data.public, o.data.format].filter(Boolean).map((t) => <span>{t}</span>)}
+            </div>
+            <div class="btns">
+              <a href={`/obres/${o.id}`} class="btn">Veure l'obra</a>
+              {o.data.dossier && <a href={o.data.dossier} class="btn ghost" download><IconaBaixar />Dossier</a>}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center;padding-top:56px">
+      <div>
+        <h2 class="display" style="font-size:52px;margin-bottom:8px">Voleu una data<em>?</em></h2>
+        <p class="muted" style="margin:0">Escriviu{web.contacteNom ? ` a ${web.contacteNom}, de producció` : ' a producció'}: {web.email}{web.telefon && ` · ${web.telefon}`}</p>
+      </div>
+      <a href="/contractacio" class="btn">Contactar amb producció →</a>
+    </div>
+  </section>
+</Base>

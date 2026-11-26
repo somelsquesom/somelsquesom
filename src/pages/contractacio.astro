@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import IconaBaixar from '../components/IconaBaixar.astro';
+import web from '../data/web.json';
+
+const enGira = await getCollection('obres', (o) => o.data.estat === 'en-gira');
+// Si teniu un servei de formulari (p. ex. Formspree), poseu-ne l'adreça a "formulari" (Dades de la web).
+// Si no, el formulari obre el correu de qui el fa servir, adreçat a la companyia.
+const action = web.formulari || `mailto:${web.email}`;
+// Les preguntes freqüents s'editen a «Dades de la web». Si no n'hi ha cap, la secció no surt.
+const faq = (web.preguntes ?? []).filter((p: { pregunta?: string; resposta?: string }) => p.pregunta && p.resposta);
+---
+<Base title="Contractació">
+  <section class="wrap hero">
+    <div>
+      <div class="label" style="margin-bottom:20px">Contractació</div>
+      <h1 class="display">Programeu-<em>nos</em>.</h1>
+    </div>
+    <p class="lead">Ajuntaments, sales, festivals, escoles o entitats: expliqueu-nos què busqueu i us respondrem amb disponibilitat i condicions.</p>
+  </section>
+
+  <section class="section">
+    <div class="wrap cols" style="gap:64px;padding-top:48px">
+      <div style="display:flex;flex-direction:column;gap:32px">
+        <div>
+          <div class="label">Producció i contractació</div>
+          {web.contacteNom && <div class="serif" style="font-size:36px;line-height:1.1">{web.contacteNom}</div>}
+        </div>
+        <div class="rows" style="border-bottom:1px solid var(--line)">
+          <div class="kv"><span>Correu</span><a href={`mailto:${web.email}`}>{web.email}</a></div>
+          {web.telefon && <div class="kv"><span>Telèfon / WhatsApp</span><span>{web.telefon}</span></div>}
+          <div class="kv"><span>On som</span><span style="text-align:right">{web.poblacio} · {web.codiPostal} {web.provincia}</span></div>
+        </div>
+        {enGira.some((o) => o.data.dossier) && (
+          <div>
+            <div class="label" style="margin-bottom:12px">Dossiers de les obres en gira</div>
+            <div class="rows">
+              {enGira.filter((o) => o.data.dossier).map((o) => (
+                <a href={o.data.dossier} download class="kv" style="text-decoration:none"><span style="color:var(--ink)">{o.data.titol}</span><IconaBaixar /></a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <form class="form" action={action} method="post" enctype={web.formulari ? undefined : 'text/plain'}>
+        <div class="serif" style="font-size:36px;line-height:1.1">Demaneu una data</div>
+        <div class="form-grid">
+          <label>Nom i cognoms<input type="text" name="nom" required /></label>
+          <label>Entitat o ajuntament<input type="text" name="entitat" /></label>
+          <label>Correu electrònic<input type="email" name="correu" required /></label>
+          <label>Telèfon<input type="tel" name="telefon" /></label>
+          <label>Obra que us interessa
+            <select name="obra">
+              {enGira.map((o) => <option>{o.data.titol}</option>)}
+              <option>Encara no ho sabem</option>
+            </select>
+          </label>
+          <label>Data aproximada<input type="date" name="data" /></label>
+        </div>
+        <label>Missatge<textarea name="missatge" rows="5"></textarea></label>
+        <label class="check"><input type="checkbox" required />Accepto que feu servir aquestes dades per respondre'm.</label>
+        <button type="submit" class="btn">Enviar sol·licitud</button>
+      </form>
+    </div>
+  </section>
+
+  {faq.length > 0 && (
+  <section class="section">
+    <div class="wrap cols">
+      <div>
+        <div class="label" style="margin-bottom:20px">Preguntes freqüents</div>
+        <h2 class="display" style="font-size:52px">El que sol voler saber qui ens <em>programa</em>.</h2>
+      </div>
+      <div>
+        {faq.map((q: { pregunta: string; resposta: string }) => (
+          <details><summary>{q.pregunta}</summary><p class="muted" style="margin:10px 0 0">{q.resposta}</p></details>
+        ))}
+      </div>
+    </div>
+  </section>
+  )}
+</Base>

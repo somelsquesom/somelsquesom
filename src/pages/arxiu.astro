@@ -1,0 +1,105 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import Etiquetes from '../components/Etiquetes.astro';
+import web from '../data/web.json';
+import altres from '../data/altres-actuacions.json';
+import { perEstrena, repDe } from '../lib/util';
+
+const obres = (await getCollection('obres')).sort(perEstrena);
+
+// Agrupem per any (o temporada), del més recent al més antic.
+const grups = new Map<string, { obres: typeof obres; altres: typeof altres.actuacions }>();
+const grup = (k: string) => {
+  if (!grups.has(k)) grups.set(k, { obres: [], altres: [] });
+  return grups.get(k)!;
+};
+for (const o of obres) grup(o.data.temporada).obres.push(o);
+for (const a of altres.actuacions ?? []) grup(String(a.any)).altres.push(a);
+const ordenats = [...grups].sort(([a], [b]) => b.localeCompare(a));
+
+// Totes les etiquetes que s'han fet servir, per al filtre.
+const etiquetes = [...new Set(obres.flatMap((o) => [...(o.data.textPropi ? ['Text propi'] : []), ...o.data.etiquetes]))].sort((a, b) => a.localeCompare(b, 'ca'));
+const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Text propi'] : []), ...o.data.etiquetes].join('|');
+---
+<Base title="Temporades anteriors" current="arxiu">
+  <section class="wrap hero" style="padding-bottom:48px">
+    <div>
+      <div class="label" style="margin-bottom:20px">Arxiu</div>
+      <h1 class="display">Temporades <em>anteriors</em>.</h1>
+    </div>
+    <p class="lead">Totes les obres que hem fet des del {web.anyInici}: de què anaven, quan les vam estrenar i on les vam portar.</p>
+  </section>
+
+  {etiquetes.length > 0 && (
+    <section class="wrap" style="padding-bottom:16px">
+      <div class="filtre" role="group" aria-label="Filtra per etiqueta">
+        <span class="label" style="margin-right:8px">Filtra</span>
+        <button type="button" data-filtre="" aria-pressed="true">Totes</button>
+        {etiquetes.map((e) => <button type="button" data-filtre={e} aria-pressed="false">{e}</button>)}
+      </div>
+    </section>
+  )}
+
+  <section class="wrap" style="padding-bottom:96px">
+    {ordenats.map(([any, g]) => (
+      <div class="any" style="padding:40px 0;border-top:1px solid var(--line)">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:28px">
+          <h2 class="serif" style="margin:0;font-size:44px;line-height:1">{any}</h2>
+          <span class="label">
+            {[g.obres.length && `${g.obres.length} ${g.obres.length === 1 ? 'obra' : 'obres'}`, g.altres.length && `${g.altres.length} ${g.altres.length === 1 ? 'actuació' : 'actuacions'} més`].filter(Boolean).join(' · ')}
+          </span>
+        </div>
+        {g.obres.length > 0 && (
+          <div class="grid-cards">
+            {g.obres.map((o) => (
+              <a href={`/obres/${o.id}`} class="card obra" data-etiquetes={etiquetesDe(o)}>
+                <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="3/2" />
+                <div class="card-title">{o.data.titol}</div>
+                {(o.data.grup !== 'Companyia' || o.data.resum) && (
+                  <div class="muted" style="font-size:14px">{[o.data.grup !== 'Companyia' ? o.data.grup : '', o.data.resum].filter(Boolean).join(' · ')}</div>
+                )}
+                <Etiquetes etiquetes={o.data.etiquetes} textPropi={o.data.textPropi} />
+                <div class="label" style="display:flex;flex-wrap:wrap;gap:6px 16px">
+                  {repDe(o) > 0 && <span>{repDe(o)} {repDe(o) === 1 ? 'representació' : 'representacions'}</span>}
+                  {o.data.estat === 'en-gira' && <span class="accent">En gira</span>}
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+        {g.altres.length > 0 && (
+          <div class="altres rows" style="margin-top:28px">
+            <div class="label" style="border-top:0;padding-top:0">També vam fer</div>
+            {g.altres.map((a) => (
+              <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px">
+                <span>{a.titol}{a.grup !== 'Companyia' && <span class="label"> · {a.grup}</span>}</span>
+                <span class="label" style="text-align:right">{a.llocs}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    ))}
+  </section>
+
+  <script>
+    // Filtre per etiquetes: amaga les obres que no tenen l'etiqueta triada.
+    const botons = document.querySelectorAll<HTMLButtonElement>('[data-filtre]');
+    botons.forEach((b) =>
+      b.addEventListener('click', () => {
+        const f = b.dataset.filtre ?? '';
+        botons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        document.querySelectorAll<HTMLElement>('.obra').forEach((o) => {
+          o.hidden = f !== '' && !(o.dataset.etiquetes ?? '').split('|').includes(f);
+        });
+        document.querySelectorAll<HTMLElement>('.any').forEach((any) => {
+          const visibles = any.querySelectorAll('.obra:not([hidden])').length;
+          any.hidden = f !== '' && visibles === 0;
+          any.querySelectorAll<HTMLElement>('.altres').forEach((a) => (a.hidden = f !== ''));
+        });
+      })
+    );
+  </script>
+</Base>
