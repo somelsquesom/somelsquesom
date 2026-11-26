@@ -115,3 +115,16 @@ summary { cursor: pointer; font-weight: 500; font-size: 17px; }
 .filtre button { font: inherit; font-size: 14px; cursor: pointer; padding: 8px 14px; min-height: 40px; border: 1px solid var(--ink); background: #fff; color: var(--ink); }
 .filtre button[aria-pressed='true'] { background: var(--ink); color: #fff; }
 [hidden] { display: none !important; }
+
+/* Toc granat de teló de teatre */
+:root { --accent: #7a1c2a; --granat: #7a1c2a; --granat-fosc: #5c1420; }
+body { border-top: 6px solid var(--granat); }
+.site-nav .btn { background: var(--granat); border-color: var(--granat); }
+.site-nav .btn:hover { background: var(--granat-fosc); color: #fff; }
+.site-nav a[aria-current='page'] { border-bottom-color: var(--granat); }
+.section.dark { background: var(--granat); }
+.dark .btn { color: var(--granat); }
+h1.display em, h2.display em { color: var(--granat); }
+.section.dark h2.display em { color: #fff; }
+.tags li.propi, .tags.gran li.propi { border-color: var(--granat); color: var(--granat); }
+.filtre button[aria-pressed='true'] { background: var(--granat); border-color: var(--granat); }
