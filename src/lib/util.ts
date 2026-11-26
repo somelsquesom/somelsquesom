@@ -39,7 +39,7 @@ export function xifres(obres: CollectionEntry<'obres'>[]) {
   actuacions.forEach((a) => (a.poblacions ?? []).forEach((p: string) => p.trim() && poblacions.add(p.trim())));
   return {
     anys: new Date().getFullYear() - Number(web.anyInici),
-    obres: obres.length,
+    obres: obres.filter((o) => !o.data.secundaria).length,
     representacions: obres.reduce((n, o) => n + repDe(o), 0) + actuacions.reduce((n, a) => n + (Number(a.representacions) || 0), 0),
     poblacions: poblacions.size,
   };
