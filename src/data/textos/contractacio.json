@@ -21,5 +21,9 @@
   "acceptacio": "Accepto que feu servir aquestes dades per respondre'm.",
   "boto": "Enviar sol·licitud",
   "faqEtiqueta": "Preguntes freqüents",
-  "faqTitol": "El que sol voler saber qui ens *programa*."
+  "faqTitol": "El que sol voler saber qui ens *programa*.",
+  "formAssumpte": "Nova sol·licitud des de la web",
+  "graciesTitol": "Gràcies*!*",
+  "graciesText": "Hem rebut el vostre missatge. Us respondrem tan aviat com puguem.",
+  "graciesBoto": "Tornar a l'inici"
 }
