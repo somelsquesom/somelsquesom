@@ -287,8 +287,9 @@ collections:
       - name: formatFotos
         label: "Format de les fotos de portada (inici, En gira, arxiu, notícies). Si una foto té un altre format, es retalla sola pel centre. Els cartells sempre surten sencers."
         widget: select
-        default: "4/3"
+        default: "4/5"
         options:
+          - { label: "Vertical (4:5)", value: "4/5" }
           - { label: "Quadrada (1:1)", value: "1/1" }
           - { label: "Clàssica (4:3)", value: "4/3" }
           - { label: "Foto (3:2)", value: "3/2" }
