@@ -11,8 +11,11 @@ interface Props {
   description?: string;
   seccio?: string;
 }
-const { title, description = web.presentacio } = Astro.props;
-const fullTitle = title ? `${title} · ${web.nom}` : `${web.nom} · Teatre amateur de ${web.poblacio}`;
+const w = web as Record<string, any>;
+const { title, description = w.descripcioWeb || web.presentacio } = Astro.props;
+const fullTitle = title ? `${title} · ${web.nom}` : w.titolWeb || `${web.nom} · Teatre amateur de ${web.poblacio}`;
+// Imatge que surt quan es comparteix l'enllaç (WhatsApp, xarxes...)
+const imatge = new URL(w.imatgeCompartir || w.fotoPortada || w.logo || '/favicon.svg', Astro.site ?? Astro.url).href;
 const vars = variables();
 const ruta = Astro.url.pathname.replace(/\/$/, '') || '/';
 const actiu = (enllac: string) => enllac !== '/' && (ruta === enllac.replace(/\/$/, '') || ruta.startsWith(enllac.replace(/\/$/, '') + '/'));
@@ -35,6 +38,15 @@ const seccioObra = Astro.props.seccio;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={web.nom} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site ?? Astro.url).href} />
+    <meta property="og:image" content={imatge} />
+    <meta property="og:locale" content="ca_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {w.logo && <link rel="icon" href={w.logo} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
