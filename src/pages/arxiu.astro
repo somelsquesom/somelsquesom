@@ -61,7 +61,7 @@ const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Tex
           </span>
         </div>
         {g.obres.length > 0 && (
-          <div class="llista-h petita">
+          <div class="llista-h petita llista-arxiu">
             {g.obres.map((o) => (
               <a href={`/obres/${o.id}`} class="card-h obra" data-etiquetes={etiquetesDe(o)}>
                 <Foto src={o.data.foto || o.data.cartell} alt={o.data.titol} portada encaixa={!o.data.foto} />
