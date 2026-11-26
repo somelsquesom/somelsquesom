@@ -58,6 +58,16 @@ collections:
       - { name: foto, label: Foto principal, widget: image, required: false }
       - { name: galeria, label: Galeria de fotos, widget: image, multiple: true, required: false }
       - { name: trailer, label: "Tràiler (enllaç de YouTube o Vimeo)", widget: string, required: false }
+      - name: videos
+        label: "Vídeos (reels d'Instagram, TikTok, YouTube...)"
+        label_singular: vídeo
+        widget: list
+        required: false
+        summary: "{{titol}}"
+        fields:
+          - { name: titol, label: Títol, widget: string, required: false }
+          - { name: enllac, label: "Enllaç al vídeo", widget: string }
+          - { name: imatge, label: "Imatge de portada", widget: image, required: false }
       - { name: entrades, label: "Comprar entrades: enllaç (si és buit, el botó no surt)", widget: string, required: false }
       - { name: entradesInfo, label: "Entrades: text informatiu (p. ex. «Entrades disponibles a partir del 5 de desembre a les 10 h · 8 €»)", widget: string, required: false }
       - { name: dossier, label: Dossier de venda (PDF), widget: file, required: false }
@@ -127,6 +137,16 @@ collections:
       - { name: peuFoto, label: Peu de foto, widget: string, required: false }
       - { name: body, label: Text, widget: markdown }
       - { name: galeria, label: Més fotos, widget: image, multiple: true, required: false }
+      - name: videos
+        label: "Vídeos (reels d'Instagram, TikTok, YouTube...)"
+        label_singular: vídeo
+        widget: list
+        required: false
+        summary: "{{titol}}"
+        fields:
+          - { name: titol, label: Títol, widget: string, required: false }
+          - { name: enllac, label: "Enllaç al vídeo", widget: string }
+          - { name: imatge, label: "Imatge de portada", widget: image, required: false }
       - { name: destacada, label: Destacada, widget: boolean, default: false, required: false }
 
   # ---------------- PREMSA ----------------
