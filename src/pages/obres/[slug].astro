@@ -55,7 +55,7 @@ const descarregues = [
         <div style="margin-top:20px"><Etiquetes etiquetes={d.etiquetes} textPropi={d.textPropi} gran /></div>
         {(d.autoria || d.direccio || d.grup !== 'Companyia') && (
           <div class="label" style="font-size:18px;margin-top:12px">
-            {[d.autoria && de(d.autoria), d.direccio && `direcció ${de(d.direccio)}`, d.grup !== 'Companyia' && d.grup].filter(Boolean).join(' · ')}
+            {[d.autoria && (/^(versió|adaptació|a partir|creació|text|lectura)/i.test(d.autoria.trim()) ? d.autoria : de(d.autoria)), d.direccio && `direcció ${de(d.direccio)}`, d.grup !== 'Companyia' && d.grup].filter(Boolean).join(' · ')}
           </div>
         )}
       </div>
