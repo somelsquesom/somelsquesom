@@ -58,7 +58,7 @@ collections:
       - { name: galeria, label: Galeria de fotos, widget: image, multiple: true, required: false }
       - { name: trailer, label: "Tràiler (enllaç de YouTube o Vimeo)", widget: string, required: false }
       - { name: entrades, label: "Entrades: enllaç per comprar-les (surt el botó «Comprar entrades»)", widget: string, required: false }
-      - { name: entradesInfo, label: "Entrades: preu o informació (p. ex. 8 € · venda anticipada a ...)", widget: string, required: false }
+      - { name: entradesInfo, label: "Entrades: text informatiu (p. ex. «Entrades disponibles a partir del 5 de desembre a les 10 h · 8 €»)", widget: string, required: false }
       - { name: dossier, label: Dossier de venda (PDF), widget: file, required: false }
       - { name: rider, label: Rider tècnic (PDF), widget: file, required: false }
       - { name: cartell, label: Cartell, widget: image, required: false }
