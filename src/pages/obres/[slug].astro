@@ -67,8 +67,10 @@ const descarregues = [
         )}
         <div class="btns">
           {d.dossier && <a href={d.dossier} class="btn" download><IconaBaixar />{enGira ? 'Descarregar el dossier de venda' : "Dossier de l'obra"}</a>}
+          {d.entrades && <a href={d.entrades} class="btn granat" target="_blank" rel="noopener">Comprar entrades</a>}
           {enGira && <a href="/contractacio" class="btn ghost">Demanar data</a>}
         </div>
+        {d.entradesInfo && <div class="label" style="font-size:14px">{d.entradesInfo}</div>}
       </div>
     </div>
   </section>
@@ -179,7 +181,7 @@ const descarregues = [
               {d.funcions.map((f) => (
                 <div style="display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px">
                   <span class="label" style="font-size:15px">{f.data}</span>
-                  <span>{[f.espai, f.poblacio].filter(Boolean).join(' · ')}{f.nota && <span class="label"> · {f.nota}</span>}</span>
+                  <span>{[f.espai, f.poblacio].filter(Boolean).join(' · ')}{f.nota && <span class="label"> · {f.nota}</span>}{f.entrades && <> · <a href={f.entrades} target="_blank" rel="noopener">Entrades ↗</a></>}</span>
                 </div>
               ))}
             </div>
