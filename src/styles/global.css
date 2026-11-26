@@ -164,9 +164,53 @@ a[data-galeria] { cursor: zoom-in; display: block; }
 .video-text { display: flex; flex-direction: column; gap: 2px; }
 
 /* Cartells sencers (sense retallar) quan fan de foto */
-.media.sencera { object-fit: contain; background: var(--soft); padding: 14px; }
+.media.sencera { height: auto; object-fit: initial; background: none; }
 
 /* Logo */
 .logo { display: inline-flex; align-items: center; gap: 14px; }
 .logo img { height: 56px; width: auto; }
 .logo-peu { display: block; height: 72px; width: auto; margin-bottom: 14px; }
+
+/* Subtítols en granat */
+.section-head > :first-child { color: var(--granat); }
+
+/* Línia del temps (La companyia) */
+.linia-temps { list-style: none; margin: 0; padding: 0; position: relative; }
+.linia-temps .any-boto { font: inherit; background: none; border: 0; padding: 0; cursor: pointer; color: var(--ink); display: flex; align-items: center; gap: 14px; }
+.linia-temps .any-boto:disabled { cursor: default; }
+.linia-temps .punt { width: 14px; height: 14px; border-radius: 50%; background: var(--granat); border: 3px solid var(--bg, #fff); box-shadow: 0 0 0 2px var(--granat); flex: none; }
+.linia-temps .buit .punt { background: var(--bg, #fff); box-shadow: 0 0 0 2px var(--line); }
+.linia-temps .any-num { font-family: var(--serif); font-size: 30px; line-height: 1; }
+.linia-temps .buit .any-num { color: #b5b5b0; }
+.linia-temps .any-obres { display: flex; flex-direction: column; gap: 8px; }
+.linia-temps .any-obres a { display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: 15px; line-height: 1.3; }
+.linia-temps .any-obres a:hover { color: var(--granat); }
+.linia-temps .any-obres img, .linia-temps .sense-img { width: 40px; height: 52px; object-fit: cover; background: var(--soft); flex: none; }
+
+/* Mòbil: línia vertical, els anys apareixen en baixar */
+@media (max-width: 899px) {
+  .linia-temps { border-left: 2px solid var(--granat); margin-left: 6px; padding-left: 0; }
+  .linia-temps .any { padding: 0 0 28px 0; margin-left: -8px; }
+  .linia-temps .any-boto { pointer-events: none; }
+  .linia-temps .any-obres { margin: 12px 0 0 30px; }
+  .linia-temps .buit { display: none; }
+  .linia-temps.anima .any { opacity: 0; transform: translateX(16px); transition: opacity .6s ease, transform .6s ease; }
+  .linia-temps.anima .any.vist { opacity: 1; transform: none; }
+}
+
+/* Ordinador: línia horitzontal, les obres surten en passar per sobre de l'any */
+@media (min-width: 900px) {
+  .linia-temps { display: flex; justify-content: space-between; padding: 150px 0 10px; }
+  .linia-temps::before { content: ''; position: absolute; left: 0; right: 0; top: 159px; height: 2px; background: var(--granat); }
+  .linia-temps .any { position: relative; flex: 1; display: flex; justify-content: center; }
+  .linia-temps .any-boto { flex-direction: column; gap: 12px; position: relative; z-index: 1; }
+  .linia-temps .any-num { font-size: 22px; }
+  .linia-temps .any:not(.buit):hover .punt, .linia-temps .any.obert .punt { transform: scale(1.35); }
+  .linia-temps .punt { transition: transform .2s; }
+  .linia-temps .any-obres { position: absolute; bottom: 100%; left: 50%; transform: translate(-50%, 8px); width: 240px; background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(0,0,0,.08); padding: 14px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 2; }
+  .linia-temps .any:first-child .any-obres, .linia-temps .any:nth-child(2) .any-obres { left: 0; transform: translate(0, 8px); }
+  .linia-temps .any:last-child .any-obres, .linia-temps .any:nth-last-child(2) .any-obres { left: auto; right: 0; transform: translate(0, 8px); }
+  .linia-temps .any:hover .any-obres, .linia-temps .any:focus-within .any-obres, .linia-temps .any.obert .any-obres { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+  .linia-temps .any:first-child:is(:hover, :focus-within, .obert) .any-obres, .linia-temps .any:nth-child(2):is(:hover, :focus-within, .obert) .any-obres,
+  .linia-temps .any:last-child:is(:hover, :focus-within, .obert) .any-obres, .linia-temps .any:nth-last-child(2):is(:hover, :focus-within, .obert) .any-obres { transform: none; }
+}
