@@ -39,5 +39,9 @@
   "veureTotes": "Veure-les totes →",
   "videos": "Vídeos",
   "veureVideo": "Veure el vídeo ↗",
-  "mapa": "Mapa ↗"
+  "mapa": "Mapa ↗",
+  "maximGaleria": 10,
+  "veureGaleria": "Veure totes les fotos",
+  "mesFotos": "fotos",
+  "galeriaGeneral": "Fotos"
 }
