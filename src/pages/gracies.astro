@@ -1,0 +1,16 @@
+---
+// Pàgina on arriba qui envia el formulari de contractació.
+import Base from '../layouts/Base.astro';
+import t from '../data/textos/contractacio.json';
+import { rich, variables } from '../lib/util';
+const R = (s?: string) => rich(s, variables());
+---
+<Base title={t.titolPestanya}>
+  <section class="wrap hero" style="padding-bottom:120px">
+    <h1 class="display" set:html={R(t.graciesTitol ?? 'Gràcies*!*')} />
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <p class="lead" set:html={R(t.graciesText)} />
+      <a href="/" class="btn" style="align-self:flex-start">{t.graciesBoto ?? "Tornar a l'inici"}</a>
+    </div>
+  </section>
+</Base>

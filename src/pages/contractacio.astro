@@ -51,6 +51,12 @@ const faq = (web.preguntes ?? []).filter((p: { pregunta?: string; resposta?: str
       {t.mostrarFormulari && (
       <form class="form" action={action} method="post" enctype={web.formulari ? undefined : 'text/plain'}>
         <div class="serif" style="font-size:36px;line-height:1.1">{t.formTitol}</div>
+        {web.formulari && <>
+          <input type="hidden" name="_subject" value={t.formAssumpte ?? 'Nova sol·licitud des de la web'} />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_next" value={new URL('/gracies', Astro.site ?? Astro.url).href} />
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+        </>}
         <div class="form-grid">
           <label>{t.campNom}<input type="text" name="nom" required /></label>
           <label>{t.campEntitat}<input type="text" name="entitat" /></label>
