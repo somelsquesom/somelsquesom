@@ -35,7 +35,7 @@ const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Tex
 <Base title={t.titolPestanya}>
   <section class="wrap hero" style="padding-bottom:48px">
     <div>
-      {t.etiqueta && <div class="label" style="margin-bottom:20px">{t.etiqueta}</div>}
+      {t.etiqueta && <div class="label accent" style="margin-bottom:20px">{t.etiqueta}</div>}
       <h1 class="display" set:html={R(t.titol)} />
     </div>
     {t.presentacio && <p class="lead" set:html={R(t.presentacio)} />}
@@ -64,7 +64,7 @@ const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Tex
           <div class="grid-cards">
             {g.obres.map((o) => (
               <a href={`/obres/${o.id}`} class="card obra" data-etiquetes={etiquetesDe(o)}>
-                <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="3/2" sencera={!o.data.foto} />
+                <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} portada sencera={!o.data.foto} />
                 <div class="card-title">{o.data.titol}</div>
                 {(o.data.grup !== 'Companyia' || o.data.resum) && (
                   <div class="muted" style="font-size:14px">{[o.data.grup !== 'Companyia' ? o.data.grup : '', o.data.resum].filter(Boolean).join(' · ')}</div>

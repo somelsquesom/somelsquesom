@@ -18,7 +18,7 @@ const faq = (web.preguntes ?? []).filter((p: { pregunta?: string; resposta?: str
 <Base title={t.titolPestanya}>
   <section class="wrap hero">
     <div>
-      {t.etiqueta && <div class="label" style="margin-bottom:20px">{t.etiqueta}</div>}
+      {t.etiqueta && <div class="label accent" style="margin-bottom:20px">{t.etiqueta}</div>}
       <h1 class="display" set:html={R(t.titol)} />
     </div>
     {t.presentacio && <p class="lead" set:html={R(t.presentacio)} />}
@@ -76,7 +76,7 @@ const faq = (web.preguntes ?? []).filter((p: { pregunta?: string; resposta?: str
   <section class="section">
     <div class="wrap cols">
       <div>
-        <div class="label" style="margin-bottom:20px">{t.faqEtiqueta}</div>
+        <div class="label accent" style="margin-bottom:20px">{t.faqEtiqueta}</div>
         <h2 class="display" style="font-size:52px" set:html={R(t.faqTitol)} />
       </div>
       <div>

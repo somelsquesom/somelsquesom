@@ -18,7 +18,7 @@ const R = (s?: string) => rich(s, variables());
 <Base title={d.titol} description={d.entradeta}>
   <section class="wrap hero">
     <div>
-      {d.etiqueta && <div class="label" style="margin-bottom:20px">{d.etiqueta}</div>}
+      {d.etiqueta && <div class="label accent" style="margin-bottom:20px">{d.etiqueta}</div>}
       <h1 class="display" set:html={R(d.titolGran || d.titol)} />
     </div>
     {d.entradeta && <p class="lead" set:html={R(d.entradeta)} />}

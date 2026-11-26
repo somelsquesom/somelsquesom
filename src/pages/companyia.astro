@@ -16,12 +16,15 @@ for (const o of [...obres].filter((o) => !o.data.secundaria).reverse()) {
   const a = o.data.estrena.getFullYear();
   anys.set(a, [...(anys.get(a) ?? []), o]);
 }
+// Tots els anys, també els que no vam estrenar res, per dibuixar la línia del temps.
+const claus = [...anys.keys()];
+const totsAnys = claus.length ? Array.from({ length: Math.max(...claus) - Math.min(...claus) + 1 }, (_, k) => Math.min(...claus) + k) : [];
 const xifresLlista = [[x.anys, t.xifres?.anys], [x.obres, t.xifres?.obres], [x.representacions, t.xifres?.representacions], [x.poblacions, t.xifres?.poblacions]].filter(([n, l]) => Number(n) > 0 && l);
 ---
 <Base title={t.titolPestanya}>
   <section class="wrap hero">
     <div>
-      {t.etiqueta && <div class="label" style="margin-bottom:20px">{t.etiqueta}</div>}
+      {t.etiqueta && <div class="label accent" style="margin-bottom:20px">{t.etiqueta}</div>}
       <h1 class="display" set:html={R(t.titol)} />
     </div>
     <p class="lead" style="font-size:20px;max-width:520px" set:html={R(t.presentacio || web.presentacioLlarga || web.presentacio)} />
@@ -46,19 +49,52 @@ const xifresLlista = [[x.anys, t.xifres?.anys], [x.obres, t.xifres?.obres], [x.r
       <div class="wrap">
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;margin-bottom:36px">
           <div>
-            {t.historiaEtiqueta && <div class="label" style="margin-bottom:16px">{t.historiaEtiqueta}</div>}
+            {t.historiaEtiqueta && <div class="label accent" style="margin-bottom:16px">{t.historiaEtiqueta}</div>}
             <h2 class="display" set:html={R(t.historiaTitol)} />
           </div>
           <a href="/arxiu">{t.historiaEnllac ?? "Veure tot l'arxiu →"}</a>
         </div>
-        <div class="cronologia">
-          {[...anys].map(([any, llista]) => (
-            <div>
-              <div class="serif accent" style="font-size:30px;line-height:1">{any}</div>
-              {llista.map((o) => <a href={`/obres/${o.id}`}>{o.data.titol}</a>)}
-            </div>
-          ))}
-        </div>
+        <ol class="linia-temps">
+          {totsAnys.map((any) => {
+            const llista = anys.get(any) ?? [];
+            return (
+              <li class:list={['any', { buit: llista.length === 0 }]}>
+                <button type="button" class="any-boto" aria-expanded="false" disabled={llista.length === 0}>
+                  <span class="punt" aria-hidden="true"></span>
+                  <span class="any-num">{any}</span>
+                </button>
+                {llista.length > 0 && (
+                  <div class="any-obres">
+                    {llista.map((o) => (
+                      <a href={`/obres/${o.id}`}>
+                        {(o.data.foto || o.data.cartell) ? <img src={o.data.foto ?? o.data.cartell} alt="" loading="lazy" /> : <span class="sense-img" aria-hidden="true"></span>}
+                        <span>{o.data.titol}</span>
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+        <script>
+          const linia = document.querySelector<HTMLElement>('.linia-temps');
+          if (linia) {
+            // Ordinador: clicar un any també l'obre (per a pantalles tàctils grans)
+            linia.querySelectorAll<HTMLButtonElement>('.any-boto').forEach((b) =>
+              b.addEventListener('click', () => {
+                const li = b.parentElement!;
+                const obert = li.classList.toggle('obert');
+                b.setAttribute('aria-expanded', String(obert));
+                linia.querySelectorAll('.any.obert').forEach((x) => x !== li && x.classList.remove('obert'));
+              })
+            );
+            // Mòbil: els anys apareixen a mesura que baixes
+            linia.classList.add('anima');
+            const obs = new IntersectionObserver((ents) => ents.forEach((e) => e.isIntersecting && (e.target.classList.add('vist'), obs.unobserve(e.target))), { threshold: 0.25 });
+            linia.querySelectorAll('.any').forEach((a) => obs.observe(a));
+          }
+        </script>
       </div>
     </section>
   )}
@@ -75,7 +111,7 @@ const xifresLlista = [[x.anys, t.xifres?.anys], [x.obres, t.xifres?.obres], [x.r
       </div>
       {web.noms.length > 0 && (
         <div style="margin-top:56px;border-top:1px solid var(--line);padding-top:28px">
-          <div class="label" style="margin-bottom:16px" set:html={R(t.nomsEtiqueta)} />
+          <div class="label accent" style="margin-bottom:16px" set:html={R(t.nomsEtiqueta)} />
           <p class="serif" style="margin:0;font-size:30px;line-height:1.45">{web.noms.join(' · ')}</p>
         </div>
       )}
