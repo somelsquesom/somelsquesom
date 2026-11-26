@@ -11,7 +11,8 @@ const R = (s?: string) => rich(s, v);
 const enGira = await getCollection('obres', (o) => o.data.estat === 'en-gira');
 // Si teniu un servei de formulari (p. ex. Formspree), poseu-ne l'adreça a "formulari" (Dades de la web).
 // Si no, el formulari obre el correu de qui el fa servir, adreçat a la companyia.
-const clau = (web as Record<string, any>).clauWeb3forms;
+// Agafem només la clau (el codi amb guions), encara que al gestor s'hi hagi enganxat més text.
+const clau = String((web as Record<string, any>).clauWeb3forms ?? '').match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i)?.[0];
 const action = clau ? 'https://api.web3forms.com/submit' : web.formulari || `mailto:${web.email}`;
 const gracies = new URL('/gracies', Astro.site ?? Astro.url).href;
 // Les preguntes freqüents s'editen a «Dades de la web». Si no n'hi ha cap, la secció no surt.
