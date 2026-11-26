@@ -1097,6 +1097,7 @@ collections:
           - { name: tiktok, label: "TikTok (només l'usuari, sense @)", widget: string, required: false }
           - { name: facebook, label: Facebook (enllaç), widget: string, required: false }
           - { name: formulari, label: "Adreça del formulari (Formspree...). Buit = s'obre el correu", widget: string, required: false }
+          - { name: clauWeb3forms, label: "Clau de Web3Forms (Access Key) per al formulari de contractació. Si hi és, el formulari envia amb Web3Forms", widget: string, required: false }
           - { name: dossiersGenerals, label: Tots els dossiers (ZIP), widget: file, required: false }
           - { name: fotoPortada, label: Foto de portada, widget: image, required: false }
           - { name: fotoGrup, label: Foto de grup, widget: image, required: false }
