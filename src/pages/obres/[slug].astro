@@ -22,6 +22,11 @@ const { Content } = await render(obra);
 const enGira = d.estat === 'en-gira';
 const teText = Boolean(obra.body && obra.body.trim());
 const video = embedVideo(d.trailer);
+// Galeria: a la fitxa només en surten unes quantes; la resta, a la pàgina de galeria de l'obra.
+const totesFotos = [...d.galeria, ...d.seccionsGaleria.flatMap((s) => s.fotos)];
+const maxim = Number(t.maximGaleria) || 10;
+const fotosFitxa = totesFotos.slice(0, maxim);
+const hiHaMes = totesFotos.length > maxim || d.seccionsGaleria.length > 0;
 const estrena = d.estrenaText ?? formatMesAny(d.estrena);
 const rep = repDe(obra);
 const v = variables({ titol: d.titol });
@@ -127,13 +132,14 @@ const descarregues = [
     </section>
   )}
 
-  {d.galeria.length > 0 && (
+  {fotosFitxa.length > 0 && (
     <section class="section">
       <div class="wrap">
-        <div class="section-head"><span class="accent">{t.galeria}</span><span>{d.galeria.length} {t.fotos}</span></div>
-        <div class="galeria-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:12px">
-          {d.galeria.map((src, n) => <a href={src} data-galeria="obra"><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="4/3" /></a>)}
+        <div class="section-head"><span class="accent">{t.galeria}</span>{hiHaMes ? <a href={`/obres/${obra.id}/galeria`}>{t.veureGaleria ?? 'Veure totes les fotos'} ({totesFotos.length}) →</a> : <span>{totesFotos.length} {t.fotos}</span>}</div>
+        <div class="galeria-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:12px">
+          {fotosFitxa.map((src, n) => <a href={src} data-galeria="obra"><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="4/3" /></a>)}
         </div>
+        {hiHaMes && <div style="margin-top:28px"><a href={`/obres/${obra.id}/galeria`} class="btn ghost">+ {t.mesFotos ?? 'fotos'} ({totesFotos.length - fotosFitxa.length})</a></div>}
       </div>
     </section>
   )}
