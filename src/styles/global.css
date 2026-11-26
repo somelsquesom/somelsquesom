@@ -162,3 +162,11 @@ a[data-galeria] { cursor: zoom-in; display: block; }
 .video-play { position: absolute; inset: 0; margin: auto; width: 64px; height: 64px; border-radius: 50%; background: var(--granat); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; padding-left: 4px; }
 .video-card:hover .video-play { background: var(--granat-fosc); }
 .video-text { display: flex; flex-direction: column; gap: 2px; }
+
+/* Cartells sencers (sense retallar) quan fan de foto */
+.media.sencera { object-fit: contain; background: var(--soft); padding: 14px; }
+
+/* Logo */
+.logo { display: inline-flex; align-items: center; gap: 14px; }
+.logo img { height: 56px; width: auto; }
+.logo-peu { display: block; height: 72px; width: auto; margin-bottom: 14px; }
