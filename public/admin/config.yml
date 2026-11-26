@@ -176,6 +176,8 @@ collections:
           - { name: dossiersGenerals, label: Tots els dossiers (ZIP), widget: file, required: false }
           - { name: fotoPortada, label: Foto de portada, widget: image, required: false }
           - { name: fotoGrup, label: Foto de grup, widget: image, required: false }
+          - { name: titolCompanyia, label: "Portada: títol del bloc de la companyia (el que va entre *asteriscs* surt en cursiva granat)", widget: string, required: false }
+          - { name: enllacCompanyia, label: "Portada: text de l'enllaç a la companyia", widget: string, required: false }
           - name: preguntes
             label: Preguntes freqüents (Contractació)
             label_singular: pregunta
