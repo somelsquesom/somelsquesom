@@ -4,5 +4,6 @@
   "colorText": "#111111",
   "colorFons": "#ffffff",
   "colorFonsSuau": "#f7f7f5",
-  "franjaSuperior": true
+  "franjaSuperior": true,
+  "formatFotos": "4/3"
 }
