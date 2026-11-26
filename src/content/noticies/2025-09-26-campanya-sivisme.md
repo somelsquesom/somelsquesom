@@ -12,6 +12,7 @@ galeria:
   - "/uploads/instagram/noticia-campanya-sivisme-ig07.jpg"
   - "/uploads/instagram/noticia-campanya-sivisme-ig08.jpg"
   - "/uploads/instagram/noticia-campanya-sivisme-ig09.jpg"
+videos: [{"titol":"Sí-visme: el vídeo de la campanya","enllac":"https://www.instagram.com/reel/DFqVadEtF7T/"}]
 ---
 
 Des de la Festa Major del setembre del 2024, l'Ajuntament de Bell-lloc d'Urgell i Som els que som hem fet la campanya *Sí-visme*, en positiu i per a la bona convivència al poble.
