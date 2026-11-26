@@ -1,12 +1,18 @@
 ---
 // Mostra la foto només si n'hi ha. Si el camp és buit, no surt res.
-// "sencera": la imatge es veu completa, sense retallar (per als cartells).
+// sencera: la imatge es mostra amb el seu format original, sense retallar (per als cartells).
+// portada: fa servir el format de foto triat al gestor (Textos i aparença → Colors i aparença).
+import estil from '../data/textos/estil.json';
 interface Props {
   src?: string;
   alt?: string;
   ratio?: string;
   sencera?: boolean;
+  portada?: boolean;
 }
-const { src, alt = '', ratio = '4/3', sencera = false } = Astro.props;
+const { src, alt = '', ratio = '4/3', sencera = false, portada = false } = Astro.props;
+const format = portada ? (estil as Record<string, string>).formatFotos || '4/3' : ratio;
 ---
-{src && <img class:list={['media', { sencera }]} src={src} alt={alt} loading="lazy" style={`aspect-ratio:${ratio}`} />}
+{src && (sencera
+  ? <img class="media sencera" src={src} alt={alt} loading="lazy" />
+  : <img class="media" src={src} alt={alt} loading="lazy" style={`aspect-ratio:${format}`} />)}
