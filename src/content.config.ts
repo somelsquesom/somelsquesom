@@ -25,6 +25,8 @@ const obres = defineCollection({
     foto: z.string().optional(),
     galeria: z.array(z.string()).default([]),
     trailer: z.string().optional(),
+        entrades: z.string().optional(),
+    entradesInfo: z.string().optional(),
     dossier: z.string().optional(),
     rider: z.string().optional(),
     cartell: z.string().optional(),
@@ -33,7 +35,7 @@ const obres = defineCollection({
     fitxaArtistica: z.array(z.object({ rol: z.string(), nom: z.string() })).default([]),
     fitxaTecnica: z.array(z.object({ concepte: z.string(), valor: z.string() })).default([]),
     funcions: z
-      .array(z.object({ data: z.string(), espai: z.string().optional(), poblacio: z.string().optional(), nota: z.string().optional() }))
+      .array(z.object({ data: z.string(), espai: z.string().optional(), poblacio: z.string().optional(), nota: z.string().optional(), entrades: z.string().optional() }))
       .default([]),
     cites: z.array(z.object({ text: z.string(), autor: z.string() })).default([]),
     destacada: z.boolean().default(false),
