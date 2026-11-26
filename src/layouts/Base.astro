@@ -42,13 +42,24 @@ const seccioObra = Astro.props.seccio;
   <body class:list={{ franja: estil.franjaSuperior }}>
     <header class="wrap site-header">
       <a href="/" class="logo">{web.logo && <img src={web.logo} alt="" />}<span>{web.nom}</span></a>
-      <nav class="site-nav" aria-label="Menú principal">
+      <button type="button" class="menu-boto" aria-expanded="false" aria-controls="menu-principal" aria-label="Obrir el menú"><span></span><span></span><span></span></button>
+      <nav class="site-nav" id="menu-principal" aria-label="Menú principal">
         {(menu.elements ?? []).map((item) => (
           <a href={item.enllac} aria-current={actiu(item.enllac) || seccioObra === item.enllac ? 'page' : undefined} target={extern(item.enllac) ? '_blank' : undefined}>{item.text}</a>
         ))}
         {menu.boto?.text && <a href={menu.boto.enllac} class="btn">{menu.boto.text}</a>}
       </nav>
     </header>
+    <script>
+      const boto = document.querySelector<HTMLButtonElement>('.menu-boto');
+      const nav = document.getElementById('menu-principal');
+      boto?.addEventListener('click', () => {
+        const obert = nav!.classList.toggle('obert');
+        boto.classList.toggle('obert', obert);
+        boto.setAttribute('aria-expanded', String(obert));
+        boto.setAttribute('aria-label', obert ? 'Tancar el menú' : 'Obrir el menú');
+      });
+    </script>
 
     <main>
       <slot />
