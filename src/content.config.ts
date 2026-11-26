@@ -39,6 +39,7 @@ const obres = defineCollection({
       .default([]),
     cites: z.array(z.object({ text: z.string(), autor: z.string() })).default([]),
     destacada: z.boolean().default(false),
+    secundaria: z.boolean().default(false),
   }),
 });
 
