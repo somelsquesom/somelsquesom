@@ -131,7 +131,7 @@ const descarregues = [
     <section class="section">
       <div class="wrap">
         <div class="section-head"><span class="accent">{t.galeria}</span><span>{d.galeria.length} {t.fotos}</span></div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:12px">
+        <div class="galeria-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:12px">
           {d.galeria.map((src, n) => <a href={src} data-galeria="obra"><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="4/3" /></a>)}
         </div>
       </div>
@@ -191,9 +191,9 @@ const descarregues = [
             <div class="label accent" style="margin-bottom:20px">{t.onLhemFet} · {d.funcions.length} {d.funcions.length === 1 ? t.funcio : t.funcions}</div>
             <div class="rows">
               {d.funcions.map((f) => (
-                <div style="display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px">
+                <div class="funcio-fila">
                   <span class="label" style="font-size:15px">{f.data}</span>
-                  <span>{[f.espai, f.poblacio].filter(Boolean).join(' · ')}{f.nota && <span class="label"> · {f.nota}</span>}{f.entrades && <> · <a href={f.entrades} target="_blank" rel="noopener">{t.entrades}</a></>}</span>
+                  <span>{[f.espai, f.poblacio].filter(Boolean).join(' · ')}{f.nota && <span class="label"> · {f.nota}</span>}{f.entrades && <> · <a href={f.entrades} target="_blank" rel="noopener">{t.entrades}</a></>}{(f.adreca || (f.espai && f.poblacio)) && <> · <a class="mapa" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f.adreca || `${f.espai}, ${f.poblacio}`)}`} target="_blank" rel="noopener">{t.mapa ?? 'Mapa ↗'}</a></>}</span>
                 </div>
               ))}
             </div>
