@@ -9,7 +9,7 @@ import { perEstrena, perData, formatData, rich, variables } from '../lib/util';
 
 const obres = (await getCollection('obres')).sort(perEstrena);
 const enGira = obres.filter((o) => o.data.estat === 'en-gira').slice(0, t.enGira.quantes ?? 2);
-const arxiu = obres.filter((o) => o.data.estat === 'arxiu').slice(0, t.arxiu.quantes ?? 4);
+const arxiu = obres.filter((o) => o.data.estat === 'arxiu' && !o.data.secundaria).slice(0, t.arxiu.quantes ?? 4);
 const noticies = (await getCollection('noticies')).sort(perData).slice(0, t.noticies.quantes ?? 3);
 const v = variables({}, obres);
 const R = (s?: string) => rich(s, v);

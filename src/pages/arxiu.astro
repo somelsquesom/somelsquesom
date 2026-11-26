@@ -13,17 +13,23 @@ const R = (s?: string) => rich(s, v);
 const obres = (await getCollection('obres')).sort(perEstrena);
 
 // Agrupem per any (o temporada), del més recent al més antic.
-const grups = new Map<string, { obres: typeof obres; altres: typeof altres.actuacions }>();
+type Altra = { titol: string; grup: string; llocs?: string; href?: string };
+const grups = new Map<string, { obres: typeof obres; altres: Altra[] }>();
 const grup = (k: string) => {
   if (!grups.has(k)) grups.set(k, { obres: [], altres: [] });
   return grups.get(k)!;
 };
-for (const o of obres) grup(o.data.temporada).obres.push(o);
+// Obres principals: fitxa gran amb foto. Obres secundàries: només a la llista «També vam fer».
+const principals = obres.filter((o) => !o.data.secundaria);
+const teFitxa = (o: (typeof obres)[number]) => Boolean(o.data.foto || o.data.cartell || o.data.galeria.length || o.data.resum || o.body?.trim());
+for (const o of principals) grup(o.data.temporada).obres.push(o);
+for (const o of obres.filter((o) => o.data.secundaria))
+  grup(o.data.temporada).altres.push({ titol: o.data.titol, grup: o.data.grup, llocs: o.data.llocs, href: teFitxa(o) ? `/obres/${o.id}` : undefined });
 for (const a of altres.actuacions ?? []) grup(String(a.any)).altres.push(a);
 const ordenats = [...grups].sort(([a], [b]) => b.localeCompare(a));
 
 // Totes les etiquetes que s'han fet servir, per al filtre.
-const etiquetes = [...new Set(obres.flatMap((o) => [...(o.data.textPropi ? ['Text propi'] : []), ...o.data.etiquetes]))].sort((a, b) => a.localeCompare(b, 'ca'));
+const etiquetes = [...new Set(principals.flatMap((o) => [...(o.data.textPropi ? ['Text propi'] : []), ...o.data.etiquetes]))].sort((a, b) => a.localeCompare(b, 'ca'));
 const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Text propi'] : []), ...o.data.etiquetes].join('|');
 ---
 <Base title={t.titolPestanya}>
@@ -77,7 +83,7 @@ const etiquetesDe = (o: (typeof obres)[number]) => [...(o.data.textPropi ? ['Tex
             <div class="label accent" style="border-top:0;padding-top:0">{t.tambe}</div>
             {g.altres.map((a) => (
               <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px">
-                <span>{a.titol}{a.grup !== 'Companyia' && <span class="label"> · {a.grup}</span>}</span>
+                <span>{a.href ? <a href={a.href}>{a.titol}</a> : a.titol}{a.grup !== 'Companyia' && <span class="label"> · {a.grup}</span>}</span>
                 <span class="label" style="text-align:right">{a.llocs}</span>
               </div>
             ))}

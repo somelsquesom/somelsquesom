@@ -11,7 +11,11 @@ const x = xifres(obres);
 const v = variables({}, obres);
 const R = (s?: string) => rich(s, v);
 // La història es construeix sola a partir de les estrenes (de la primera a la darrera).
-const fites = [...obres].reverse();
+const anys = new Map<number, typeof obres>();
+for (const o of [...obres].filter((o) => !o.data.secundaria).reverse()) {
+  const a = o.data.estrena.getFullYear();
+  anys.set(a, [...(anys.get(a) ?? []), o]);
+}
 const xifresLlista = [[x.anys, t.xifres?.anys], [x.obres, t.xifres?.obres], [x.representacions, t.xifres?.representacions], [x.poblacions, t.xifres?.poblacions]].filter(([n, l]) => Number(n) > 0 && l);
 ---
 <Base title={t.titolPestanya}>
@@ -39,20 +43,20 @@ const xifresLlista = [[x.anys, t.xifres?.anys], [x.obres, t.xifres?.obres], [x.r
 
   {t.mostrarHistoria && (
     <section class="section">
-      <div class="wrap cols">
-        <div>
-          {t.historiaEtiqueta && <div class="label" style="margin-bottom:24px">{t.historiaEtiqueta}</div>}
-          <h2 class="display" set:html={R(t.historiaTitol)} />
+      <div class="wrap">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;margin-bottom:36px">
+          <div>
+            {t.historiaEtiqueta && <div class="label" style="margin-bottom:16px">{t.historiaEtiqueta}</div>}
+            <h2 class="display" set:html={R(t.historiaTitol)} />
+          </div>
+          <a href="/arxiu">{t.historiaEnllac ?? "Veure tot l'arxiu →"}</a>
         </div>
-        <div class="rows">
-          {fites.map((o) => (
-            <a href={`/obres/${o.id}`} style="display:grid;grid-template-columns:100px minmax(0,1fr);gap:24px;text-decoration:none">
-              <div class="serif accent" style="font-size:28px">{o.data.estrena.getFullYear()}</div>
-              <div>
-                <div style="font-weight:600">{o.data.titol}</div>
-                <div class="muted" style="font-size:15px">{[o.data.grup, o.data.resum].filter(Boolean).join(' · ')}</div>
-              </div>
-            </a>
+        <div class="cronologia">
+          {[...anys].map(([any, llista]) => (
+            <div>
+              <div class="serif accent" style="font-size:30px;line-height:1">{any}</div>
+              {llista.map((o) => <a href={`/obres/${o.id}`}>{o.data.titol}</a>)}
+            </div>
           ))}
         </div>
       </div>
