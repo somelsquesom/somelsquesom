@@ -25,6 +25,7 @@ const obres = defineCollection({
     foto: z.string().optional(),
     galeria: z.array(z.string()).default([]),
     trailer: z.string().optional(),
+    videos: z.array(z.object({ titol: z.string().optional(), enllac: z.string(), imatge: z.string().optional() })).default([]),
     entrades: z.string().optional(),
     entradesInfo: z.string().optional(),
     dossier: z.string().optional(),
@@ -53,6 +54,7 @@ const noticies = defineCollection({
     foto: z.string().optional(),
     peuFoto: z.string().optional(),
     galeria: z.array(z.string()).default([]),
+    videos: z.array(z.object({ titol: z.string().optional(), enllac: z.string(), imatge: z.string().optional() })).default([]),
     destacada: z.boolean().default(false),
   }),
 });
