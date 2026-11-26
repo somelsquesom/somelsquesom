@@ -32,7 +32,7 @@ const mes = (await getCollection('noticies')).sort(perData).filter((n) => n.id !
     {noticia.body?.trim() && <div class="narrow prose" style="padding-top:48px;padding-bottom:24px"><Content /></div>}
     {d.galeria.length > 0 && (
       <div style="max-width:1000px;margin:0 auto;padding:0 40px 48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px">
-        {d.galeria.map((src, n) => <a href={src}><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="1/1" /></a>)}
+        {d.galeria.map((src, n) => <a href={src} data-galeria="noticia"><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="1/1" /></a>)}
       </div>
     )}
     <div class="narrow" style="padding-bottom:72px">
