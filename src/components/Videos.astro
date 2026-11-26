@@ -1,0 +1,20 @@
+---
+// Vídeos externs (reels d'Instagram, TikTok, YouTube...): una miniatura que porta al vídeo original.
+interface Props {
+  videos: { titol?: string; enllac: string; imatge?: string }[];
+  text?: string;
+}
+const { videos = [], text = 'Veure el vídeo ↗' } = Astro.props;
+---
+{videos.length > 0 && (
+  <div class="videos">
+    {videos.map((v) => (
+      <a href={v.enllac} target="_blank" rel="noopener" class="video-card">
+        <span class="video-thumb" style={v.imatge ? `background-image:url('${v.imatge}')` : undefined}>
+          <span class="video-play" aria-hidden="true">▶</span>
+        </span>
+        <span class="video-text">{v.titol && <strong>{v.titol}</strong>}<span class="label">{text}</span></span>
+      </a>
+    ))}
+  </div>
+)}
