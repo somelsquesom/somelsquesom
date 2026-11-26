@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import Foto from '../../components/Foto.astro';
 import IconaBaixar from '../../components/IconaBaixar.astro';
 import Etiquetes from '../../components/Etiquetes.astro';
+import Videos from '../../components/Videos.astro';
 import web from '../../data/web.json';
 import engira from '../../data/textos/engira.json';
 import arxiu from '../../data/textos/arxiu.json';
@@ -115,6 +116,15 @@ const descarregues = [
             <div class="rows">{d.fitxaTecnica.map((r) => <div class="kv"><span>{r.concepte}</span><span style="text-align:right">{r.valor}</span></div>)}</div>
           </div>
         )}
+      </div>
+    </section>
+  )}
+
+  {d.videos.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><span>{t.videos}</span></div>
+        <Videos videos={d.videos} text={t.veureVideo} />
       </div>
     </section>
   )}
