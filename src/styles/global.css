@@ -148,3 +148,9 @@ a[data-galeria] { cursor: zoom-in; display: block; }
 .visor.sola .visor-ant, .visor.sola .visor-seg { display: none; }
 .visor-compte { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; color: #bbb; font-size: 13px; }
 @media (max-width: 640px) { .visor img { max-width: 100vw; } .visor-ant, .visor-seg { font-size: 36px !important; } }
+
+/* Cronologia compacta (La companyia) */
+.cronologia { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); gap: 28px 24px; border-top: 1px solid var(--ink); padding-top: 24px; }
+.cronologia > div { display: flex; flex-direction: column; gap: 6px; }
+.cronologia a { text-decoration: none; font-size: 15px; line-height: 1.35; }
+.cronologia a:hover { color: var(--granat); }
