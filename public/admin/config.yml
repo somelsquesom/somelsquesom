@@ -108,6 +108,7 @@ collections:
           - { name: poblacio, label: Població, widget: string, required: false }
           - { name: nota, label: Nota, widget: string, required: false }
           - { name: entrades, label: "Enllaç d'entrades d'aquesta funció", widget: string, required: false }
+          - { name: adreca, label: "Adreça per al mapa (opcional: si és buida, es busca l'espai i la població)", widget: string, required: false }
       - name: cites
         label: Què n'han dit
         label_singular: cita
