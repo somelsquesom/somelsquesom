@@ -12,6 +12,9 @@ representacions: 4
 llocs: "Bell-lloc (3), Mollerussa (Casal Cultural)"
 poblacions: ["Bell-lloc d'Urgell", "Mollerussa"]
 funcions: [{"data": "21.03.2015", "espai": "Sala Cultural", "poblacio": "Bell-lloc d'Urgell", "nota": "Jornades Culturals"}, {"data": "22.03.2015", "espai": "Sala Cultural", "poblacio": "Bell-lloc d'Urgell", "nota": "Jornades Culturals"}, {"data": "2015", "espai": "Sala Cultural", "poblacio": "Bell-lloc d'Urgell"}, {"data": "2015", "espai": "Casal Cultural", "poblacio": "Mollerussa"}]
+cartell: "/uploads/blog/hamlet-02.jpg"
+galeria:
+  - "/uploads/blog/hamlet-01.jpg"
 ---
 
 La primera obra de la Companyia Jove: 14 joves que assajaven des del setembre del 2014. Una adaptació de Shakespeare amb tocs còmics.
