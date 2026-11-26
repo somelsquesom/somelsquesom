@@ -233,7 +233,7 @@ const descarregues = [
       <div class="cols" style="gap:32px">
         {altresEnGira.map((o) => (
           <a href={`/obres/${o.id}`} style="text-decoration:none;display:grid;grid-template-columns:160px minmax(0,1fr);gap:20px;align-items:center">
-            <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} portada sencera={!o.data.foto} />
+            <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} portada encaixa={!o.data.foto} />
             <div class="serif" style="font-size:32px;line-height:1.1">{o.data.titol}</div>
           </a>
         ))}
