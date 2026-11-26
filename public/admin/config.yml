@@ -8,7 +8,7 @@ backend:
   # base_url: https://sveltia-cms-auth.EL-VOSTRE-COMPTE.workers.dev
 
 locale: ca
-site_url: https://somelsquesom.pages.dev
+site_url: https://somelsquesom.cat
 media_folder: public/uploads
 public_folder: /uploads
 
