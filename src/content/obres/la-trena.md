@@ -30,7 +30,7 @@ llocs: Castell d'Aro, Bell-lloc (4 al Casal Parroquial)
 poblacions:
   - Bell-lloc d'Urgell
   - Castell d'Aro
-funcions: []
+funcions: [{"data":"15–17.05.2026","poblacio":"Castell d'Aro","nota":"Intercanvi amb Platja d'Aro"},{"data":"19.06.2026","espai":"Casal Parroquial","poblacio":"Bell-lloc d'Urgell","nota":"20 h · Tertúlia postfunció"},{"data":"20.06.2026","espai":"Casal Parroquial","poblacio":"Bell-lloc d'Urgell","nota":"17 h"},{"data":"21.06.2026","espai":"Casal Parroquial","poblacio":"Bell-lloc d'Urgell","nota":"11 h · Tertúlia postfunció"},{"data":"21.06.2026","espai":"Casal Parroquial","poblacio":"Bell-lloc d'Urgell","nota":"17 h"}]
 cites: []
 destacada: false
 ---
