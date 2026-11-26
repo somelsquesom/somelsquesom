@@ -36,8 +36,6 @@ const altresEnGira = totes.filter((o) => o.data.estat === 'en-gira' && o.id !== 
 const descarregues = [
   { t: t.docDossier, f: d.dossier },
   { t: t.docRider, f: d.rider },
-  { t: t.docCartell, f: d.cartell },
-  { t: t.docFlyer, f: d.flyer },
   { t: t.docFotos, f: d.fotosPremsa },
 ].filter((x) => x.f);
 ---
@@ -83,7 +81,7 @@ const descarregues = [
   {video && (
     <section class="section">
       <div class="wrap">
-        <div class="label" style="margin-bottom:28px">{t.trailer}</div>
+        <div class="label accent" style="margin-bottom:28px">{t.trailer}</div>
         <div class="video"><iframe src={video} title={`${t.trailer} · ${d.titol}`} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
       </div>
     </section>
@@ -93,7 +91,7 @@ const descarregues = [
     <section class="section">
       <div class="wrap cols">
         <div>
-          <div class="label" style="margin-bottom:20px">{t.deQueVa}</div>
+          <div class="label accent" style="margin-bottom:20px">{t.deQueVa}</div>
           {d.resum && <p class="serif" style="margin:0;font-size:34px;line-height:1.25">{d.resum}</p>}
         </div>
         {teText && <div class="prose"><Content /></div>}
@@ -106,13 +104,13 @@ const descarregues = [
       <div class="wrap cols">
         {d.fitxaArtistica.length > 0 && (
           <div>
-            <div class="label" style="margin-bottom:20px">{t.fitxaArtistica}</div>
+            <div class="label accent" style="margin-bottom:20px">{t.fitxaArtistica}</div>
             <div class="rows">{d.fitxaArtistica.map((r) => <div class="kv"><span>{r.rol}</span><span>{r.nom}</span></div>)}</div>
           </div>
         )}
         {d.fitxaTecnica.length > 0 && (
           <div>
-            <div class="label" style="margin-bottom:20px">{t.fitxaTecnica}</div>
+            <div class="label accent" style="margin-bottom:20px">{t.fitxaTecnica}</div>
             <div class="rows">{d.fitxaTecnica.map((r) => <div class="kv"><span>{r.concepte}</span><span style="text-align:right">{r.valor}</span></div>)}</div>
           </div>
         )}
@@ -123,7 +121,7 @@ const descarregues = [
   {d.videos.length > 0 && (
     <section class="section">
       <div class="wrap">
-        <div class="section-head"><span>{t.videos}</span></div>
+        <div class="section-head"><span class="accent">{t.videos}</span></div>
         <Videos videos={d.videos} text={t.veureVideo} />
       </div>
     </section>
@@ -132,7 +130,7 @@ const descarregues = [
   {d.galeria.length > 0 && (
     <section class="section">
       <div class="wrap">
-        <div class="section-head"><span>{t.galeria}</span><span>{d.galeria.length} {t.fotos}</span></div>
+        <div class="section-head"><span class="accent">{t.galeria}</span><span>{d.galeria.length} {t.fotos}</span></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:12px">
           {d.galeria.map((src, n) => <a href={src} data-galeria="obra"><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="4/3" /></a>)}
         </div>
@@ -143,18 +141,18 @@ const descarregues = [
   {(d.cartell || d.flyer || descarregues.length > 0) && (
     <section class="section">
       <div class="wrap">
-        <div class="section-head"><span>{enGira ? t.material : d.cartell && d.flyer ? t.cartellFlyer : d.cartell ? t.cartell : t.flyer}</span>{enGira && t.materialSub && <span>{t.materialSub}</span>}</div>
+        <div class="section-head"><span class="accent">{enGira ? t.material : d.cartell && d.flyer ? t.cartellFlyer : d.cartell ? t.cartell : t.flyer}</span>{enGira && t.materialSub && <span>{t.materialSub}</span>}</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),280px));gap:32px;align-items:end">
           {d.cartell && (
             <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
               <a href={d.cartell} data-galeria="cartell"><Foto src={d.cartell} alt={`${t.cartell} · ${d.titol}`} ratio="auto" /></a>
-              <figcaption class="label">{t.cartell} · <a href={d.cartell} download>{t.descarregar}</a></figcaption>
+              {d.flyer && <figcaption class="label">{t.cartell}</figcaption>}
             </figure>
           )}
           {d.flyer && (
             <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
               <a href={d.flyer} data-galeria="cartell"><Foto src={d.flyer} alt={`${t.flyer} · ${d.titol}`} ratio="auto" /></a>
-              <figcaption class="label">{t.flyer} · <a href={d.flyer} download>{t.descarregar}</a></figcaption>
+              {d.cartell && <figcaption class="label">{t.flyer}</figcaption>}
             </figure>
           )}
           {enGira && descarregues.length > 0 && (
@@ -174,7 +172,7 @@ const descarregues = [
       <div class="wrap cols">
         {d.cites.length > 0 && (
           <div>
-            <div class="label" style="margin-bottom:20px">{t.cites}</div>
+            <div class="label accent" style="margin-bottom:20px">{t.cites}</div>
             <div style="display:flex;flex-direction:column;gap:32px">
               {d.cites.map((c) => (
                 <blockquote class="serif" style="margin:0;font-size:30px;line-height:1.25">«{c.text}»<footer class="label" style="font-family:var(--sans);font-size:14px;margin-top:8px">— {c.autor}</footer></blockquote>
@@ -231,11 +229,11 @@ const descarregues = [
 
   {enGira && altresEnGira.length > 0 && (
     <section class="wrap" style="padding-top:48px;padding-bottom:88px">
-      <div class="section-head"><span>{t.altresGira}</span><a href="/en-gira">{t.veureTotes}</a></div>
+      <div class="section-head"><span class="accent">{t.altresGira}</span><a href="/en-gira">{t.veureTotes}</a></div>
       <div class="cols" style="gap:32px">
         {altresEnGira.map((o) => (
           <a href={`/obres/${o.id}`} style="text-decoration:none;display:grid;grid-template-columns:160px minmax(0,1fr);gap:20px;align-items:center">
-            <Foto src={o.data.foto} alt={o.data.titol} ratio="1/1" />
+            <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="1/1" sencera={!o.data.foto} />
             <div class="serif" style="font-size:32px;line-height:1.1">{o.data.titol}</div>
           </a>
         ))}
