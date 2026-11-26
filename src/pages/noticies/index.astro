@@ -16,7 +16,7 @@ const premsa = (await getCollection('premsa')).sort(perData);
 <Base title={t.titolPestanya}>
   <section class="wrap hero" style="padding-bottom:48px">
     <div>
-      {t.etiqueta && <div class="label" style="margin-bottom:20px">{t.etiqueta}</div>}
+      {t.etiqueta && <div class="label accent" style="margin-bottom:20px">{t.etiqueta}</div>}
       <h1 class="display" set:html={R(t.titol)} />
     </div>
     {t.presentacio && <p class="lead" set:html={R(t.presentacio)} />}
@@ -26,7 +26,7 @@ const premsa = (await getCollection('premsa')).sort(perData);
     <section class="section">
       <div class="wrap" style="padding-bottom:56px">
         <a href={`/noticies/${destacada.id}`} class="cols" style="text-decoration:none;gap:40px;align-items:center">
-          <Foto src={destacada.data.foto} alt={destacada.data.titol} ratio="3/2" />
+          <Foto src={destacada.data.foto} alt={destacada.data.titol} portada />
           <div style="display:flex;flex-direction:column;gap:16px">
             <div class="label"><span class="accent">{t.destacat}</span> · {formatData(destacada.data.data)}</div>
             <h2 class="display" style="font-size:56px">{destacada.data.titol}</h2>
@@ -44,7 +44,7 @@ const premsa = (await getCollection('premsa')).sort(perData);
         <div class="grid-cards" style="grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:48px 32px">
           {resta.map((n) => (
             <a href={`/noticies/${n.id}`} class="card" style="gap:12px">
-              <Foto src={n.data.foto} alt={n.data.titol} ratio="4/3" />
+              <Foto src={n.data.foto} alt={n.data.titol} portada />
               <div class="label">{formatData(n.data.data)}</div>
               <div class="card-title">{n.data.titol}</div>
               {n.data.entradeta && <div class="muted" style="font-size:15px">{n.data.entradeta}</div>}
@@ -59,7 +59,7 @@ const premsa = (await getCollection('premsa')).sort(perData);
     <section class="section soft" id="premsa">
       <div class="wrap cols">
         <div>
-          <div class="label" style="margin-bottom:20px">{t.premsaEtiqueta}</div>
+          <div class="label accent" style="margin-bottom:20px">{t.premsaEtiqueta}</div>
           <h2 class="display" style="margin-bottom:16px" set:html={R(t.premsaTitol)} />
           {t.premsaText && <p class="muted" style="font-size:17px;max-width:420px;margin:0" set:html={R(t.premsaText)} />}
         </div>
