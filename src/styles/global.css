@@ -276,3 +276,9 @@ a[data-galeria] { cursor: zoom-in; display: block; }
   .facts > div:nth-child(odd) { padding-left: 0; }
 }
 .card-h > .card-h-text:first-child { grid-column: 1 / -1; }
+
+/* Temporades anteriors: a l'ordinador, targetes verticals; al mòbil, imatge a l'esquerra i text a la dreta */
+@media (min-width: 641px) {
+  .llista-h.llista-arxiu { grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 40px 28px; }
+  .llista-h.llista-arxiu .card-h { display: flex; flex-direction: column; gap: 10px; align-items: stretch; }
+}
