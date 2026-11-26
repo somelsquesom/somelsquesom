@@ -1,0 +1,45 @@
+---
+// Pàgina amb totes les fotos d'una obra, separades per seccions (p. ex. una per a cada lloc on l'hem fet).
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Foto from '../../../components/Foto.astro';
+import t from '../../../data/textos/obra.json';
+
+export async function getStaticPaths() {
+  const obres = await getCollection('obres');
+  return obres
+    .filter((o) => o.data.galeria.length + o.data.seccionsGaleria.reduce((n, s) => n + s.fotos.length, 0) > 0)
+    .map((obra) => ({ params: { slug: obra.id }, props: { obra } }));
+}
+const { obra } = Astro.props;
+const d = obra.data;
+const seccions = [
+  ...(d.galeria.length ? [{ titol: d.seccionsGaleria.length ? (t.galeriaGeneral ?? 'Fotos') : '', fotos: d.galeria }] : []),
+  ...d.seccionsGaleria.filter((s) => s.fotos.length),
+];
+const total = seccions.reduce((n, s) => n + s.fotos.length, 0);
+---
+<Base title={`${t.galeria} · ${d.titol}`} seccio={d.estat === 'en-gira' ? '/en-gira' : '/arxiu'}>
+  <section class="wrap hero" style="padding-bottom:40px">
+    <div>
+      <div class="label accent" style="margin-bottom:20px"><a href={`/obres/${obra.id}`} style="color:inherit">← {d.titol}</a></div>
+      <h1 class="display">{t.galeria}</h1>
+    </div>
+    <p class="lead">{total} {t.fotos}</p>
+  </section>
+  {seccions.map((s, k) => (
+    <section class="section">
+      <div class="wrap">
+        {s.titol && <div class="section-head"><span class="accent">{s.titol}</span><span>{s.fotos.length} {t.fotos}</span></div>}
+        <div class="galeria-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:12px">
+          {s.fotos.map((src, n) => <a href={src} data-galeria={`seccio-${k}`}><Foto src={src} alt={`${d.titol}, foto ${n + 1}`} ratio="4/3" /></a>)}
+        </div>
+      </div>
+    </section>
+  ))}
+  <section class="section">
+    <div class="wrap" style="padding-top:32px;padding-bottom:32px">
+      <a href={`/obres/${obra.id}`}>← {d.titol}</a>
+    </div>
+  </section>
+</Base>
