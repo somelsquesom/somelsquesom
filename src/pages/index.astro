@@ -50,7 +50,7 @@ const fons = (s: string) => (seccions.indexOf(s) % 2 === 1 ? 'section soft' : 's
             <div class="cols" style="gap:40px">
               {enGira.map((o) => (
                 <a href={`/obres/${o.id}`} class="card" style="gap:16px">
-                  <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="4/3" />
+                  <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="4/3" sencera={!o.data.foto} />
                   {t.enGira.disponible && <div class="label accent">{t.enGira.disponible}</div>}
                   <div class="serif" style="font-size:52px;line-height:1">{o.data.titol}</div>
                   <Etiquetes etiquetes={o.data.etiquetes} textPropi={o.data.textPropi} />
@@ -84,7 +84,7 @@ const fons = (s: string) => (seccions.indexOf(s) % 2 === 1 ? 'section soft' : 's
             <div class="grid-cards">
               {arxiu.map((o) => (
                 <a href={`/obres/${o.id}`} class="card">
-                  <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="3/4" />
+                  <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="3/4" sencera={!o.data.foto} />
                   <div class="label">{o.data.temporada}</div>
                   <div class="card-title" style="font-size:28px">{o.data.titol}</div>
                 </a>
