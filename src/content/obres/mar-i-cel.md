@@ -19,6 +19,7 @@ galeria:
   - "/uploads/blog/mar-i-cel-04.jpg"
   - "/uploads/blog/mar-i-cel-05.jpg"
   - "/uploads/blog/mar-i-cel-06.jpg"
+  - "/uploads/instagram/mar-i-cel-ig01.jpg"
 ---
 
 Un vaixell pirata surt de la boira amb captius cristians a la bodega. El primer drama de la companyia, a partir de l'obra d'Àngel Guimerà.
