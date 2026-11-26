@@ -53,9 +53,9 @@ const x = xifres(obres, web.anyInici);
     <div class={web.fotoGrup ? 'wrap cols' : 'wrap'} style="align-items:center">
       <div>
         <div class="label" style="margin-bottom:24px">02 — La companyia</div>
-        <h2 class="display" style="margin-bottom:24px">Un grup de gent que s'ajunta per <em>fer teatre</em>.</h2>
+        <h2 class="display" style="margin-bottom:24px" set:html={(web.titolCompanyia || "Un grup de gent que s'ajunta per *fer teatre*.").replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\*([^*]+)\*/g, '<em>$1</em>')}></h2>
         <p class="muted" style="font-size:18px;max-width:520px;margin:0 0 28px">{web.somTotsITotes}</p>
-        <a href="/companyia">Coneix-nos →</a>
+        <a href="/companyia">{web.enllacCompanyia || 'Coneix-nos →'}</a>
       </div>
       <Foto src={web.fotoGrup} alt="Foto de grup de la companyia" ratio="4/3" />
     </div>
