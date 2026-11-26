@@ -128,3 +128,5 @@ h1.display em, h2.display em { color: var(--granat); }
 .section.dark h2.display em { color: #fff; }
 .tags li.propi, .tags.gran li.propi { border-color: var(--granat); color: var(--granat); }
 .filtre button[aria-pressed='true'] { background: var(--granat); border-color: var(--granat); }
+.btn.granat { background: var(--granat); border-color: var(--granat); color: #fff; }
+.btn.granat:hover { background: var(--granat-fosc); border-color: var(--granat-fosc); color: #fff; }
