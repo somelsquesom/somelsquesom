@@ -1,7 +1,8 @@
 ---
 // Mostra la foto només si n'hi ha. Si el camp és buit, no surt res.
-// sencera: la imatge es mostra amb el seu format original, sense retallar (per als cartells).
 // portada: fa servir el format de foto triat al gestor (Textos i aparença → Colors i aparença).
+// encaixa: la imatge (un cartell) es veu sencera dins d'aquest mateix format, sense retallar.
+// sencera: la imatge es veu amb el seu format original.
 import estil from '../data/textos/estil.json';
 interface Props {
   src?: string;
@@ -9,10 +10,11 @@ interface Props {
   ratio?: string;
   sencera?: boolean;
   portada?: boolean;
+  encaixa?: boolean;
 }
-const { src, alt = '', ratio = '4/3', sencera = false, portada = false } = Astro.props;
-const format = portada ? (estil as Record<string, string>).formatFotos || '4/3' : ratio;
+const { src, alt = '', ratio = '4/3', sencera = false, portada = false, encaixa = false } = Astro.props;
+const format = portada ? (estil as Record<string, string>).formatFotos || '4/5' : ratio;
 ---
 {src && (sencera
   ? <img class="media sencera" src={src} alt={alt} loading="lazy" />
-  : <img class="media" src={src} alt={alt} loading="lazy" style={`aspect-ratio:${format}`} />)}
+  : <img class:list={['media', { encaixa }]} src={src} alt={alt} loading="lazy" style={`aspect-ratio:${format}`} />)}
