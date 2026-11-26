@@ -1078,6 +1078,9 @@ collections:
         fields:
           - { name: nom, label: Nom de la companyia, widget: string }
           - { name: logo, label: Logo, widget: image, required: false }
+          - { name: titolWeb, label: "Títol de la web (el que surt a la pestanya i quan es comparteix l'enllaç per WhatsApp o xarxes)", widget: string, required: false }
+          - { name: descripcioWeb, label: "Descripció per compartir (el text petit que surt sota el títol a WhatsApp, Google...)", widget: text, required: false }
+          - { name: imatgeCompartir, label: "Imatge per compartir (la que surt a WhatsApp i xarxes; millor horitzontal, 1200×630). Si és buida, surt la foto de portada o el logo", widget: image, required: false }
           - { name: descripcio, label: Descripció curta, widget: string }
           - { name: poblacio, label: Població, widget: string }
           - { name: codiPostal, label: Codi postal, widget: string }
