@@ -56,7 +56,16 @@ collections:
       - { name: public, label: Públic, widget: string, required: false }
       - { name: format, label: "Format (sala, carrer...)", widget: string, required: false }
       - { name: foto, label: Foto principal, widget: image, required: false }
-      - { name: galeria, label: Galeria de fotos, widget: image, multiple: true, required: false }
+      - { name: galeria, label: "Galeria de fotos (a la fitxa en surten les 10 primeres; la resta, a la pàgina de galeria)", widget: image, multiple: true, required: false }
+      - name: seccionsGaleria
+        label: "Més galeries per seccions (p. ex. una per a cada lloc on l'hem fet)"
+        label_singular: secció
+        widget: list
+        required: false
+        summary: "{{titol}}"
+        fields:
+          - { name: titol, label: "Títol de la secció (p. ex. Funció a Castell d'Aro)", widget: string }
+          - { name: fotos, label: Fotos, widget: image, multiple: true }
       - { name: trailer, label: "Tràiler (enllaç de YouTube o Vimeo)", widget: string, required: false }
       - name: videos
         label: "Vídeos (reels d'Instagram, TikTok, YouTube...)"
