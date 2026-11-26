@@ -20,6 +20,7 @@ const teText = Boolean(obra.body && obra.body.trim());
 const video = embedVideo(d.trailer);
 const estrena = d.estrenaText ?? formatMesAny(d.estrena);
 const rep = repDe(obra);
+const de = (nom: string) => (/^[aeiouàáèéíïòóúüh]/i.test(nom.trim()) ? `d'${nom}` : `de ${nom}`);
 
 const totes = (await getCollection('obres')).sort(perEstrena);
 const i = totes.findIndex((o) => o.id === obra.id);
@@ -51,7 +52,7 @@ const descarregues = [
         <div style="margin-top:20px"><Etiquetes etiquetes={d.etiquetes} textPropi={d.textPropi} gran /></div>
         {(d.autoria || d.direccio || d.grup !== 'Companyia') && (
           <div class="label" style="font-size:18px;margin-top:12px">
-            {[d.autoria && `de ${d.autoria}`, d.direccio && `direcció de ${d.direccio}`, d.grup !== 'Companyia' && d.grup].filter(Boolean).join(' · ')}
+            {[d.autoria && de(d.autoria), d.direccio && `direcció ${de(d.direccio)}`, d.grup !== 'Companyia' && d.grup].filter(Boolean).join(' · ')}
           </div>
         )}
       </div>
