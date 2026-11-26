@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
-// Quan tingueu el domini propi, canvieu aquesta adreça (per exemple https://somelsquesom.cat)
+// Adreça principal de la web
 export default defineConfig({
-  site: 'https://somelsquesom.pages.dev',
+  site: 'https://somelsquesom.cat',
   trailingSlash: 'ignore',
 });
