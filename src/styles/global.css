@@ -154,3 +154,11 @@ a[data-galeria] { cursor: zoom-in; display: block; }
 .cronologia > div { display: flex; flex-direction: column; gap: 6px; }
 .cronologia a { text-decoration: none; font-size: 15px; line-height: 1.35; }
 .cronologia a:hover { color: var(--granat); }
+
+/* Vídeos externs */
+.videos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 20px; }
+.video-card { text-decoration: none; display: flex; flex-direction: column; gap: 10px; }
+.video-thumb { position: relative; display: block; aspect-ratio: 4 / 5; background: var(--ink) center / cover no-repeat; }
+.video-play { position: absolute; inset: 0; margin: auto; width: 64px; height: 64px; border-radius: 50%; background: var(--granat); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; padding-left: 4px; }
+.video-card:hover .video-play { background: var(--granat-fosc); }
+.video-text { display: flex; flex-direction: column; gap: 2px; }
