@@ -15,7 +15,6 @@ funcions: [{"data":"20.12.2025","espai":"Sala Cultural","poblacio":"Bell-lloc d'
 foto: "/uploads/instagram/els-pastorets-catalans-2025-ig04.jpg"
 cartell: "/uploads/instagram/els-pastorets-catalans-2025-ig02.jpg"
 galeria:
-  - "/uploads/instagram/els-pastorets-catalans-2025-ig01.jpg"
   - "/uploads/instagram/els-pastorets-catalans-2025-ig03.jpg"
   - "/uploads/instagram/els-pastorets-catalans-2025-ig05.jpg"
   - "/uploads/instagram/els-pastorets-catalans-2025-ig06.jpg"
@@ -23,6 +22,7 @@ galeria:
   - "/uploads/instagram/els-pastorets-catalans-2025-ig08.jpg"
   - "/uploads/instagram/els-pastorets-catalans-2025-ig09.jpg"
   - "/uploads/instagram/els-pastorets-catalans-2025-ig10.jpg"
+videos: [{"titol":"Un dia «entre cametes» amb les dimonietes","enllac":"https://www.instagram.com/reel/DSmg7KBjJ7Y/","imatge":"/uploads/instagram/els-pastorets-catalans-2025-ig01.jpg"}]
 ---
 
 Gairebé deu anys després, *Els Pastorets Catalans* de Lluís Millà van tornar al nostre poble. Els vam preparar amb molta il·lusió, com tan bé ho havien fet temps enrere altres bell-lloquins i bell-lloquines, per començar el Nadal amb una proposta familiar plena de rialles amb les aventures i desventures dels pastors i els dimonis.
