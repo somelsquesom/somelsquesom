@@ -62,7 +62,7 @@ const descarregues = [
       <div style="display:flex;flex-direction:column;gap:16px">
         {(d.durada || d.public || d.format || rep > 0) && (
           <div class="facts">
-            {d.durada && <div><div class="k">{t.durada}</div><div>{d.durada}</div></div>}
+            {d.durada && <div><div class="k">{t.durada}</div><div>{/^\d+$/.test(d.durada.trim()) ? `${d.durada} min` : d.durada}</div></div>}
             {d.public && <div><div class="k">{t.public}</div><div>{d.public}</div></div>}
             {d.format && <div><div class="k">{t.format}</div><div>{d.format}</div></div>}
             {rep > 0 && <div><div class="k">{t.representacions}</div><div>{rep}</div></div>}
@@ -233,7 +233,7 @@ const descarregues = [
       <div class="cols" style="gap:32px">
         {altresEnGira.map((o) => (
           <a href={`/obres/${o.id}`} style="text-decoration:none;display:grid;grid-template-columns:160px minmax(0,1fr);gap:20px;align-items:center">
-            <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} ratio="1/1" sencera={!o.data.foto} />
+            <Foto src={o.data.foto ?? o.data.cartell} alt={o.data.titol} portada sencera={!o.data.foto} />
             <div class="serif" style="font-size:32px;line-height:1.1">{o.data.titol}</div>
           </a>
         ))}
